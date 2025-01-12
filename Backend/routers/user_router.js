@@ -1,0 +1,35 @@
+import express from "express";
+import { 
+  registerUser, 
+  loginUser, 
+  getUser, 
+  updateUser, 
+  deleteUser, 
+  admin,
+  adminLogin
+} from "../controllers/user_controller.js"; // Assuming your controllers are in the controllers folder
+
+const router = express.Router();
+
+// Route for user registration
+router.post("/register", registerUser);
+
+// Route for user login
+router.post("/login", loginUser);
+
+//Route for Admin
+router.get("/admin", admin);
+
+//Route for Admin
+router.post("/adminLogin", adminLogin);
+
+// Route to get user details by ID
+router.get("/:id", getUser);
+
+// Route to update user details
+router.put("/:id", updateUser);
+
+// Route to delete a user
+router.delete("/:id", deleteUser);
+
+export default router;

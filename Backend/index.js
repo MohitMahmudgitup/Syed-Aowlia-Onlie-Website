@@ -23,6 +23,10 @@ app.use("/api/user", userRoutes);
 app.use("/api/product", productRoutes);
 app.use('/api/cart', cartRouter);
 app.use("/api/order", orderRouter);
+app.get("/", (req, res) => {
+  res.send("E-commerce API is running...");
+});
+
 
 connectDB();
 connetCloudnary();

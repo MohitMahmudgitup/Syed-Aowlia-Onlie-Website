@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from './component/Navbar'
 import Sideber from './component/sideber'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import List from './page/list'
 import Orders from './page/Orders'
 import Add from './page/add'
@@ -14,10 +14,15 @@ import Footer from './component/Footer'
 export const backend = import.meta.env.VITE_BACKEND_URL 
 
 function App() {
-  const [token, setToken] = useState(  localStorage.getItem('token') ? localStorage.getItem('token') : "/")
+  const [token, setToken] = useState(  localStorage.getItem('token') ? localStorage.getItem('token') : "/login")
+const navigate = useNavigate()
   
-  useEffect(()=>{
+useEffect(()=>{
     const token = localStorage.getItem("token")
+    token === null && navigate("/login")
+
+    
+
   },[token])
   
 
@@ -28,6 +33,7 @@ function App() {
       {
         token === "" ? (
           <Login setToken={setToken} />  
+          
         ) : (
           <>
             <Navbar setToken={setToken} />

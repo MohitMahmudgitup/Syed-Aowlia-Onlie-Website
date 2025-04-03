@@ -1,5 +1,6 @@
 import React from 'react';
 import { assets } from '../assets/assets';
+import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -7,8 +8,10 @@ const Footer = () => {
       <div className="flex flex-col sm:grid grid-cols-3 gap-8 mx-auto max-w-screen-xl px-6 text-sm">
         {/* Logo and Description */}
         <div className="flex flex-col">
-          <img className="mb-4 w-32" src={assets.logo} alt="Company Logo" />
-          <p className="text-gray-400 leading-relaxed">
+          <NavLink to={"/"}>
+                  <p className="text-2xl">LOGO</p>
+                </NavLink>
+          <p className="text-gray-400 leading-relaxed mt-4">
             Whether you need help expanding the team, ramping up marketing, or keeping surprise bestsellers in stock, Shopify Capital is here to lend a hand.
           </p>
         </div>

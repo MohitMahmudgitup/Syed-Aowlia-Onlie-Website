@@ -6,7 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import Skeleton from 'react-loading-skeleton'
 
 function LatesCallection() {
-  const { products } = useContext(ShopContext);
+  const { products, darkmode } = useContext(ShopContext);
   const [latestProducts, setLatestProducts] = useState([]); // Initialize with an empty array
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function LatesCallection() {
     <div>
       <div className='text-center py-8 text-3xl'>
         <Titel text1={"LATEST "} text2={"COLLECTION"} />
-        <p className='w-3/4 text-xs sm:text-sm m-auto md:text-base text-gray-600'>
+        <p className={`w-3/4 text-xs sm:text-sm m-auto md:text-base ${darkmode ? 'text-gray-300' : 'text-gray-600'}`}>
         Shopify puts your store within 50 milliseconds of every shopper on the planet, with the capacity to handle even the most epic product drops.
         </p>
       </div>

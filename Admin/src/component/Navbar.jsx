@@ -1,15 +1,17 @@
+import { useEffect } from 'react'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 
 function Navbar({ setToken }) {
   const navigate = useNavigate()
 
+
   const handleLogout = () => {
     // Clear the token from state and localStorage
     setToken("")
     localStorage.removeItem('token')
     // Redirect to the login page
-    navigate('/')
+    navigate('/login')
   }
 
   return (

@@ -3,9 +3,10 @@ import axios from "axios";
 import { backend } from '../App';
 import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login({ setToken }) {
+    const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,6 +22,7 @@ function Login({ setToken }) {
         setToken(response.data.token);
         localStorage.setItem('token', response.data.token);
         toast.success(response.data.message);
+        navigate('/')
       } else {
         toast.error(response.data.message);
       }

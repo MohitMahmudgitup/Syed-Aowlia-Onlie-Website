@@ -12,7 +12,7 @@ function SignUp() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [signUpsignIn, setSignUpsignIn] = useState(false);
 
-  const { token, setToken, backend, navigate } = useContext(ShopContext);
+  const { token, setToken, backend, navigate, darkmode  } = useContext(ShopContext);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -62,7 +62,7 @@ function SignUp() {
           </div>
         </div>
       ) : (
-        <div className="w-full max-w-md bg-white p-8 ">
+        <div className="w-full max-w-md  p-8 ">
           <div className="flex justify-center">
             {signUpsignIn ? (
               <Titel text2={`Sign Up`} color2={"text-3xl font-bold text-center mb-6 prata-regular"} />
@@ -93,7 +93,7 @@ function SignUp() {
                 required
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-4 ">
               <input
                 type="password"
                 value={password}
@@ -104,16 +104,19 @@ function SignUp() {
               />
             </div>
             <div className='flex justify-between items-center mb-4'>
-              <p className="cursor-pointer text-sm text-gray-600">Forgot your password?</p>
+            <p className={`cursor-pointer text-sm ${darkmode ? 'text-gray-300' : 'text-gray-600'}`}>
+  Forgot your password?</p>
+
               {signUpsignIn ? (
-                <p onClick={() => setSignUpsignIn(false)} className="cursor-pointer text-sm text-gray-600">Login Here</p>
+                <p onClick={() => setSignUpsignIn(false)} className={`cursor-pointer text-sm ${darkmode ? 'text-gray-300' : 'text-gray-600'}`}>Login Here</p>
               ) : (
-                <p onClick={() => setSignUpsignIn(true)} className="cursor-pointer text-sm text-gray-600">Create account</p>
+                <p onClick={() => setSignUpsignIn(true)} className={`cursor-pointer text-sm ${darkmode ? 'text-gray-300' : 'text-gray-600'}`}>Create account</p>
               )}
             </div>
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 px-4 hover:bg-gray-600 rounded-md transition duration-300">
+              className={`w-full py-2 px-4 rounded-md transition duration-300 
+                ${darkmode ? "bg-white text-black hover:bg-gray-300" : "bg-black text-white hover:bg-gray-600"}`}>
               {signUpsignIn ? "Create Account" : "Login Now"}
             </button>
           </form>

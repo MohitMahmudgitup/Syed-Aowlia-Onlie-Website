@@ -2,16 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
+import Switch from "./Switch";
 
-function Navber() {
+function Navbar() {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
-  const { getCartItem, setToken, setCartItem, token , getUserCart } = useContext(ShopContext);
+  const { getCartItem, setToken, setCartItem, token, getUserCart, darkmode } = useContext(ShopContext);
   
   const [linkProfile, setLinkProfile] = useState("/login");
 
   const handleLogout = () => {
-    // Clear the token and navigate to login page
     navigate("/login");
     localStorage.removeItem("token");
     setToken("");
@@ -23,87 +23,67 @@ function Navber() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Get the token from local storage
-
-    if (token) {
-        // getUserCart(token); // Fetch the user's cart
-        // setLinkProfile("/"); // Set the profile link if the token exists
+    const storedToken = localStorage.getItem("token"); 
+    if (storedToken) {
+      // getUserCart(storedToken);
+      setLinkProfile("/"); 
     } else {
-        setLinkProfile("/login"); // Redirect to login if no token
+      setLinkProfile("/login"); 
     }
-
-    // Optional: log the token for debugging purposes
-    // console.log("Token from local storage:", token);
-}, []); // Empty dependency array to run this effect only once on component mount
-
+  }, []); 
 
   return (
-    <div className="flex items-center justify-between py-5 font-medium px-2 sm:px-8">
+    <div className={`flex sticky top-0  z-50 items-center justify-between py-5 font-medium px-2 sm:px-8 ${darkmode ? 'bg-zinc-900 text-white' : 'bg-white text-black'}`}>
       {/* Logo */}
       <NavLink to={"/"}>
-        <img src={assets.logo2} className="w-44 md:w-52" alt="Logo" />
+        <p className="text-2xl">LOGO</p>
       </NavLink>
 
       {/* Links for larger screens */}
       <div className="flex justify-center gap-5 items-center">
-        <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
-          <NavLink to="/" className="flex flex-col items-center gap-1">
-            <p>HOME</p>
-          </NavLink>
-          <NavLink to="/collection" className="flex flex-col items-center gap-1">
-            <p>COLLECTION</p>
-          </NavLink>
-          <NavLink to="/about" className="flex flex-col items-center gap-1">
-            <p>ABOUT</p>
-          </NavLink>
-          <NavLink to="/contact" className="flex flex-col items-center gap-1">
-            <p>CONTACT</p>
-          </NavLink>
+        <ul className="hidden sm:flex gap-5 text-sm">
+          <NavLink to="/" className="flex flex-col items-center gap-1">HOME</NavLink>
+          <NavLink to="/collection" className="flex flex-col items-center gap-1">COLLECTION</NavLink>
+          <NavLink to="/about" className="flex flex-col items-center gap-1">ABOUT</NavLink>
+          <NavLink to="/contact" className="flex flex-col items-center gap-1">CONTACT</NavLink>
         </ul>
         <NavLink
-          to="http://localhost:5174/" // Consider updating this in production
+          to="http://localhost:5174/"
           target="_blank"
-          className="flex-col items-center hidden lg:flex border rounded-full px-5 py-2"
+          className={`hidden lg:flex border rounded-full px-5 py-2 ${darkmode ? "bg-gray-900 border-gray-700 shadow-lg shadow-gray-800" : " border-gray-400 shadow-md"}`}
+          
         >
-          <p className="text-xs">ADMIN PANEL</p>
+          ADMIN PANEL
         </NavLink>
+        <div className="hidden sm:block">
+          <Switch />
+        </div>
       </div>
 
-      {/* Icons section */}
-      <div className="flex items-center gap-6 ">
+      {/* Icons Section */}
+      <div className="flex items-center gap-6">
         {/* Search Icon */}
         <img
           onClick={handleSearch}
           src={assets.search_icon}
-          className="w-5 cursor-pointer sm:flex hidden"
+        
+          className={`w-5 cursor-pointer hidden sm:block transition-all duration-300 ${darkmode ? 'invert' : ''}`}
           alt="Search Icon"
         />
 
         {/* Profile Dropdown */}
         <Link to={linkProfile}>
-          <div className="group relative">
-            <img
-              src={assets.profile_icon}
-              className="w-5 cursor-pointer"
-              alt="Profile Icon"
-            />
-            { token && (
-              <div className="group-hover:block hidden absolute z-50 dropdown-menu right-0 pt-4">
-                <div className="flex flex-col gap-4 bg-white w-36 px-5 py-4 rounded-md shadow-md">
-                  <p className="text-lg text-gray-500 hover:text-black cursor-pointer">
-                    Profile
-                  </p>
-                  <Link to="/oders">
-                    <p className="text-lg text-gray-500 hover:text-black cursor-pointer">
-                      Orders
-                    </p>
+          <div className="relative group">
+          <img src={assets.profile_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : ''}`} alt="Profile Icon" />
+
+            {token && (
+              <div className="hidden group-hover:block absolute z-50 right-0 pt-4">
+                <div className="flex flex-col gap-4 bg-white w-36 px-5 py-4 rounded-md shadow-md text-gray-700">
+                  <p className="hover:text-black cursor-pointer">Profile</p>
+                  <Link to="/orders">
+                    <p className="hover:text-black cursor-pointer">Orders</p>
                   </Link>
-                  <p
-                    className="text-lg text-gray-500 hover:text-black cursor-pointer"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </p>
+                  <p className="hover:text-black cursor-pointer" onClick={handleLogout}>Logout</p>
                 </div>
               </div>
             )}
@@ -112,14 +92,12 @@ function Navber() {
 
         {/* Cart Icon */}
         <Link to="/cart" className="relative">
-          <img
-            src={assets.cart_icon}
-            className="w-5 cursor-pointer"
-            alt="Cart Icon"
-          />
-          <p className="absolute -right-[5px] w-4 -bottom-[5px] text-center leading-4 bg-black text-white aspect-square rounded-full text-[10px]">
-            {getCartItem() || 0} {/* Ensure cart count is always shown */}
-          </p>
+          <img src={assets.cart_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : ''}`} alt="Cart Icon" />
+          <p className={`absolute -right-[5px] -bottom-[5px] text-center w-4 h-4 rounded-full text-xs 
+  ${darkmode ? 'bg-white text-black' : 'bg-black text-white'}`}>
+  {getCartItem() || 0}
+</p>
+
         </Link>
 
         {/* Mobile Menu Icon */}
@@ -127,67 +105,32 @@ function Navber() {
           onClick={() => setVisible(true)}
           src={assets.menu_icon}
           alt="Menu Icon"
-          className="w-5 cursor-pointer sm:hidden"
+          className={`w-5 cursor-pointer sm:hidden block transition-all duration-300 ${darkmode ? 'invert' : ''}`}
+          
         />
       </div>
 
       {/* Sidebar for small screens */}
       <div
-        className={`fixed z-40 top-0 right-0 bottom-0 bg-white transition-all duration-300 ${
-          visible ? "w-64" : "w-0"
-        } overflow-hidden`}
+        className={`fixed z-40 top-0 right-0 bottom-0 ${darkmode ? "bg-zinc-900 text-white" : "bg-white"} transition-all duration-300 ${visible ? "w-64" : "w-0"} overflow-hidden`}
       >
-        <div className="flex flex-col text-gray-700">
-          <div
-            onClick={() => setVisible(false)}
-            className="flex gap-4 items-center p-3"
-          >
-            <img
-              src={assets.dropdown_icon}
-              className="h-4 rotate-180"
-              alt="Back Icon"
-            />
+        <div className="flex flex-col">
+          <div onClick={() => setVisible(false)} className="flex gap-4 items-center p-3">
+            <img src={assets.dropdown_icon} className="h-4 rotate-180" alt="Back Icon" />
             <p className="text-xl">Back</p>
           </div>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/"
-            className="py-3 pl-6 border"
-          >
-            HOME
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/about"
-            className="py-3 pl-6 border"
-          >
-            ABOUT
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/collection"
-            className="py-3 pl-6 border"
-          >
-            COLLECTION
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/contact"
-            className="py-3 pl-6 border"
-          >
-            CONTACT
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="http://localhost:5174/"
-            className="py-3 pl-6 border bg-black text-white"
-          >
-            ADMIN PANEL
-          </NavLink>
+          <NavLink onClick={() => setVisible(false)} to="/" className="py-3 pl-6 border-b ">HOME</NavLink>
+          <NavLink onClick={() => setVisible(false)} to="/about" className="py-3 pl-6 border-b">ABOUT</NavLink>
+          <NavLink onClick={() => setVisible(false)} to="/collection" className="py-3 pl-6 border-b">COLLECTION</NavLink>
+          <NavLink onClick={() => setVisible(false)} to="/contact" className="py-3 pl-6 border-b">CONTACT</NavLink>
+          <NavLink onClick={() => setVisible(false)} to="http://localhost:5174/" className="py-3 pl-6  bg-black text-white">ADMIN PANEL</NavLink>
+          <div className="mt-5 ml-5 sm:hidden block">
+            <Switch />
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Navber;
+export default Navbar;

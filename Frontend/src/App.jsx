@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Routes,Route } from 'react-router-dom'
 import Home from './Pages/Home'
 import { Collection } from './Pages/Collection'
@@ -13,13 +13,14 @@ import Navber from './Components/Navber.jsx'
 import Footer from './Components/Footer.jsx'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ShopContext } from './Context/ShopContext'
 
 
 function App() {
-
+  const { darkmode, setDarkmode } = useContext(ShopContext);
 
   return (
-    <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+    <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${darkmode ? 'bg-zinc-900 text-white' : 'bg-white text-black'}`}>
       <ToastContainer/>
       <Navber/>
       {/* <SearchBer/> */}

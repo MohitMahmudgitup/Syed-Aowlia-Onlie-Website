@@ -5,7 +5,7 @@ import RelatedProduct from "../Components/relatedProduct";
 
 function Product() {
     const { productID } = useParams();
-    const { products, addtocart , token , navigate} = useContext(ShopContext);
+    const { products, addtocart, token, navigate, darkmode } = useContext(ShopContext);
     const [productData, setProductData] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [activeTab, setActiveTab] = useState("details");
@@ -29,19 +29,16 @@ function Product() {
         fetchProductData();
     }, [productID, products]);
 
-    // If product data is not available, show loading message
     if (!productData) {
         return <div className="text-center text-gray-500">Loading product data...</div>;
     }
 
-    // Handle previous image
     const handlePrevImage = () => {
         setCurrentImageIndex((prevIndex) =>
             prevIndex === 0 ? productData.images.length - 1 : prevIndex - 1
         );
     };
 
-    // Handle next image
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) =>
             prevIndex === productData.images.length - 1 ? 0 : prevIndex + 1
@@ -58,7 +55,7 @@ function Product() {
 
     return (
         <>
-            <div className="container mx-auto my-10 p-5 bg-white rounded-lg shadow-lg">
+            <div className={`container mx-auto my-10 p-5 rounded-lg  ${darkmode ? '' : 'bg-white shadow-lg'}`}>
                 <div className="flex flex-col lg:flex-row">
                     {/* Image Gallery */}
                     <div className="lg:w-1/2">
@@ -87,11 +84,7 @@ function Product() {
                                     <button
                                         key={index}
                                         onClick={() => setCurrentImageIndex(index)}
-                                        className={`w-3 h-3 mx-1 rounded-full ${
-                                            currentImageIndex === index
-                                                ? "bg-gray-800"
-                                                : "bg-gray-300"
-                                        }`}
+                                        className={`w-3 h-3 mx-1 rounded-full ${currentImageIndex === index ? 'bg-gray-800' : 'bg-gray-300'}`}
                                     />
                                 ))}
                             </div>
@@ -99,35 +92,34 @@ function Product() {
                     </div>
 
                     {/* Product Details */}
-                    <div className="lg:w-1/2 lg:pl-10 mt-4 lg:mt-0">
-                        <h2 className="text-4xl font-bold text-gray-800 mb-2">
-                            {productData.name}
-                        </h2>
-                        <p className="text-2xl font-semibold text-gray-800 my-2">
-                            ${productData.price}
-                        </p>
+                    <div className={`lg:w-1/2 lg:pl-10 mt-4 lg:mt-0 ${darkmode ? 'text-white' : 'text-gray-800'}`}>
+                        <h2 className="text-4xl font-bold mb-2">{productData.name}</h2>
+                        <p className="text-2xl font-semibold my-2">${productData.price}</p>
                         <p>Select Size</p>
                         <div className="flex flex-wrap space-x-2 my-2">
                             {productData.sizes.map((item, index) => (
                                 <span
                                     key={index}
                                     onClick={() => setSize(item)}
-                                    className={`${item === size ? "bg-gray-200" : ""} border cursor-pointer border-gray-300 rounded-md px-3 py-1 text-gray-700 hover:bg-gray-200 transition`}
+                                    className={`${
+                                        item === size ? "bg-gray-200" : ""
+                                    } border cursor-pointer border-gray-300 rounded-md px-3 py-1 text-gray-700 hover:bg-gray-200 transition ${darkmode ? 'text-white hover:text-black' : 'text-gray-800'}`}
                                 >
                                     {item}
                                 </span>
                             ))}
                         </div>
 
-                            {
-                                token ?  <button onClick={() => addtocart(productData._id, size)} className="mt-4 w-full bg-black text-white font-semibold py-3 rounded-lg hover:bg-gray-500 transition">
+                        {token ? (
+                            <button onClick={() => addtocart(productData._id, size)} className={`mt-4 w-full font-semibold py-3 rounded-lg transition ${darkmode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-black text-white hover:bg-gray-500'}`}>
                                 Add to Cart
                             </button>
-                            :  <button onClick={()=>navigate("/login")} className="mt-4 w-full bg-black text-white font-semibold py-3 rounded-lg hover:bg-gray-500 transition">
-                            Please login...
-                        </button>
-                            }
-                       
+                        ) : (
+                            <button onClick={() => navigate("/login")} className={`mt-4 w-full font-semibold py-3 rounded-lg transition ${darkmode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-black text-white hover:bg-gray-500'}`}>
+                                Please login...
+                            </button>
+                        )}
+
                         {productData.bestseller && (
                             <div className="mt-2 flex items-center bg-green-100 text-green-800 font-bold px-2 py-1 rounded-full">
                                 <span className="mr-1">😲🌟</span>
@@ -141,21 +133,13 @@ function Product() {
                 <div className="mt-6">
                     <div className="flex space-x-4 border-b border-gray-300">
                         <button
-                            className={`py-2 px-4 ${
-                                activeTab === "details"
-                                    ? "font-bold border-b-2 border-indigo-600"
-                                    : "text-gray-600 hover:text-indigo-600"
-                            }`}
+                            className={`py-2 px-4 ${activeTab === "details" ? "font-bold border-b-2 border-indigo-600" : "text-gray-600 hover:text-indigo-600"}`}
                             onClick={() => setActiveTab("details")}
                         >
                             Details
                         </button>
                         <button
-                            className={`py-2 px-4 ${
-                                activeTab === "reviews"
-                                    ? "font-bold border-b-2 border-indigo-600"
-                                    : "text-gray-600 hover:text-indigo-600"
-                            }`}
+                            className={`py-2 px-4 ${activeTab === "reviews" ? "font-bold border-b-2 border-indigo-600" : "text-gray-600 hover:text-indigo-600"}`}
                             onClick={() => setActiveTab("reviews")}
                         >
                             Reviews
@@ -163,16 +147,16 @@ function Product() {
                     </div>
 
                     {activeTab === "details" && (
-                        <div className="mt-4 text-gray-600">
+                        <div className="mt-4">
                             <h3 className="text-2xl font-semibold">Product Description</h3>
-                            <p className="mt-2">{productData.description}</p>
+                            <p>{productData.description}</p>
                         </div>
                     )}
 
                     {activeTab === "reviews" && (
-                        <div className="mt-4 text-gray-600">
+                        <div className="mt-4">
                             <h3 className="text-2xl font-semibold">Customer Reviews</h3>
-                            <p className="mt-2">No reviews available for this product yet.</p>
+                            <p>No reviews available for this product yet.</p>
                         </div>
                     )}
                 </div>
@@ -180,10 +164,7 @@ function Product() {
                 {/* Modal for Full-Screen Image */}
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-                        <button
-                            onClick={closeModal}
-                            className="absolute top-4 right-4 text-white text-2xl"
-                        >
+                        <button onClick={closeModal} className="absolute top-4 right-4 text-white text-2xl">
                             &times;
                         </button>
                         <div className="relative">

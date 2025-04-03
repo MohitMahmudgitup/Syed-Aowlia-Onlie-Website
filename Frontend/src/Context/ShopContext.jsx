@@ -15,6 +15,7 @@ const ShopContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
   const navigate = useNavigate();
+  const [darkmode , setDarkmode] = useState(true);
 
   // Retrieve token from localStorage
 
@@ -225,7 +226,8 @@ useEffect(() => {
     token,
     setToken,
     setCartItem,
-    getUserCart
+    getUserCart,
+    darkmode,setDarkmode
     
   };
 

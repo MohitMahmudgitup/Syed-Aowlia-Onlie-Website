@@ -31,9 +31,8 @@ useEffect(()=>{
       
       <ToastContainer />
       {
-        token === "" ? (
+        !token ? (
           <Login setToken={setToken} />  
-          
         ) : (
           <>
             <Navbar setToken={setToken} />

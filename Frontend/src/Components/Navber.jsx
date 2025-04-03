@@ -48,7 +48,7 @@ function Navbar() {
           <NavLink to="/contact" className="flex flex-col items-center gap-1">CONTACT</NavLink>
         </ul>
         <NavLink
-          to="https://full-stack-e-commerce-admins.onrender.com/"
+          to="https://full-stack-e-commerce-admins.onrender.com"
           target="_blank"
           className={`hidden lg:flex border rounded-full px-5 py-2 ${darkmode ? "bg-gray-900 border-gray-700 shadow-lg shadow-gray-800" : " border-gray-400 shadow-md"}`}
           
@@ -123,7 +123,7 @@ function Navbar() {
           <NavLink onClick={() => setVisible(false)} to="/about" className="py-3 pl-6 border-b">ABOUT</NavLink>
           <NavLink onClick={() => setVisible(false)} to="/collection" className="py-3 pl-6 border-b">COLLECTION</NavLink>
           <NavLink onClick={() => setVisible(false)} to="/contact" className="py-3 pl-6 border-b">CONTACT</NavLink>
-          <NavLink onClick={() => setVisible(false)} to="https://full-stack-e-commerce-admins.onrender.com/" className="py-3 pl-6  bg-black text-white">ADMIN PANEL</NavLink>
+          <NavLink onClick={() => setVisible(false)} to="https://full-stack-e-commerce-admins.onrender.com" className="py-3 pl-6  bg-black text-white">ADMIN PANEL</NavLink>
           <div className="mt-5 ml-5 sm:hidden block">
             <Switch />
           </div>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import Titel from "../Components/titel";
+import Titel from "../Components/Titel";
 
 import { ShopContext } from "../Context/ShopContext";
 import { assets } from "../assets/assets";
@@ -41,61 +41,59 @@ const PlaceOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const orderItems = [];
+      const orderItems = [];
 
-        for (const itemId in cartItem) {
-            const sizes = cartItem[itemId];
-            
-            for (const size in sizes) {
-                const quantity = sizes[size]; 
-                if (quantity > 0) {
-                    const itemsInfo = products.products.find(p => p._id === itemId);
-                    if (itemsInfo) {
-                        const clonedItemInfo = structuredClone(itemsInfo); 
-                        clonedItemInfo.size = size;
-                        clonedItemInfo.quantity = quantity;
-                        orderItems.push(clonedItemInfo);
-                    }
-                }
+      for (const itemId in cartItem) {
+        const sizes = cartItem[itemId];
+
+        for (const size in sizes) {
+          const quantity = sizes[size];
+          if (quantity > 0) {
+            const itemsInfo = products.products.find((p) => p._id === itemId);
+            if (itemsInfo) {
+              const clonedItemInfo = structuredClone(itemsInfo);
+              clonedItemInfo.size = size;
+              clonedItemInfo.quantity = quantity;
+              orderItems.push(clonedItemInfo);
             }
+          }
         }
-        
-        const orderData = {
-          address: formData,
-          items: orderItems,
-          amount: getTotalAmount() + delivery_fee
-        };
-        console.log(orderData)
-        // Ensure token is logged for debugging
-        console.log("Token being sent:", token);
+      }
 
-        switch(method){
-          case 'cod':
-            const response = await axios.post(backend + '/api/order/place', orderData, {headers: { token}});
-            console.log(response.data)
-            if (response.data.success) {
-              setCartItem({});
-              navigate("/oders");
-              toast.success(response.data.message);
+      const orderData = {
+        address: formData,
+        items: orderItems,
+        amount: getTotalAmount() + delivery_fee,
+      };
+      console.log(orderData);
+      // Ensure token is logged for debugging
+      console.log("Token being sent:", token);
 
-            } else {
-              toast.error(response.data.message);
-            }
-            break;
+      switch (method) {
+        case "cod":
+          const response = await axios.post(
+            backend + "/api/order/place",
+            orderData,
+            { headers: { token } }
+          );
+          console.log(response.data);
+          if (response.data.success) {
+            setCartItem({});
+            navigate("/oders");
+            toast.success(response.data.message);
+          } else {
+            toast.error(response.data.message);
+          }
+          break;
 
-          default:
-            break;
-        }
-
+        default:
+          break;
+      }
     } catch (error) {
-        console.error("An error occurred during order submission:", error);
-        toast.error("Order submission failed. Please try again.");
+      console.error("An error occurred during order submission:", error);
+      toast.error("Order submission failed. Please try again.");
     }
-};
-
-
-
-
+  };
 
   return (
     <div className="container mx-auto sm:p-6 pt-10">

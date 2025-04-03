@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/assets";
-import Titel from "../Components/titel";
+import Titel from "../Components/Titel";
 import { ShopContext } from "../Context/ShopContext";
 import ProductItem from "../Components/ProductItem";
 
@@ -86,7 +86,9 @@ export const Collection = () => {
             >
               FILTERS
               <img
-                className={`h-4 transition-transform sm:hidden ${showFilter ? "rotate-90" : ""}`}
+                className={`h-4 transition-transform sm:hidden ${
+                  showFilter ? "rotate-90" : ""
+                }`}
                 src={assets.dropdown_icon}
                 alt="Toggle Filters"
               />
@@ -165,13 +167,13 @@ export const Collection = () => {
               //   key={index}
               //   className="bg-white  shadow-md rounded-lg hover:shadow-lg transform hover:scale-105 transition-transform duration-300"
               // >
-                <ProductItem
-                  id={item._id}
-                  name={item.name}
-                  price={item.price}
-                  description={item.description}  
-                  image={item.images[0]} 
-                />
+              <ProductItem
+                id={item._id}
+                name={item.name}
+                price={item.price}
+                description={item.description}
+                image={item.images[0]}
+              />
               // </div>
             ))
           ) : (

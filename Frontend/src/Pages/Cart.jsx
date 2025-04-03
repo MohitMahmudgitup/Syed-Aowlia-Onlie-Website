@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
-import Titel from "../Components/titel";
+import Titel from "../Components/Titel";
 import { useNavigate } from "react-router-dom";
 
 export const Cart = () => {
@@ -11,7 +11,7 @@ export const Cart = () => {
     getTotalAmount,
     removeFromCart,
     addtocart,
-    deleteFromCart
+    deleteFromCart,
   } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 

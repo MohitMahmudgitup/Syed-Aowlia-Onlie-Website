@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
-import Titel from "../Components/titel";
+import Titel from "../Components/Titel";
 import axios from "axios";
 
 function Orders() {
@@ -10,24 +10,28 @@ function Orders() {
   const loadOrder = async () => {
     try {
       if (!token) return;
-  
-      const response = await axios.post(`${backend}/api/order`, {}, {
-        headers: { token },
-      });
-  
+
+      const response = await axios.post(
+        `${backend}/api/order`,
+        {},
+        {
+          headers: { token },
+        }
+      );
+
       // console.log("API response:", response.data);
-  
+
       if (response.data.success && response.data.data) {
         let allOrders = [];
-        response.data.data.forEach(order => {
-          order.items.forEach(item => {
+        response.data.data.forEach((order) => {
+          order.items.forEach((item) => {
             allOrders.push({
               ...item,
-              status: order.status,          
-              payment: order.payment,        
+              status: order.status,
+              payment: order.payment,
               paymentMethod: order.paymentMethod,
-              date: order.date,  // Check if `order.orderDate` exists in API data
-              amount: order.amount             
+              date: order.date, // Check if `order.orderDate` exists in API data
+              amount: order.amount,
             });
           });
         });
@@ -39,31 +43,26 @@ function Orders() {
       console.error("Error loading orders:", error);
     }
   };
-  
-  useEffect(()=>{
-    loadOrder()
-  },[token])
-  
-  
-  
+
+  useEffect(() => {
+    loadOrder();
+  }, [token]);
+
   const formatDate = (dateString) => {
     if (!dateString) return "Invalid date"; // Return a fallback if dateString is missing
     const date = new Date(dateString);
-    
+
     if (isNaN(date.getTime())) return "Invalid date"; // Ensure the date is valid
-    
+
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
     return `${year}-${month}-${day} T:${hours}:${minutes}:${seconds}`; // Return date in format "YYYY-MM-DD HH:MM:SS"
   };
-  
-
-
 
   return (
     <div className="border-t pt-6 min-h-screen">
@@ -99,7 +98,6 @@ function Orders() {
                     Date: <span>{formatDate(item.date)}</span>
                   </p>
                   <p className="mt-1 text-sm text-gray-500">
-                    
                     Payment: <span>{item.paymentMethod} </span>
                   </p>
                 </div>
@@ -113,7 +111,10 @@ function Orders() {
                     {item.status}
                   </p>
                 </div>
-                <button onClick={loadOrder()} className="bg-indigo-600 text-white py-2 px-6 rounded-lg shadow hover:bg-indigo-700 transition-colors duration-300">
+                <button
+                  onClick={loadOrder()}
+                  className="bg-indigo-600 text-white py-2 px-6 rounded-lg shadow hover:bg-indigo-700 transition-colors duration-300"
+                >
                   Track Order
                 </button>
               </div>

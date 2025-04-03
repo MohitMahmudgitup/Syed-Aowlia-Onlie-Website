@@ -11,7 +11,7 @@ import orderRouter from './routers/order_router.js';
 // App  setup
 
 const app = express();
-const port = process.env.PORT || 10000;
+const port = process.env.PORT || 4000;
 
 //middleware
 app.use(cors());
@@ -23,10 +23,6 @@ app.use("/api/user", userRoutes);
 app.use("/api/product", productRoutes);
 app.use('/api/cart', cartRouter);
 app.use("/api/order", orderRouter);
-app.get("/", (req, res) => {
-  res.send("E-commerce API is running...");
-});
-
 
 connectDB();
 connetCloudnary();

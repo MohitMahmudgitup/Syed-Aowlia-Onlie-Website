@@ -71,7 +71,7 @@ function Login({ setToken }) {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <Link to="https://full-stack-e-commerce-admins.onrender.com" target=' _blank'>
+          <Link to="https://full-stack-e-commerce-frontend.onrender.com" target=' _blank'>
 
             <div className="relative w-full py-2 ">
               <p className="text-xs absolute right-0 text-blue-500 hover:underline cursor-pointer">Go to home page</p>

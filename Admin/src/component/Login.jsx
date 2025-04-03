@@ -18,6 +18,7 @@ function Login({ setToken }) {
 
     try {
       const response = await axios.post(`${backend}/api/user/adminLogin`, { email, password });
+      console.log(response)
       if (response.data.success) {
         setToken(response.data.token);
         localStorage.setItem('token', response.data.token);
@@ -27,6 +28,7 @@ function Login({ setToken }) {
         toast.error(response.data.message);
       }
     } catch (error) {
+      console.log(error)
       toast.error('Invalid email or password!');
     } finally {
       setLoading(false);

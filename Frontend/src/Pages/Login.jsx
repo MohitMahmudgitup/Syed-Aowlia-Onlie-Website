@@ -59,7 +59,6 @@ function SignUp() {
           <h2 className="text-3xl font-bold mb-4 text-green-500">
             Account Created Successfully!
           </h2>
-          {/* <p className="text-gray-700 mb-6">Welcome, {username}! Your account has been created.</p> */}
           <div className="flex items-center justify-center">
             <img
               className="w-40"

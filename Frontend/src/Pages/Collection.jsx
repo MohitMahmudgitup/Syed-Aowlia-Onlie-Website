@@ -75,7 +75,7 @@ export const Collection = () => {
   };
 
   return (
-    <div className={`flex flex-col sm:flex-row gap-6 pt-10 ${darkmode ? "border-t  border-t-gray-700" : "border-t"} p-5`}>
+    <div className={`flex flex-col sm:flex-row gap-6 pt-10 ${darkmode ? "border-t  border-t-gray-700" : "border-t"} `}>
       <div className="w-full sm:w-1/4">
   <div className={`p-4 rounded-lg shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
     {/* FILTERS HEADER */}
@@ -163,13 +163,10 @@ export const Collection = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-2  lg:grid-cols-3 gap-6 overflow-y-scroll sm:h-80 scroll-container">
+        <div className="grid grid-cols-2  lg:grid-cols-3 gap-2 sm:gap-6 overflow-y-scroll sm:h-80 scroll-container">
           {filter.length > 0 ? (
             filter.map((item, index) => (
-              // <div
-              //   key={index}
-              //   className="bg-white  shadow-md rounded-lg hover:shadow-lg transform hover:scale-105 transition-transform duration-300"
-              // >
+              //
               <ProductItem
                 id={item._id}
                 name={item.name}

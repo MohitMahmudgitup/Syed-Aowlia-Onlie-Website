@@ -151,7 +151,7 @@ export const adminLogin = async (req, res) => {
       return res.status(200).json({ token, success: true ,  message: "Admin logged in successfully." });
 
     }else{
-      return res.status(401).json({ message: "Invalid email or password.", success: false})
+      return res.status(401).json({ message: "Invalid email or password backend.", success: false})
     }
 
   } catch (error) {

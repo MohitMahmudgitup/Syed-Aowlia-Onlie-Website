@@ -29,7 +29,7 @@ function Login({ setToken }) {
       }
     } catch (error) {
       console.log(error)
-      toast.error('Invalid email or password!');
+      toast.error('Invalid email or password frondend!');
     } finally {
       setLoading(false);
     }

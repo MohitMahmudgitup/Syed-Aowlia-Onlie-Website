@@ -5,7 +5,7 @@ function Hero() {
   const { darkmode } = useContext(ShopContext);
 
   return (
-    <div className={`flex flex-col sm:flex-row items-center p-6 sm:p-10 rounded-lg  transition-all duration-300 
+    <div className={`flex flex-col sm:flex-row items-center p-6 sm:p-10 rounded-lg  
       ${darkmode ? ' text-white' : 'bg-white text-black'}`}>
       
       {/* Hero Left Side */}

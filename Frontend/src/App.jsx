@@ -20,7 +20,7 @@ function App() {
   const { darkmode, setDarkmode } = useContext(ShopContext);
 
   return (
-    <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${darkmode ? 'bg-zinc-900 text-white' : 'bg-white text-black'}`}>
+    <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${darkmode ? ' bg-zinc-900   text-white' : 'bg-white text-black'}`}>
       <ToastContainer/>
       <Navber/>
       {/* <SearchBer/> */}

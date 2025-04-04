@@ -78,12 +78,12 @@ function Navbar() {
 
             {token && (
               <div className="hidden group-hover:block absolute z-50 right-0 pt-4">
-                <div className="flex flex-col gap-4 bg-white w-36 px-5 py-4 rounded-md shadow-md text-gray-700">
-                  <p className="hover:text-black cursor-pointer">Profile</p>
-                  <Link to="/orders">
-                    <p className="hover:text-black cursor-pointer">Orders</p>
+                <div className={`flex flex-col gap-4 ${darkmode ? "bg-gray-800 text-gray-200 hover:text-white " : "bg-white text-gray-700"}  w-36 px-5 py-4 rounded-md shadow-md `}>
+                  <p className={`${darkmode ? "bg-gray-800 text-gray-200 hover:text-white " : "bg-white text-gray-700 hover:text-black"}  cursor-pointer`}>Profile</p>
+                  <Link to="/oders">
+                    <p className={`${darkmode ? "bg-gray-800 text-gray-200 hover:text-white " : "bg-white text-gray-700 hover:text-black"}  cursor-pointer`}>Orders</p>
                   </Link>
-                  <p className="hover:text-black cursor-pointer" onClick={handleLogout}>Logout</p>
+                  <p className={`${darkmode ? "bg-gray-800 text-gray-200 hover:text-white " : "bg-white text-gray-700 hover:text-black"}  cursor-pointer`} onClick={handleLogout}>Logout</p>
                 </div>
               </div>
             )}

@@ -5,7 +5,7 @@ import { ShopContext } from "../Context/ShopContext";
 import ProductItem from "../Components/ProductItem";
 
 export const Collection = () => {
-  const { products } = useContext(ShopContext);
+  const { products, darkmode } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [filter, setFilter] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -41,7 +41,6 @@ export const Collection = () => {
       filteredProducts.sort((a, b) => a.price - b.price);
     }
 
-    console.log("Filtered Products After All Filters:", filteredProducts);
     setFilter(filteredProducts);
   };
 
@@ -76,74 +75,78 @@ export const Collection = () => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-6 pt-10 border-t p-5">
+    <div className={`flex flex-col sm:flex-row gap-6 pt-10 ${darkmode ? "border-t  border-t-gray-700" : "border-t"} p-5`}>
       <div className="w-full sm:w-1/4">
-        <div className="bg-white shadow-md rounded-lg p-4">
-          <div className="flex items-center justify-between mb-4">
-            <p
-              onClick={() => setShowFilter((prev) => !prev)}
-              className="text-xl font-semibold text-gray-700 cursor-pointer flex items-center gap-2"
-            >
-              FILTERS
-              <img
-                className={`h-4 transition-transform sm:hidden ${
-                  showFilter ? "rotate-90" : ""
-                }`}
-                src={assets.dropdown_icon}
-                alt="Toggle Filters"
-              />
-            </p>
-          </div>
+  <div className={`p-4 rounded-lg shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
+    {/* FILTERS HEADER */}
+    <div className="flex items-center justify-between mb-4">
+      <p
+        onClick={() => setShowFilter((prev) => !prev)}
+        className="text-xl font-semibold cursor-pointer flex items-center gap-2 transition-colors duration-300"
+      >
+        FILTERS
+        <img
+          className={`h-4 transition-transform sm:hidden ${showFilter ? "rotate-90" : ""}`}
+          src={assets.dropdown_icon}
+          alt="Toggle Filters"
+        />
+      </p>
+    </div>
 
-          <div className={`${showFilter ? "hidden" : "block"} sm:block`}>
-            <div className="mb-4">
+    {/* FILTER OPTIONS */}
+    <div className={`${showFilter ? "hidden" : "block"} sm:block`}>
+      {/* SEARCH BOX */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search products..."
+          className={`border-2 p-2 w-full rounded-lg transition-all duration-300 ${darkmode ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 text-gray-800"}`}
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </div>
+
+      {/* CATEGORIES */}
+      <div className="mb-6">
+        <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>CATEGORIES</p>
+        <div className="flex flex-col gap-3 text-sm">
+          {["Men", "Women", "Kids"].map((category) => (
+            <label className="flex items-center gap-2" key={category}>
               <input
-                type="text"
-                placeholder="Search products..."
-                className="border-2 border-gray-300 p-2 w-full rounded-lg"
-                value={searchQuery}
-                onChange={handleSearchChange}
+                className="w-4 h-4 rounded-md transition-all duration-300"
+                type="checkbox"
+                value={category}
+                onChange={() => handleCategoryChange(category)}
+                checked={selectedCategories.includes(category)}
               />
-            </div>
-
-            <div className="mb-6">
-              <p className="mb-3 text-sm font-bold text-gray-600">CATEGORIES</p>
-              <div className="flex flex-col gap-3 text-sm text-gray-700">
-                {["Men", "Women", "Kids"].map((category) => (
-                  <label className="flex items-center gap-2" key={category}>
-                    <input
-                      className="w-4 h-4 text-indigo-600 rounded-md"
-                      type="checkbox"
-                      value={category}
-                      onChange={() => handleCategoryChange(category)}
-                      checked={selectedCategories.includes(category)}
-                    />
-                    {category}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <p className="mb-3 text-sm font-bold text-gray-600">TYPE</p>
-              <div className="flex flex-col gap-3 text-sm text-gray-700">
-                {["Topwear", "Bottomwear", "Winterwear"].map((type) => (
-                  <label className="flex items-center gap-2" key={type}>
-                    <input
-                      className="w-4 h-4 text-indigo-600 rounded-md"
-                      type="checkbox"
-                      value={type}
-                      onChange={() => handleTypeChange(type)}
-                      checked={selectedTypes.includes(type)}
-                    />
-                    {type}
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
+              <span className={darkmode ? "text-gray-300" : "text-gray-700"}>{category}</span>
+            </label>
+          ))}
         </div>
       </div>
+
+      {/* TYPE */}
+      <div>
+        <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>TYPE</p>
+        <div className="flex flex-col gap-3 text-sm">
+          {["Topwear", "Bottomwear", "Winterwear"].map((type) => (
+            <label className="flex items-center gap-2" key={type}>
+              <input
+                className="w-4 h-4 rounded-md transition-all duration-300"
+                type="checkbox"
+                value={type}
+                onChange={() => handleTypeChange(type)}
+                checked={selectedTypes.includes(type)}
+              />
+              <span className={darkmode ? "text-gray-300" : "text-gray-700"}>{type}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
       <div className="flex-1">
         <div className="flex justify-between mb-6 flex-col sm:flex-row">
@@ -160,7 +163,7 @@ export const Collection = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-scroll sm:h-80 scroll-container">
+        <div className="grid grid-cols-2  lg:grid-cols-3 gap-6 overflow-y-scroll sm:h-80 scroll-container">
           {filter.length > 0 ? (
             filter.map((item, index) => (
               // <div
@@ -180,7 +183,7 @@ export const Collection = () => {
             <div className="sm:w-[60vw] flex items-center">
               <img
                 className="m-auto sm:w-40 md:w-80"
-                src="https://static.vecteezy.com/system/resources/previews/007/104/553/original/search-no-result-not-found-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"
+                src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-illustration-download-in-svg-png-gif-file-formats--available-product-tokostore-pack-e-commerce-shopping-illustrations-2809510.png"
                 alt="No results found"
               />
             </div>

@@ -4,11 +4,13 @@ import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaEyeSlash, FaRegEye } from "react-icons/fa";
 
 function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [signUpsignIn, setSignUpsignIn] = useState(false);
 
@@ -89,7 +91,7 @@ function SignUp() {
                   placeholder="User Name"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                  className={`w-full px-4 py-2 border rounded-md outline-none ${darkmode && "text-black"}`}
                   required
                 />
               </div>
@@ -100,19 +102,25 @@ function SignUp() {
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                className={`w-full px-4 py-2 border rounded-md outline-none  ${darkmode && "text-black"}`}
                 required
               />
             </div>
-            <div className="mb-4 ">
+            <div className="mb-4 relative">
               <input
-                type="password"
+                type={`${showPassword ? "text" : "password"}`}
                 value={password}
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                className={`w-full px-4  py-2 border rounded-md outline-none   ${darkmode && "text-black"}`}
                 required
+                
               />
+              {
+                showPassword ? (<div><FaEyeSlash  onClick={() => setShowPassword(false)} className={`absolute top-[15px] right-4 ${darkmode && "text-black"}`}/></div> ):( <div><FaRegEye onClick={() => setShowPassword(true)}className={`absolute top-[15px] right-4 ${darkmode && "text-black"}`}/></div>)
+
+              }
+              
             </div>
             <div className="flex justify-between items-center mb-4">
               <p
@@ -136,7 +144,7 @@ function SignUp() {
                 <p
                   onClick={() => setSignUpsignIn(true)}
                   className={`cursor-pointer text-sm ${
-                    darkmode ? "text-gray-300" : "text-gray-600"
+                    darkmode ? "text-blue-400" : "text-gray-600"
                   }`}
                 >
                   Create account

@@ -80,7 +80,7 @@ function Orders({ token }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center py-6 px-0 md:px-0">
+      <div className="min-h-screen flex flex-col items-center py-6 ">
         <h1 className="text-2xl font-bold mb-4">Orders</h1>
         <div className="overflow-x-auto w-full">
           <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
@@ -111,7 +111,7 @@ function Orders({ token }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center py-6 px-4">
+    <div className="min-h-screen flex flex-col items-center py-6 ">
       <h1 className="text-2xl font-bold mb-4">Orders</h1>
       <div className="overflow-x-auto w-full">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">

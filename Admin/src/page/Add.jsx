@@ -76,7 +76,7 @@ export default function Add({ token }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center  md:p-8">
+    <div className="min-h-screen flex items-center justify-center ">
       <div className="bg-white md:p-8 rounded-lg w-full max-w-2xl">
         <h2 className="text-2xl md:text-4xl font-bold md:text-center text-gray-800 mb-8">Add Product</h2>
         <form onSubmit={handleSubmit} className="space-y-6">

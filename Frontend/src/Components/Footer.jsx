@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <div className={`py-10 transition-all duration-300 ${darkmode ? " text-gray-300" : "bg-white text-gray-800"}`}>
-      <div className="flex flex-col sm:grid grid-cols-3 gap-8 mx-auto max-w-screen-xl px-6 text-sm">
+      <div className="flex flex-col sm:grid grid-cols-3 gap-8 mx-auto max-w-screen-xl px-2 text-sm">
         {/* Logo and Description */}
         <div className="flex flex-col">
           <NavLink to={"/"}>

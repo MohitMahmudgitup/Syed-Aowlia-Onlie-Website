@@ -64,7 +64,7 @@ function List({ token }) {
   const sortedProducts = isReversed ? [...products].reverse() : products;
 
   return (
-    <div className="min-h-screen p-4 md:p-4 relative">
+    <div className="min-h-screen py-4 md:p-4 relative">
       <h2 className="text-2xl font-bold text-gray-800 mb-8">Product List</h2>
 
       {/* Button to toggle sort order */}

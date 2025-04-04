@@ -24,7 +24,7 @@ function App() {
   }, [token, navigate]); // Added navigate dependency
 
   return (
-    <main className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+    <main className='px-2 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
       <ToastContainer />
       {!token ? (
         <div className='w-full p-4'>

@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { assets } from '../assets/assets'
 import { Link, NavLink ,useNavigate } from 'react-router-dom'
 
 function Navbar({ setToken }) {
@@ -16,9 +14,7 @@ function Navbar({ setToken }) {
 
   return (
     <nav className='flex justify-between items-center py-4 sticky top-0 bg-white z-50 border-b '>
-      <NavLink to={"/"}>
-              <p className="text-2xl">LOGO</p>
-     </NavLink>
+        <p className="text-2xl">LOGO</p>
       <Link
         onClick={handleLogout}
         className='px-5 py-2 bg-gray-950 hover:bg-gray-900 text-white rounded-md font-medium'

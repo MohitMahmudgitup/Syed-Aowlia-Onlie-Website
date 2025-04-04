@@ -4,7 +4,7 @@ import Titel from "../Components/Titel";
 import axios from "axios";
 
 function Orders() {
-  const { backend, token, products, currency } = useContext(ShopContext);
+  const { backend, token, products, currency, darkmode } = useContext(ShopContext);
   const [ordersData, setOrdersData] = useState([]);
 
   const loadOrder = async () => {
@@ -73,52 +73,53 @@ function Orders() {
         {ordersData.length > 0 ? (
           ordersData.map((item, index) => (
             <div
-              key={index}
-              className="py-6 px-4 bg-white shadow border rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-xl transition-shadow duration-300"
-            >
-              {/* Product Details */}
-              <div className="flex items-start gap-6 text-sm md:w-2/3">
-                <img
-                  src={item.images[0]}
-                  alt={item.name}
-                  className="w-24 h-24 object-cover rounded-lg"
-                />
-                <div>
-                  <p className="text-xl font-semibold text-gray-800">
-                    {item.name}
-                  </p>
-                  <div className="flex items-center gap-4 mt-3 text-lg">
-                    <p className="text-indigo-600 font-bold">
-                      {currency} {item.price}
-                    </p>
-                    <p className="text-gray-600">Qty: {item.quantity}</p>
-                    <p className="text-gray-600">Size: {item.size}</p>
-                  </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Date: <span>{formatDate(item.date)}</span>
-                  </p>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Payment: <span>{item.paymentMethod} </span>
-                  </p>
-                </div>
-              </div>
+  key={index}
+  className={`py-6 px-4 ${
+    darkmode ? "bg-gray-800 border-zinc-800 text-gray-200" : "bg-white text-gray-800"
+  } shadow border rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-xl transition-shadow duration-300`}
+>
+  {/* Product Details */}
+  <div className="flex items-start gap-6 text-sm md:w-2/3">
+    <img
+      src={item.images[0]}
+      alt={item.name}
+      className="w-24 h-24 object-cover rounded-lg"
+    />
+    <div>
+      <p className="text-xl font-semibold">{item.name}</p>
+      <div className="flex items-center gap-4 mt-3 text-lg">
+        <p className={`font-bold ${darkmode ? "text-indigo-400" : "text-indigo-600"}`}>
+          {currency} {item.price}
+        </p>
+        <p className={`${darkmode ? "text-gray-400" : "text-gray-600"}`}>Qty: {item.quantity}</p>
+        <p className={`${darkmode ? "text-gray-400" : "text-gray-600"}`}>Size: {item.size}</p>
+      </div>
+      <p className={`mt-2 text-sm ${darkmode ? "text-gray-400" : "text-gray-500"}`}>
+        Date: <span>{formatDate(item.date)}</span>
+      </p>
+      <p className={`mt-1 text-sm ${darkmode ? "text-gray-400" : "text-gray-500"}`}>
+        Payment: <span>{item.paymentMethod} </span>
+      </p>
+    </div>
+  </div>
 
-              {/* Order Status */}
-              <div className="flex flex-col md:w-1/3 text-center space-y-3">
-                <div className="flex items-center justify-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-green-500"></span>
-                  <p className="text-green-600 text-lg font-medium">
-                    {item.status}
-                  </p>
-                </div>
-                <button
-                  onClick={loadOrder()}
-                  className="bg-indigo-600 text-white py-2 px-6 rounded-lg shadow hover:bg-indigo-700 transition-colors duration-300"
-                >
-                  Track Order
-                </button>
-              </div>
-            </div>
+  {/* Order Status */}
+  <div className="flex flex-col md:w-1/3 text-center space-y-3">
+    <div className="flex items-center justify-center gap-2">
+      <span className="w-4 h-4 rounded-full bg-green-500"></span>
+      <p className="text-green-400 text-lg font-medium">{item.status}</p>
+    </div>
+    <button
+      onClick={loadOrder}  // ✅ Fixed onClick issue
+      className={`py-2 px-6 rounded-lg shadow transition-colors duration-300 ${
+        darkmode ? "bg-indigo-500 hover:bg-indigo-400" : "bg-indigo-600 hover:bg-indigo-700"
+      } text-white`}
+    >
+      Track Order
+    </button>
+  </div>
+</div>
+
           ))
         ) : (
           <div className="flex justify-center items-center">

@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../Context/ShopContext";
 import Titel from "./Titel";
+import { MdCurrencyExchange } from "react-icons/md";
+import { BiSupport } from "react-icons/bi";
 
 function OuerPolicy() {
   const { darkmode } = useContext(ShopContext); // Access dark mode state
@@ -18,12 +20,9 @@ function OuerPolicy() {
             darkmode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
           } shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`}
         >
-          <img
-            className="w-16 mb-4"
-            src={assets.exchange_icon}
-            alt="Easy Exchange"
-          />
-          <p className="font-semibold text-xl">Easy Exchange Policy</p>
+          
+          <MdCurrencyExchange size={60} />
+          <p className="font-semibold text-xl pt-5">Easy Exchange Policy</p>
           <p
             className={`text-center text-sm ${
               darkmode ? "text-gray-300" : "text-gray-500"
@@ -60,12 +59,8 @@ function OuerPolicy() {
             darkmode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
           } shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`}
         >
-          <img
-            className="w-16 mb-4"
-            src={assets.support_img}
-            alt="Best Customer Support"
-          />
-          <p className="font-semibold text-xl">Best Customer Support</p>
+          <BiSupport  size={60}/>
+          <p className="font-semibold text-xl pt-5">Best Customer Support</p>
           <p
             className={`text-center text-sm ${
               darkmode ? "text-gray-300" : "text-gray-500"

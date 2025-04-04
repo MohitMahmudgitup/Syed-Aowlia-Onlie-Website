@@ -27,7 +27,7 @@ function NewsLetterBox() {
             required
           />
           <button className={`px-6 py-3 rounded-lg text-sm transition duration-200 focus:outline-none
-            ${darkmode ? "bg-violet-500 text-gray-900 font-semibold hover:bg-violet-400" : "bg-black text-white hover:bg-gray-800"}`}>
+            ${darkmode ? "bg-violet-500 text-white font-semibold hover:bg-violet-400" : "bg-black text-white hover:bg-gray-800"}`}>
             Subscribe
           </button>
         </form>

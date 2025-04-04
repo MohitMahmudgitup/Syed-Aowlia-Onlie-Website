@@ -47,9 +47,9 @@ function LatesCallection() {
           : // Generate 10 skeleton loaders
             [...Array(10)].map((_, index) => (
               <div key={index}>
-                <Skeleton height={200} /> {/* Simulate image skeleton */}
-                <Skeleton count={2} /> {/* Simulate text skeleton */}
-                <Skeleton width={100} /> {/* Simulate price skeleton */}
+                <Skeleton height={200} baseColor={darkmode ? "#374151" : "#e0e0e0"} highlightColor={darkmode ? "#4b5563" : "#f5f5f5"} /> {/* Simulate image skeleton */}
+                <Skeleton count={2} baseColor={darkmode ? "#374151" : "#e0e0e0"} highlightColor={darkmode ? "#4b5563" : "#f5f5f5"} /> {/* Simulate text skeleton */}
+                <Skeleton width={100} baseColor={darkmode ? "#374151" : "#e0e0e0"} highlightColor={darkmode ? "#4b5563" : "#f5f5f5"} /> {/* Simulate price skeleton */}
               </div>
             ))}
       </div>

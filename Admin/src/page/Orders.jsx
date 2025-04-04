@@ -18,14 +18,20 @@ function Orders({ token }) {
       const response = await axios.post(`${backend}/api/order/list`, {}, {
         headers: { token },
       });
-      console.log(response.data);
-      setOrders(response.data.data); // Adjust based on your API response structure
+  
+      if (!response || !response.data) {
+        throw new Error('No response from the server');
+      }
+  
+      setOrders(response.data.data || []); // Ensure orders is always an array
     } catch (error) {
-      toast.error('Failed to fetch orders.');
+      console.error('Error fetching orders:', error);
+      toast.error(error.message || 'Failed to fetch orders.');
     } finally {
       setIsLoading(false);
     }
   };
+  
   const statusHandler = async (event, orderId) => {
     console.log("Order ID:", orderId);
     console.log("New Status:", event.target.value);
@@ -35,17 +41,24 @@ function Orders({ token }) {
         { orderId, status: event.target.value }, 
         { headers: { token } }
       );
+  
+      if (!response || !response.data) {
+        throw new Error('No response from the server');
+      }
+  
       console.log("Response:", response.data);
   
       if (response.data.success) {
         await fetchOrders(); 
-        // toast.success('Order status updated successfully.');
+      } else {
+        toast.error('Failed to update order status.');
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Failed to update order status.');
+      toast.error(error.message || 'Failed to update order status.');
     }
   };
+  
   
 
 
@@ -73,7 +86,7 @@ function Orders({ token }) {
           <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
             <thead>
               <tr className="bg-gray-800 text-white">
-                <th className="py-3 px-4 text-center">Order ID</th>
+                {/* <th className="py-3 px-4 text-center">Order ID</th> */}
                 <th className="py-3 px-4 text-center">Customer</th>
                 <th className="py-3 px-4 text-center">Total Price</th>
                 <th className="py-3 px-4 text-center">Status</th>
@@ -82,13 +95,12 @@ function Orders({ token }) {
             </thead>
             <tbody>
               {/* Skeleton rows */}
-              {Array.from({ length: 5 }).map((_, index) => (
+              {Array.from({ length: 4 }).map((_, index) => (
                 <tr key={index} className="border-b">
-                  <td className="py-3 px-4"><Skeleton /></td>
-                  <td className="py-3 px-4"><Skeleton /></td>
-                  <td className="py-3 px-4"><Skeleton /></td>
-                  <td className="py-3 px-4"><Skeleton /></td>
-                  <td className="py-3 px-4"><Skeleton /></td>
+                  <td className="py-3 px-3"><Skeleton /></td>
+                  <td className="py-3 px-3"><Skeleton /></td>
+                  <td className="py-3 px-3"><Skeleton /></td>
+                  <td className="py-3 px-3"><Skeleton /></td>
                 </tr>
               ))}
             </tbody>
@@ -105,7 +117,7 @@ function Orders({ token }) {
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead>
             <tr className="bg-gray-800 text-white">
-              <th className="py-3 px-4 text-center">Order ID</th>
+              {/* <th className="py-3 px-4 text-center">Order ID</th> */}
               <th className="py-3 px-4 text-center">Customer</th>
               <th className="py-3 px-4 text-center">Total Price</th>
               <th className="py-3 px-4 text-center">Status</th>
@@ -113,37 +125,36 @@ function Orders({ token }) {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order._id} className="border-b">
-                <td className="py-3 px-4 text-center">{order._id}</td>
-                <td className="py-3 px-4 text-center font-medium">{`${order.address.firstName} ${order.address.lastName}`}</td>
-                <td className="py-3 px-4 text-center">৳ {order.amount}</td>
-                <td className="py-3 px-4 text-center">
-                <select 
-  onChange={(event) => statusHandler(event, order._id)} 
-  value={order.status} 
-  className='bg-gray-800 text-white rounded-md px-5 py-1 text-sm'
->
-  <option value="Order Placed">Order Placed</option>
-  <option value="Packing">Packing</option>
-  <option value="Shipped">Shipped</option>
-  <option value="Out for delivery">Out for delivery</option>
-  <option value="Delivered">Delivered</option>
-</select>
-
-                </td>
-                <td className="py-3 px-4">
-                  <button
-                    className="text-center flex justify-center items-center w-full "
-                    onClick={() => handleViewClick(order)}
-                  >
-                    <MdOutlineViewInAr className='text-gray-800 text-center text-2xl '/>
-                  </button>
-                  {/* <button className="text-red-600 hover:underline ml-4">Delete</button> */}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+  {orders.slice().reverse().map((order) => (
+    <tr key={order._id} className="border-b">
+      <td className="py-3 px-4 text-center font-medium">
+        {`${order.address.firstName} ${order.address.lastName}`}
+      </td>
+      <td className="py-3 px-4 text-center">৳ {order.amount}</td>
+      <td className="py-3 px-4 text-center">
+        <select 
+          onChange={(event) => statusHandler(event, order._id)} 
+          value={order.status} 
+          className='bg-gray-800 text-white rounded-md px-5 py-1 text-sm'
+        >
+          <option value="Order Placed">Order Placed</option>
+          <option value="Packing">Packing</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Out for delivery">Out for delivery</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+      </td>
+      <td className="py-3 px-4">
+        <button
+          className="text-center flex justify-center items-center w-full"
+          onClick={() => handleViewClick(order)}
+        >
+          <MdOutlineViewInAr className='text-gray-800 text-center text-2xl'/>
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
       </div>
 

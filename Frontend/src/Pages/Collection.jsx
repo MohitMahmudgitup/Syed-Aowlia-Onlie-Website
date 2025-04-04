@@ -177,7 +177,7 @@ export const Collection = () => {
               // </div>
             ))
           ) : (
-            <div className="sm:w-[60vw] flex items-center">
+            <div className="sm:w-[60vw] flex items-center h-[100vh]">
               <img
                 className="m-auto sm:w-40 md:w-80"
                 src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-illustration-download-in-svg-png-gif-file-formats--available-product-tokostore-pack-e-commerce-shopping-illustrations-2809510.png"

@@ -3,7 +3,7 @@ import axios from "axios";
 import { backend } from '../App';
 import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 
 function Login({ setToken }) {
     const navigate = useNavigate()
@@ -71,12 +71,9 @@ function Login({ setToken }) {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <Link to="https://full-stack-e-commerce-admins.onrender.com" target=' _blank'>
-
-            <div className="relative w-full py-2 ">
-            <a href="https://full-stack-e-commerce-frontend.onrender.com" target=' _blank' className="text-xs absolute right-0 text-blue-500 hover:underline cursor-pointer"><p>Go to home page</p></a>
-            </div>
-          </Link>
+          <div className="relative">
+            <NavLink to="https://full-stack-e-commerce-frontend.onrender.com" target="_blank" > <p className="absolute right-0 -top-2 text-sm font-bold text-red-600">Go to Home</p> </NavLink> 
+          </div>
      
             <button type="submit" disabled={loading} className={`login-btn `}>
   {loading ? 'Logging in...' : 'Login'}

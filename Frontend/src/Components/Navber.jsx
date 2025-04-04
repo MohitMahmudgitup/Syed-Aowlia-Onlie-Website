@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/assets";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import Switch from "./Switch";
 

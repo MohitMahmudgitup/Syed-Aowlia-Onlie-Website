@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { assets } from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { Link, NavLink ,useNavigate } from 'react-router-dom'
 
 function Navbar({ setToken }) {
   const navigate = useNavigate()
@@ -15,15 +15,17 @@ function Navbar({ setToken }) {
   }
 
   return (
-    <nav className='flex justify-between py-4'>
-      <img className='w-40' src={assets.logo} alt="Logo" />
-      <button
+    <nav className='flex justify-between items-center py-4 sticky top-0 bg-white z-50 border-b '>
+      <NavLink to={"/"}>
+              <p className="text-2xl">LOGO</p>
+     </NavLink>
+      <Link
         onClick={handleLogout}
-        className='px-5 bg-gray-950 hover:bg-gray-900 text-white rounded-md font-medium'
-        disabled={false} // Ensure logout is always enabled
+        className='px-5 py-2 bg-gray-950 hover:bg-gray-900 text-white rounded-md font-medium'
+        // disabled={false} // Ensure logout is always enabled
       >
         Logout
-      </button>
+      </Link>
     </nav>
   )
 }

@@ -33,10 +33,10 @@ function Navbar() {
   }, []); 
 
   return (
-    <div className={`flex sticky top-0  z-50 items-center justify-between py-5 font-medium px-2 sm:px-8 ${darkmode ? 'bg-zinc-900 text-white' : 'bg-white text-black'}`}>
+    <div className={`flex sticky top-0  z-50 items-center justify-between py-5 font-medium   ${darkmode ? 'bg-zinc-900 text-white' : 'bg-white text-black'}`}>
       {/* Logo */}
       <NavLink to={"/"}>
-        <p className="text-2xl">LOGO</p>
+        <img width={120} src={assets.logo01} alt="" />
       </NavLink>
 
       {/* Links for larger screens */}

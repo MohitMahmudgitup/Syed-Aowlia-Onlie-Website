@@ -12,7 +12,7 @@ const Footer = () => {
         {/* Logo and Description */}
         <div className="flex flex-col">
           <NavLink to={"/"}>
-            <p className="text-2xl font-semibold">LOGO</p>
+                   <img width={120} src={assets.logo01} alt="" />
           </NavLink>
           <p className="leading-relaxed mt-4 text-gray-400">
             Whether you need help expanding the team, ramping up marketing, or keeping surprise bestsellers in stock, Shopify Capital is here to lend a hand.

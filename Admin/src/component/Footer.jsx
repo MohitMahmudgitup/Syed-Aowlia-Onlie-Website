@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
+import { assets } from '../assets/assets';
 
 const Footer = () => {
   return (
@@ -7,7 +8,7 @@ const Footer = () => {
       <div className="flex flex-col sm:grid grid-cols-[2fr_1fr_1fr] gap-10 mx-auto max-w-screen-xl px-2 text-sm">
         {/* Logo and Description */}
         <div className="flex flex-col">
-              <p className="text-2xl">LOGO</p>
+              <img width={120} src={assets.logo01} alt="" />
           <p className="text-gray-600 leading-relaxed pt-3">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate accusamus commodi pariatur eum dolore harum voluptatibus possimus obcaecati quos. Libero, dolorem facilis. Neque dignissimos amet ad placeat nesciunt vel architecto?
           </p>

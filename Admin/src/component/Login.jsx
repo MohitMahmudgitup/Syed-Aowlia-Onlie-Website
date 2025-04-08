@@ -4,6 +4,7 @@ import { backend } from '../App';
 import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { assets } from '../assets/assets';
 
 function Login({ setToken }) {
     const navigate = useNavigate()
@@ -36,7 +37,11 @@ function Login({ setToken }) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen ">
+    <section>
+    <div className=''>
+       <img width={120} src={assets.logo01} alt="" />
+    </div>
+    <div className="flex items-center justify-center h-[80vh] ">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm border">
         <h2 className="text-3xl font-bold mb-6 text-center">Admin Panel</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -81,7 +86,9 @@ function Login({ setToken }) {
         </form>
       </div>
     </div>
+    </section>
   );
+    
 }
 
 export default Login;

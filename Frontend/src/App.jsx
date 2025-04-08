@@ -14,6 +14,7 @@ import Footer from './Components/Footer.jsx'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ShopContext } from './Context/ShopContext'
+import VerifyStripe from './Pages/verifyStripe.jsx'
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path='/product/:productID' element={<Product/>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/place-order' element={<PlaceOder/>}/>
+        <Route path='/verify' element={<VerifyStripe/>}/>
       </Routes>
       <Footer/>
     </div>

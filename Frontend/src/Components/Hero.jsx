@@ -5,7 +5,7 @@ function Hero() {
   const { darkmode } = useContext(ShopContext);
 
   return (
-    <div className={`flex flex-col sm:flex-row items-center p-6 sm:p-10 rounded-lg  
+    <div className={`w-full h-[100vh] flex flex-col sm:flex-row items-center p-6 sm:p-10 rounded-lg  
       ${darkmode ? ' text-white' : 'bg-white text-black'}`}>
       
       {/* Hero Left Side */}
@@ -36,7 +36,7 @@ function Hero() {
       <div className="w-full sm:w-1/2 flex justify-center">
         <img
           className="w-full h-auto object-cover rounded-lg"
-          src="https://cdn3d.iconscout.com/3d/premium/thumb/web-developer-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--programmer-development-freelance-kit-pack-tools-equipment-illustrations-3738664.png"
+          src="https://cms-cdn.kittl.com/t_shirt_designer_2_94d5fd3c51.png"
           alt="Latest Arrivals"
         />
       </div>

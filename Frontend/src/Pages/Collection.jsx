@@ -76,10 +76,10 @@ export const Collection = () => {
 
   return (
     <div className={`flex flex-col sm:flex-row gap-6 pt-10 ${darkmode ? "border-t  border-t-gray-700" : "border-t"} `}>
-      <div className="w-full sm:w-1/4">
-  <div className={`p-4 rounded-lg shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
+      <div className="w-full     sm:w-1/4">
+  <div className={`p-4 sticky top-[85px]  bg-black rounded-xl shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
     {/* FILTERS HEADER */}
-    <div className="flex items-center justify-between mb-4">
+    <div className=" flex   top-0 items-center justify-between mb-4">
       <p
         onClick={() => setShowFilter((prev) => !prev)}
         className="text-xl font-semibold cursor-pointer flex items-center gap-2 transition-colors duration-300"
@@ -163,7 +163,7 @@ export const Collection = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-2  lg:grid-cols-3 gap-2 sm:gap-6 overflow-y-scroll sm:h-80 scroll-container">
+        <div className="grid grid-cols-2  lg:grid-cols-3 gap-2 sm:gap-6 overflow-y-scroll ">
           {filter.length > 0 ? (
             filter.map((item, index) => (
               //

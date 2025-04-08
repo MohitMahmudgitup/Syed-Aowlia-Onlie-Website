@@ -2,6 +2,14 @@
 
 import orderModel from "../models/order_model.js";
 import userModel from "../models/user_model.js";
+import Stripe from "stripe";
+
+// Global variable
+const currency = "USD";
+const deliveryCharge = 10;
+
+// Get Stripe secret key from environment variable
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const placeOrder = async (req , res)=>{
     try {
@@ -35,6 +43,78 @@ export const placeOrder = async (req , res)=>{
 // Placing orders using Stripe Method
 
 export const placeOrderStripe = async (req , res)=>{
+  try {
+    const { userId , items ,  address ,  amount  } = req.body;
+    const { origin } = req.headers;
+    const orderData  = {
+      userId ,
+      items ,
+      address ,
+      amount ,
+      status: "Order Placed", 
+      paymentMethod :  "Stripe",
+      payment :  false ,
+      data : Date.now()
+  }
+  const newOrder = new  orderModel(orderData);
+  await newOrder.save();
+  const line_items = items.map((item) => {
+    return {
+      price_data: {
+        currency: currency,
+        unit_amount: item.price * 100,
+        product_data: {
+          name: item.name,
+        },
+      },
+        quantity: item.quantity,
+      };
+  
+});
+line_items.push({
+  price_data: {
+    currency: currency,
+    unit_amount: deliveryCharge * 100,
+    product_data: {
+      name: "Discount Charges",
+      },
+      },
+      quantity: 1
+})
+
+const session = await stripe.checkout.sessions.create({
+  success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
+  cancel_url:  `${origin}/verify?success=false&orderId=${newOrder._id}`,
+  line_items, // assumed to be a properly formatted array of items
+  mode: "payment", // could be "subscription" if you're handling recurring payments
+});
+
+res.json({ success: true, session_url: session.url });
+  } catch (error) {
+    console.error(error);
+    res.json({success : false , message : "Error creating order" });
+    
+    
+  }
+}
+
+// Verify Stripe
+
+export const verifyStripe = async (req, res) => {
+  const { orderId, success, userId } = req.body;
+  try {
+    if (success == true ) {
+      await orderModel.findByIdAndUpdate(orderId , {payment : true});
+      await userModel.findByIdAndUpdate(userId , {cartdata : {}});
+    }else{
+      await orderModel.findByIdAndDelete(orderId);
+      res.json({success : false , message : "Order cancelled" });
+    }
+    
+  } catch (error) {
+    console.error(error);
+    res.json({success : false , message : "Error verifying order" });
+  }
 
 }
 

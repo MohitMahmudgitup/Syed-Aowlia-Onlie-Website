@@ -15,9 +15,19 @@ const ShopContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
   const navigate = useNavigate();
-  const [darkmode , setDarkmode] = useState(true);
+  const [darkmode, setDarkmode] = useState(() => {
+    const savedDarkmode = localStorage.getItem("darkmode");
+    return savedDarkmode ? JSON.parse(savedDarkmode) : false;
+  });
+  useEffect(() => {
+    localStorage.setItem("darkmode", JSON.stringify(darkmode));
+  }, [darkmode]);
+  
+  
 
-  // Retrieve token from localStorage
+  useEffect(() => {
+    localStorage.setItem("darkmode", JSON.stringify(darkmode));
+  }, [darkmode]);
 
   // Initialize cart from local storage if available
   const [cartItem, setCartItem] = useState(() => {

@@ -189,7 +189,7 @@ function Product() {
                     </div>
                 )}
             </div>
-            <RelatedProduct selectedCategories={productData.category} selectedTypes={productData.subcategory} />
+            {/* <RelatedProduct selectedCategories={productData.category} selectedTypes={productData.subcategory} /> */}
         </>
     );
 }

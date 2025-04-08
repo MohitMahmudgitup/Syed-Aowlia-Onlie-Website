@@ -16,6 +16,7 @@ const PlaceOrder = () => {
     getTotalAmount,
     delivery_fee,
     products,
+    darkmode
   } = useContext(ShopContext);
   const [method, setMethod] = useState("cod");
   const [formData, setFormData] = useState({
@@ -65,9 +66,9 @@ const PlaceOrder = () => {
         items: orderItems,
         amount: getTotalAmount() + delivery_fee,
       };
-      console.log(orderData);
+      // console.log(orderData);
       // Ensure token is logged for debugging
-      console.log("Token being sent:", token);
+      // console.log("Token being sent:", token);
 
       switch (method) {
         case "cod":
@@ -85,6 +86,22 @@ const PlaceOrder = () => {
             toast.error(response.data.message);
           }
           break;
+          case "stripe":
+            const responseStrict = await axios.post(
+              backend + "/api/order/stripe",
+              orderData,
+              { headers: { token } }
+            );
+            console.log(responseStrict.data);
+            if (responseStrict.data.success) {
+              const { session_url } = responseStrict.data;
+              window.location.replace(session_url);
+            } else {
+              toast.error(responseStrict.data.message);
+            }
+      
+          break;
+            
 
         default:
           break;
@@ -120,7 +137,7 @@ const PlaceOrder = () => {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-md p-1"
+                className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
               />
             </div>
             <div>
@@ -137,7 +154,7 @@ const PlaceOrder = () => {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-md p-1"
+                className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
               />
             </div>
           </div>
@@ -152,7 +169,7 @@ const PlaceOrder = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-md p-1"
+              className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
             />
           </div>
           <div>
@@ -166,7 +183,7 @@ const PlaceOrder = () => {
               value={formData.street}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-md p-1"
+              className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
             />
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -181,7 +198,7 @@ const PlaceOrder = () => {
                 value={formData.city}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-md p-1"
+                className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
               />
             </div>
             <div>
@@ -195,7 +212,7 @@ const PlaceOrder = () => {
                 value={formData.state}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-md p-1"
+                className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
               />
             </div>
             <div>
@@ -212,7 +229,7 @@ const PlaceOrder = () => {
                 value={formData.zipCode}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-md p-1"
+                className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
               />
             </div>
             <div>
@@ -229,7 +246,7 @@ const PlaceOrder = () => {
                 value={formData.country}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-md p-1"
+                className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
               />
             </div>
           </div>
@@ -244,7 +261,7 @@ const PlaceOrder = () => {
               value={formData.phone}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-md p-1"
+                className={`w-full border border-gray-300 rounded-md p-1 ${darkmode ? "text-gray-700" : "text-black"}`}
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-0 gap-5">

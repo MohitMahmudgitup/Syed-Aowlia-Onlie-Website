@@ -192,9 +192,6 @@ useEffect(() => {
   if (token) {
     setToken(token); // Set the token in state
     getUserCart(token); // Fetch the user's cart
-  } else {
-    // Redirect to login if token is missing
-    navigate("/login");
   }
 }, []);
 

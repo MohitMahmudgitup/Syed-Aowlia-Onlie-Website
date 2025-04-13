@@ -10,7 +10,7 @@ function NewsLetterBox() {
   };
 
   return (
-    <div className={`py-8 px-4 transition-all duration-300 ${darkmode ? " text-gray-200" : "bg-white text-gray-800"}`}>
+    <div className={`py-8 px-4  `}>
       <div className="max-w-xl mx-auto text-center">
         <h1 className={`font-bold text-3xl mb-3 ${darkmode ? "text-gray-200" : "text-gray-800"}`}>
           Subscribe Now & Get 25% Off

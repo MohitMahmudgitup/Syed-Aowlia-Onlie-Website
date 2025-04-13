@@ -123,7 +123,7 @@ const Contact = () => {
             ></textarea>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300"
+              className="w-full hbgbtn text-white py-2 rounded  "
             >
               Send Message
             </button>

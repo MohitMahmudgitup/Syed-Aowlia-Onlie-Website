@@ -20,3 +20,35 @@ a.active hr{
 ::-webkit-scrollbar {
     width: 0px; /* Width of the scrollbar */
   }
+
+  /* castom color */
+  .hbgbtn {
+    background: linear-gradient(90deg, rgba(212, 55, 115, 1) 0%, rgba(204, 112, 196, 1) 50%, rgba(158, 116, 242, 1) 100%);
+    font-size: 16px;
+    transition:  0.15s ease,
+  }
+  
+  /* .hbgbtn:hover {
+    background: linear-gradient(10deg, rgba(158, 116, 242, 1) 0%, rgba(204, 112, 196, 1) 50%, rgba(212, 55, 115, 1) 100%);
+  } */
+  .borderslight {
+    padding: 10px;
+    color: black;
+    border: 1px solid transparent;
+    border-radius: 9999px; /* Fully rounded */
+    background: 
+      linear-gradient(white, rgb(255, 255, 255)) padding-box,
+      linear-gradient(90deg, rgba(212, 55, 115, 1), rgba(204, 112, 196, 1), rgba(158, 116, 242, 1)) border-box;
+  }
+  .bordersdark {
+    padding: 10px;
+    color: rgb(255, 255, 255);
+    border: 1px solid transparent;
+    border-radius: 9999px; /* Fully rounded */
+    background: 
+      linear-gradient(rgb(17, 17, 17), rgb(17, 17, 17)) padding-box,
+      linear-gradient(90deg, rgba(212, 55, 115, 1), rgba(204, 112, 196, 1), rgba(158, 116, 242, 1)) border-box;
+  }
+  
+  
+  

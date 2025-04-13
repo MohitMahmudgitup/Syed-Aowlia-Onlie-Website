@@ -7,12 +7,12 @@ const Footer = () => {
   const { darkmode } = useContext(ShopContext);
 
   return (
-    <div className={`py-10 transition-all duration-300 ${darkmode ? " text-gray-300" : "bg-white text-gray-800"}`}>
-      <div className="flex flex-col sm:grid grid-cols-3 gap-8 mx-auto max-w-screen-xl px-2 text-sm">
+    <div className={`py-10 transition-all duration-300 `}>
+      <div className="flex flex-col sm:grid grid-cols-3 gap-8 mx-auto max-w-screen-xl text-sm">
         {/* Logo and Description */}
         <div className="flex flex-col">
-          <NavLink to={"/"}>
-                   <img width={120} src={assets.logo01} alt="" />
+          <NavLink to={"/"} >
+            <img  width={120} src={assets.logo01} alt="" />
           </NavLink>
           <p className="leading-relaxed mt-4 text-gray-400">
             Whether you need help expanding the team, ramping up marketing, or keeping surprise bestsellers in stock, Shopify Capital is here to lend a hand.

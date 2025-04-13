@@ -32,10 +32,10 @@ function Navbar() {
     }
   }, []); 
 
-  return (
-    <div className={`flex sticky top-0  z-50 items-center justify-between py-5 font-medium   ${darkmode ? 'bg-zinc-900 text-white' : 'bg-white text-black'}`}>
+  return ( 
+    <div className={` px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex sticky top-0  z-50 items-center justify-between py-5 font-medium   ${darkmode ? 'bg-zinc-900 text-white' : 'bg-white text-black'}`}>
       {/* Logo */}
-      <NavLink to={"/"}>
+      <NavLink to={"/"} >
         <img width={120} src={assets.logo01} alt="" />
       </NavLink>
 
@@ -50,7 +50,7 @@ function Navbar() {
         <NavLink
           to="https://full-stack-e-commerce-admin.onrender.com"
           target="_blank"
-          className={`hidden lg:flex border rounded-full px-5 py-2 ${darkmode ? "bg-gray-900 border-gray-700 shadow-lg shadow-gray-800" : " border-gray-400 shadow-md"}`}
+          className={`hidden lg:flex  px-5 py-2 ${darkmode ? "bordersdark" : "borderslight"}`}
           
         >
           ADMIN PANEL

@@ -15,18 +15,25 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ShopContext } from './Context/ShopContext'
 import VerifyStripe from './Pages/verifyStripe.jsx'
+import ForgotPassword from './Components/ForgotPassword.jsx'
+import ResetPassword from './Components/ResetPassword.jsx'
 
 
 function App() {
   const { darkmode, setDarkmode } = useContext(ShopContext);
 
   return (
-    <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${darkmode ? ' bg-zinc-900   text-white' : 'bg-white text-black'}`}>
-      <ToastContainer/>
+    <main className={` ${darkmode ? ' bg-zinc-900   text-white' : 'bg-white text-black'}`}>
       <Navber/>
-      {/* <SearchBer/> */}
       <Routes>
         <Route path='/' element={<Home/>}/>
+      </Routes>
+    
+    <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${darkmode ? ' bg-zinc-900   text-white' : 'bg-white text-black'}`}>
+      <ToastContainer/>
+      {/* <SearchBer/> */}
+      <Routes>
+        {/* <Route path='/' element={<Home/>}/> */}
         <Route path='/collection' element={<Collection/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/contact' element={<Contact/>}/>
@@ -36,9 +43,13 @@ function App() {
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/place-order' element={<PlaceOder/>}/>
         <Route path='/verify' element={<VerifyStripe/>}/>
+        <Route path="/login/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
       <Footer/>
     </div>
+    
+    </main>
   )
 }
 

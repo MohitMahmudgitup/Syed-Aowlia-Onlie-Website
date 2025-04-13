@@ -111,11 +111,11 @@ function Product() {
                         </div>
 
                         {token ? (
-                            <button onClick={() => addtocart(productData._id, size)} className={`mt-4 w-full font-semibold py-3 rounded-lg transition ${darkmode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-black text-white hover:bg-gray-500'}`}>
+                            <button onClick={() => addtocart(productData._id, size)} className={`mt-4 w-full text-white font-semibold py-3 rounded-lg transition hbgbtn`}>
                                 Add to Cart
                             </button>
                         ) : (
-                            <button onClick={() => navigate("/login")} className={`mt-4 w-full font-semibold py-3 rounded-lg transition ${darkmode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-black text-white hover:bg-gray-500'}`}>
+                            <button onClick={() => navigate("/login")} className={`mt-4 w-full text-white font-semibold py-3 rounded-lg transition hbgbtn`}>
                                 Please login...
                             </button>
                         )}

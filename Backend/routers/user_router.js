@@ -6,7 +6,9 @@ import {
   updateUser, 
   deleteUser, 
   admin,
-  adminLogin
+  adminLogin,
+  forgetPassword,
+  resetPassword
 } from "../controllers/user_controller.js"; // Assuming your controllers are in the controllers folder
 
 const router = express.Router();
@@ -31,5 +33,12 @@ router.put("/:id", updateUser);
 
 // Route to delete a user
 router.delete("/:id", deleteUser);
+
+// Route to forgetPassword a user
+router.post("/forgot-password", forgetPassword);
+router.post("/reset-password/:token", resetPassword);
+
+
+
 
 export default router;

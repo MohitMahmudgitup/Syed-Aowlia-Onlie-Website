@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -119,16 +120,18 @@ function SignUp() {
                 showPassword ? (<div><FaEyeSlash  onClick={() => setShowPassword(false)} className={`absolute top-[15px] right-4 ${darkmode && "text-black"}`}/></div> ):( <div><FaRegEye onClick={() => setShowPassword(true)}className={`absolute top-[15px] right-4 ${darkmode && "text-black"}`}/></div>)
 
               }
-              
+              <p className={`text-xs mt-1 ${darkmode ? "text-red-600" : "text-red-600"}`}>
+                    Password must be at least 61 characters, include one uppercase letter and one number and make sure strong password.
+              </p>
             </div>
             <div className="flex justify-between items-center mb-4">
-              <p
+              <Link to={"/login/forgot-password"}
                 className={`cursor-pointer text-sm ${
                   darkmode ? "text-gray-300" : "text-gray-600"
                 }`}
               >
                 Forgot your password?
-              </p>
+              </Link>
 
               {signUpsignIn ? (
                 <p
@@ -152,12 +155,7 @@ function SignUp() {
             </div>
             <button
               type="submit"
-              className={`w-full py-2 px-4 rounded-md transition duration-300 
-                ${
-                  darkmode
-                    ? "bg-white text-black hover:bg-gray-300"
-                    : "bg-black text-white hover:bg-gray-600"
-                }`}
+              className={`w-full py-2 px-4 rounded-md text-white transition-all duration-300  bgbtn hbgbtn`}
             >
               {signUpsignIn ? "Create Account" : "Login Now"}
             </button>

@@ -36,7 +36,7 @@ const ForgotPassword = () => {
       <NavLink to={"/"} className={"absolute top-10 left-4 sm:left-16"} >
                   <img width={120} src={assets.logo01} alt="" />
                 </NavLink>
-      <div className={`shadow-2xl rounded-3xl p-8 w-full max-w-md lg:max-w-xl transition-all duration-300 ${darkmode ? ' text-white' : ' text-gray-800'}`}>
+      <div className={`shadow-2xl rounded-3xl p-8 w-full max-w-md lg:max-w-xl transition-all duration-300  text-gray-800`}>
       <div className=" font-semibold mb-5 text-2xl sm:text-4xl">
               <p className=" text-blue-500">
               FORGOT PASSWORD

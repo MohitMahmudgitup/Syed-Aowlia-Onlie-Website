@@ -178,7 +178,7 @@ export const forgetPassword = async (req, res) => {
     });
 
     // 3. রিসেট লিংক তৈরি করা
-    const resetLink = `http://localhost:3000/reset-password/${token}`;
+    const resetLink = `${process.env.VITE_FRONTEND_URL}/reset-password/${token}`;
 
     // 4. নডমেইলার সেটআপ করা
     const transporter = nodemailer.createTransport({

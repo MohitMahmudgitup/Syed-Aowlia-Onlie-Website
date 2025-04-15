@@ -49,6 +49,9 @@ a.active hr{
       linear-gradient(rgb(17, 17, 17), rgb(17, 17, 17)) padding-box,
       linear-gradient(90deg, rgba(212, 55, 115, 1), rgba(204, 112, 196, 1), rgba(158, 116, 242, 1)) border-box;
   }
+  .loginbg{
+    background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 50%, rgb(71, 88, 245) 100%);
+  }
   
   
   

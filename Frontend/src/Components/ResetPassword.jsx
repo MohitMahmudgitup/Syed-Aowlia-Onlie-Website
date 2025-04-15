@@ -1,9 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { ShopContext } from '../Context/ShopContext';
 import { toast } from 'react-toastify';
 import Titel from './Titel';
+import { assets } from '../assets/assets';
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -29,16 +30,23 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center px-4 py-8 transition-all duration-300 `}>
-      <div className={`shadow-2xl rounded-3xl p-8 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl transition-all duration-300 ${darkmode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
-        <Titel text1={"RESAT "} text2={"YOUR PASSWORD"} />
+    <div className="flex justify-center items-center right-0 top-0 absolute loginbg z-50 w-[100vw] h-[100vh]">
+      <NavLink to={"/"} className={"absolute top-10 left-4 sm:left-16"} >
+                  <img width={120} src={assets.logo01} alt="" />
+                </NavLink>
+      <div className={`shadow-2xl rounded-3xl p-8 w-full max-w-md  lg:max-w-xl `}>
+      <div className=" font-semibold mb-5 text-2xl sm:text-4xl">
+              <p className=" text-blue-500">
+              RESAT YOUR PASSWORD
+              </p>
+            </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <input
             type="password"
             placeholder="Enter new password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            className={`w-full px-5 py-3 border rounded-lg outline-none  transition-all duration-300 ${darkmode ? 'bg-gray-700 text-white border-gray-600 focus:ring-blue-500' : 'bg-gray-50 border-gray-300 focus:ring-blue-400'}`}
+            className={`w-full px-5 py-3 border rounded-lg outline-none text-black transition-all duration-300  bg-gray-50 border-gray-300 focus:ring-blue-400 `}
             required
           />
            <p className=" text-sm text-red-500 mt-2">A minimum of 6 characters is required.</p>

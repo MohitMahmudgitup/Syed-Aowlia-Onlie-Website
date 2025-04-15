@@ -17,4 +17,4 @@ function Titel({ text1, text2, color1, color2 }) {
   );
 }
 
-export default Titel;
+export default Titel; 

@@ -5,7 +5,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { assets } from "../assets/assets";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -54,7 +55,10 @@ function SignUp() {
   }, [token, navigate]);
 
   return (
-    <div className="flex justify-center items-center h-screen -mt-16 ">
+    <div className="flex justify-center items-center right-0 top-0 absolute loginbg z-50 w-[100vw] h-[100vh]">
+      <NavLink to={"/"} className={"absolute top-10 sm:left-16  left-4" } >
+                  <img width={120} src={assets.logo01} alt="" />
+      </NavLink>
       {isSubmitted || token ? (
         <div className="text-center p-8 ">
           <h2 className="text-3xl font-bold mb-4 text-green-500">
@@ -70,17 +74,19 @@ function SignUp() {
         </div>
       ) : (
         <div className="w-full max-w-md  p-8 ">
-          <div className="flex justify-center">
+          <div className="flex  ">
             {signUpsignIn ? (
-              <Titel
-                text2={`Sign Up`}
-                color2={"text-3xl font-bold text-center mb-6 prata-regular"}
-              />
+              <div className=" font-semibold mb-5 text-2xl sm:text-4xl">
+              <p className=" text-blue-500">
+              Sign Up
+              </p>
+            </div>
             ) : (
-              <Titel
-                text2={`Login`}
-                color2={"text-3xl font-bold text-center mb-6 prata-regular"}
-              />
+              <div className=" font-semibold mb-5 text-2xl sm:text-4xl">
+              <p className=" text-blue-500">
+                Login
+              </p>
+            </div>
             )}
           </div>
           <form onSubmit={handleSignUp}>
@@ -91,7 +97,7 @@ function SignUp() {
                   placeholder="User Name"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className={`w-full px-4 py-2 border rounded-md outline-none ${darkmode && "text-black"}`}
+                  className={`w-full px-4 py-2 border rounded-md outline-none  text-black`}
                   required
                 />
               </div>
@@ -102,7 +108,7 @@ function SignUp() {
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`w-full px-4 py-2 border rounded-md outline-none  ${darkmode && "text-black"}`}
+                className={`w-full px-4 py-2 border rounded-md outline-none  text-black`}
                 required
               />
             </div>
@@ -112,7 +118,7 @@ function SignUp() {
                 value={password}
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full px-4  py-2 border rounded-md outline-none   ${darkmode && "text-black"}`}
+                className={`w-full px-4  py-2 border rounded-md outline-none    text-black`}
                 required
                 
               />
@@ -126,8 +132,8 @@ function SignUp() {
             </div>
             <div className="flex justify-between items-center mb-4">
               <Link to={"/login/forgot-password"}
-                className={`cursor-pointer text-sm ${
-                  darkmode ? "text-gray-300" : "text-gray-600"
+                className={`cursor-pointer text-sm 
+                  text-gray-300
                 }`}
               >
                 Forgot your password?
@@ -136,17 +142,14 @@ function SignUp() {
               {signUpsignIn ? (
                 <p
                   onClick={() => setSignUpsignIn(false)}
-                  className={`cursor-pointer text-sm ${
-                    darkmode ? "text-gray-300" : "text-gray-600"
-                  }`}
+                  className={`cursor-pointer text-sm  text-blue-400`}
                 >
                   Login Here
                 </p>
               ) : (
                 <p
                   onClick={() => setSignUpsignIn(true)}
-                  className={`cursor-pointer text-sm ${
-                    darkmode ? "text-blue-400" : "text-gray-600"
+                  className={`cursor-pointer text-sm text-blue-400
                   }`}
                 >
                   Create account

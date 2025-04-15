@@ -126,9 +126,10 @@ function SignUp() {
                 showPassword ? (<div><FaEyeSlash  onClick={() => setShowPassword(false)} className={`absolute top-[15px] right-4 ${darkmode && "text-black"}`}/></div> ):( <div><FaRegEye onClick={() => setShowPassword(true)}className={`absolute top-[15px] right-4 ${darkmode && "text-black"}`}/></div>)
 
               }
-              <p className={`text-xs mt-1 ${darkmode ? "text-red-600" : "text-red-600"}`}>
-                    Password must be at least 61 characters, include one uppercase letter and one number and make sure strong password.
-              </p>
+              {signUpsignIn && (<p className={`text-xs mt-1 ${darkmode ? "text-red-600" : "text-red-600"}`}>
+                    Password must be at least 6 characters, include one uppercase letter and one number and make sure strong password.
+              </p>)}
+              
             </div>
             <div className="flex justify-between items-center mb-4">
               <Link to={"/login/forgot-password"}

@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from 'validator';
-import User from "../models/user_model.js"; // assuming you are using ES modules and models are stored in a "models" folder
+import User from "../models/user_model.js";
 import nodemailer from 'nodemailer';
 
 // User registration
@@ -140,7 +140,6 @@ export const admin = (req,res) =>{
 }
 
 // Admin login
-
 export const adminLogin = async (req, res) => {
   try {
     const  { email, password } = req.body;
@@ -161,26 +160,19 @@ export const adminLogin = async (req, res) => {
 }
 
 //Forget password
-
 export const forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
-
-    // 1. ইউজারটি কি আছে তা যাচাই করা
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "ইউজার পাওয়া যায়নি।", success: false });
     }
-
-    // 2. টোকেন জেনারেট করা
     const token = jwt.sign({ email }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
-    // 3. রিসেট লিংক তৈরি করা
     const resetLink = `${process.env.VITE_FRONTEND_URL}/reset-password/${token}`;
 
-    // 4. নডমেইলার সেটআপ করা
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -189,7 +181,6 @@ export const forgetPassword = async (req, res) => {
       },
     });
 
-    // 5. ইমেইল অপশনস
     const mailOptions = {
       from: process.env.SEND_EMAIL,
       to: user.email,
@@ -202,7 +193,6 @@ export const forgetPassword = async (req, res) => {
       `
     };
 
-    // ইমেইল পাঠানো
     const sendEmail = async (mailOptions) => {
       return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (error, info) => {
@@ -230,10 +220,8 @@ export const forgetPassword = async (req, res) => {
 
 
 //setPassword
-
 export const resetPassword = async (req, res) => {
   const { token } = req.params;
-  // console.log("Received token:", token);
   const { newPassword } = req.body;
 
   try {
@@ -243,8 +231,6 @@ export const resetPassword = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "ইউজার পাওয়া যায়নি।" });
     }
-
-    // নতুন পাসওয়ার্ড সেট করা (Hash করা)
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;

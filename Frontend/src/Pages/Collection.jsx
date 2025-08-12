@@ -163,7 +163,7 @@ export const Collection = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-2  lg:grid-cols-3 gap-2 sm:gap-6 overflow-y-scroll ">
+        <div className="grid grid-cols-2  lg:grid-cols-4 gap-2 sm:gap-2 overflow-y-scroll ">
           {filter.length > 0 ? (
             filter.map((item, index) => (
               //

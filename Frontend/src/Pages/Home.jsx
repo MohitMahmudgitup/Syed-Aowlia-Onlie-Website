@@ -12,8 +12,8 @@ function Home() {
     <div>
       <Hero/>
       <div className={` sm:px-[5vw] md:px-[7vw] lg:px-[9vw] `}>
-      <LatesCallection/>
       <BestSeller/>
+      <LatesCallection/>
       <OuerPolicy/>
       <NewsLetterBox/>
 

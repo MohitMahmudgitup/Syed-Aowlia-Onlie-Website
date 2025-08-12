@@ -20,19 +20,19 @@ function LatesCallection() {
 
   return (
     <div>
-      <div className="text-center py-8 text-3xl">
+      <div className=" py-8 text-3xl pl-2">
         <Titel text1={"LATEST "} text2={"COLLECTION"} />
-        <p
+        {/* <p
           className={`w-3/4 text-xs sm:text-sm m-auto md:text-base ${
             darkmode ? "text-gray-300" : "text-gray-600"
           }`}
         >
           Shopify puts your store within 50 milliseconds of every shopper on the
           planet, with the capacity to handle even the most epic product drops.
-        </p>
+        </p> */}
       </div>
       {/* Rendering products */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6 relative">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 gap-y-6 relative sm:px-0 px-2">
         {latestProducts.length > 0
           ? latestProducts.map((item) => (
               <ProductItem

@@ -74,8 +74,10 @@ import contact_img from './contact_img.png'
 import razorpay_logo from './razorpay_logo.png'
 import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
+import onlineShopBD from "./onlineShopBD.png"
 
 export const assets = {
+    onlineShopBD,
     logo01,
     logo2,
     hero_img,
@@ -723,3 +725,62 @@ export const products = [
     }
 
 ]
+
+
+// export const logos = <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+//   <defs>
+//     <!-- Gradient for the shopping bag -->
+//     <linearGradient id="bagGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+//       <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+//       <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+//     </linearGradient>
+    
+//     <!-- Gradient for the text -->
+//     <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+//       <stop offset="0%" style="stop-color:#1F2937;stop-opacity:1" />
+//       <stop offset="100%" style="stop-color:#4B5563;stop-opacity:1" />
+//     </linearGradient>
+    
+//     <!-- Shadow filter -->
+//     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+//       <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.2"/>
+//     </filter>
+//   </defs>
+  
+//   <!-- Background circle for the icon -->
+//   <circle cx="40" cy="40" r="28" fill="url(#bagGradient)" filter="url(#shadow)"/>
+  
+//   <!-- Shopping bag icon -->
+//   <g transform="translate(40, 40)">
+//     <!-- Bag body -->
+//     <path d="M-10 -5 L10 -5 L12 15 L-12 15 Z" fill="white" opacity="0.9"/>
+//     <!-- Bag handles -->
+//     <path d="M-6 -5 L-6 -12 A6 6 0 0 1 6 -12 L6 -5" 
+//           fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+//     <!-- Cart symbol inside -->
+//     <circle cx="0" cy="5" r="1.5" fill="url(#bagGradient)"/>
+//   </g>
+  
+//   <!-- Main text "Online shop" -->
+//   <text x="85" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="url(#textGradient)">
+//     Online shop
+//   </text>
+  
+//   <!-- "BD" with flag colors -->
+//   <text x="85" y="55" font-family="Arial, sans-serif" font-size="20" font-weight="bold">
+//     <tspan fill="#006A4E">B</tspan><tspan fill="#F42A41">D</tspan>
+//   </text>
+  
+//   <!-- "2.0" with modern styling -->
+//   <text x="115" y="55" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="#6B7280">
+//     2.0
+//   </text>
+  
+//   <!-- Decorative elements -->
+//   <circle cx="280" cy="20" r="3" fill="#4F46E5" opacity="0.6"/>
+//   <circle cx="290" cy="30" r="2" fill="#7C3AED" opacity="0.4"/>
+//   <circle cx="300" cy="15" r="2.5" fill="#EC4899" opacity="0.5"/>
+  
+//   <!-- Subtle underline -->
+//   <line x1="85" y1="62" x2="140" y2="62" stroke="#E5E7EB" stroke-width="1" opacity="0.8"/>
+// </svg>

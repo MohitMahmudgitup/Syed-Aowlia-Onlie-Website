@@ -18,7 +18,7 @@ function ProductItem({ id, image, name, price, description, cls }) {
             // }}
         >
             <div className='overflow-hidden rounded-xl'>
-                <img src={image} alt={name} className={`w-40 sm:w-full h-40 sm:h-52  object-cover`} />
+                <img src={image} alt={name} className={` w-full h-40 sm:h-52  object-cover`} />
             </div>
             {/* <p className='pl-3 pt-3 pb-1 text-sm'>{name}</p> */}
             <p className={`pl-3 pt-3 pb-1 text-sm  sm:text-xl ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>

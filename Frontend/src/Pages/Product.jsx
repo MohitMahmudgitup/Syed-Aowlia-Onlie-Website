@@ -57,7 +57,7 @@ function Product() {
         <>
             <div className={`container mx-auto sm:my-10 sm:p-5 rounded-lg  ${darkmode ? '' : 'sm:bg-white sm:shadow-lg'}`}>
                 <div className="flex flex-col lg:flex-row pt-2 ">
-                    {/* Image Gallery */}
+                      {/* Image Gallery */}
                     <div className="lg:w-1/2">
                         <div className="relative">
                             <img
@@ -90,7 +90,6 @@ function Product() {
                             </div>
                         </div>
                     </div>
-
                     {/* Product Details */}
                     <div className={`lg:w-1/2 lg:pl-10 mt-4 lg:mt-0 ${darkmode ? 'text-white' : 'text-gray-800'}`}>
                         <h2 className="text-4xl font-bold mb-2">{productData.name}</h2>
@@ -189,7 +188,7 @@ function Product() {
                     </div>
                 )}
             </div>
-            {/* <RelatedProduct selectedCategories={productData.category} selectedTypes={productData.subcategory} /> */}
+            <RelatedProduct selectedCategories={productData.category} selectedTypes={productData.subcategory} />
         </>
     );
 }

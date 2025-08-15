@@ -10,7 +10,7 @@ const About = () => {
   return (
     <div
       className={`py-12 transition-all duration-300 ${
-        darkmode ? " text-gray-300" : "bg-white text-gray-700"
+        darkmode ? " text-gray-300" : " text-gray-700"
       }`}
     >
       <div className="container mx-auto p-6">

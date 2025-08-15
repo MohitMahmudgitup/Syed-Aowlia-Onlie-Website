@@ -9,7 +9,7 @@ function Hero() {
   return (
     <>
     <Swiper/>
-    <OfferHero/>  
+    {/* <OfferHero/>   */}
     </>
 );
 }

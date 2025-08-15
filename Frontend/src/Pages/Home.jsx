@@ -4,19 +4,20 @@ import LatesCallection from '../Components/LatesCallection'
 import BestSeller from '../Components/BestSeller'
 import OuerPolicy from '../Components/OuerPolicy'
 import NewsLetterBox from '../Components/NewsLetterBox'
+import Search from '../Components/Search'
 
 function Home() {
   
 
   return (
     <div>
+      <Search/>
       <Hero/>
       <div className={` sm:px-[5vw] md:px-[7vw] lg:px-[9vw] `}>
       <BestSeller/>
       <LatesCallection/>
-      <OuerPolicy/>
-      <NewsLetterBox/>
-
+      {/* <OuerPolicy/> */}
+      {/* <NewsLetterBox/> */}
       </div>
     </div>
   )

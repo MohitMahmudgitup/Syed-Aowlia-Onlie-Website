@@ -75,7 +75,7 @@ export const Collection = () => {
   };
 
   return (
-    <div className={`flex flex-col sm:flex-row gap-6 pt-10 ${darkmode ? "border-t  border-t-gray-700" : "border-t"} `}>
+    <div className={`flex flex-col sm:flex-row gap-6 pt-10  ${darkmode ? "border-t  border-t-gray-700" : "border-t"} `}>
       <div className="w-full     sm:w-1/4">
   <div className={`p-4 sticky top-[115px]  bg-black rounded-xl shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
     {/* FILTERS HEADER */}

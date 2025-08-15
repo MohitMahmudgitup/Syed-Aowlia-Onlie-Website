@@ -57,7 +57,7 @@ function SignUp() {
   return (
     <div className="flex justify-center items-center right-0 top-0 absolute loginbg z-50 w-[100vw] h-[100vh]">
       <NavLink to={"/"} className={"absolute top-10 sm:left-16  left-4" } >
-                  <img width={120} src={assets.onlineShopBD} alt="" />
+                  <img width={180} src={assets.syedAowlia} alt="" />
       </NavLink>
       {isSubmitted || token ? (
         <div className="text-center p-8 ">

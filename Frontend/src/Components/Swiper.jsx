@@ -14,12 +14,10 @@ import { Link } from "react-router-dom";
 const SwiperComponent = () => {
   const { darkmode } = useContext(ShopContext);
   return (
-    <div className="sm:w-[88vw] m-auto sm:h-[55vh] h-[21vh]  ">
+    <div className="sm:w-[82vw]  p-2  m-auto sm:h-[55vh] h-[20vh]  ">
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
         className="h-full"
         autoplay={{
           delay: 3000, // 3 seconds between slides
@@ -32,7 +30,7 @@ const SwiperComponent = () => {
           <img
             src="https://img.lazcdn.com/us/domino/a63e3b50-41a3-46b9-a07e-d7d3b9e4ed5b_BD-1976-688.jpg_2200x2200q80.jpg_.webp"
             alt="Ad 2"
-            className="sm:rounded-lg shadow-md w-full sm:h-full h-40  "
+            className="rounded-xl sm:rounded-lg shadow-md w-full sm:h-full h-32 "
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -40,7 +38,7 @@ const SwiperComponent = () => {
             <img
               src="https://img.lazcdn.com/us/domino/75f23fa5-e4d4-4f0e-b889-ce1aa49ea824_BD-1976-688.jpg_2200x2200q80.jpg_.webp"
               alt="Ad 3"
-              className="sm:rounded-lg shadow-md w-full sm:h-full h-40 "
+              className="rounded-xl sm:rounded-lg shadow-md w-full sm:h-full h-32 "
             />
             <div className="absolute   pt-[500px] px-[50px] sm:pt-96 sm:px-20  inset-0 bottom-10">
               <Link to={"/collection"}>
@@ -55,14 +53,14 @@ const SwiperComponent = () => {
           <img
             src="https://img.lazcdn.com/us/domino/8dad4f81-bd40-4442-bf6d-da537dfc2177_BD-1976-688.jpg_2200x2200q80.jpg_.webp"
             alt="Ad 4"
-            className="sm:rounded-lg shadow-md w-full sm:h-full h-40 "
+            className="rounded-xl sm:rounded-lg shadow-md w-full sm:h-full h-32 "
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src="https://img.lazcdn.com/us/domino/1fc78564-7bde-4325-8dbb-9a3bc14fe5c2_BD-1976-688.jpg_2200x2200q80.jpg_.webp"
             alt="Ad 4"
-            className="sm:rounded-lg shadow-md w-full sm:h-full h-40 "
+            className="rounded-xl sm:rounded-lg shadow-md w-full sm:h-full h-32  "
           />
         </SwiperSlide>
       </Swiper>

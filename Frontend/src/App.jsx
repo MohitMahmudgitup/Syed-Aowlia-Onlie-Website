@@ -17,19 +17,20 @@ import { ShopContext } from './Context/ShopContext'
 import VerifyStripe from './Pages/verifyStripe.jsx'
 import ForgotPassword from './Components/ForgotPassword.jsx'
 import ResetPassword from './Components/ResetPassword.jsx'
+import Messenge from './Components/Messenge.jsx'
 
 
 function App() {
   const { darkmode, setDarkmode } = useContext(ShopContext);
 
   return (
-    <main className={` ${darkmode ? ' bg-zinc-900   text-white' : 'bg-white text-black'}`}>
+    <main className={` ${darkmode ? ' bg-zinc-900   text-white' : 'bg-[#F5F5F5] text-black'}`}>
       <Navber/>
       <Routes>
         <Route path='/' element={<Home/>}/>
       </Routes>
     
-    <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${darkmode ? ' bg-zinc-900   text-white' : 'bg-white text-black'}`}>
+    <div className={`px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ${darkmode ? ' bg-zinc-900   text-white' : ' text-black'}`}>
       <ToastContainer/>
       {/* <SearchBer/> */}
       <Routes>
@@ -48,7 +49,7 @@ function App() {
       </Routes>
     </div>
       <Footer/>
-    
+      <Messenge/>
     </main>
   )
 }

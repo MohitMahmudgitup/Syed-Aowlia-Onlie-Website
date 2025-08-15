@@ -33,14 +33,14 @@ function Navbar() {
   }, []); 
 
   return ( 
-    <div className={` bg-[#FF8311] px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex sticky top-0  z-50 items-center justify-between py-1 font-medium   ${darkmode ? 'bg-zinc-900 text-white' : 'bg-white text-white'}`}>
+    <div className={`  px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex sticky top-0  z-50 items-center justify-between py-1 font-medium   ${darkmode ? 'bg-zinc-900 text-white  ' : 'bg-[#FF8311] text-white '}`}>
       {/* Logo */}
-      <NavLink to={"/"} >
-        <img width={180} src={assets.onlineShopBD} alt="" />
+      <NavLink to={"/"} className={"-ml-4 sm:ml-0"} >
+        <img width={180} src={assets.syedAowlia} alt="" />
       </NavLink>
 
       {/* Links for larger screens */}
-      <div className="flex justify-center gap-5 items-center">
+      <div className="flex justify-center gap-5 items-center ">
         <ul className="hidden sm:flex gap-5 text-sm">
           <NavLink to="/" className="flex flex-col items-center gap-1">HOME</NavLink>
           <NavLink to="/collection" className="flex flex-col items-center gap-1">COLLECTION</NavLink>
@@ -67,14 +67,14 @@ function Navbar() {
           onClick={handleSearch}
           src={assets.search_icon}
         
-          className={`w-5 cursor-pointer hidden sm:block transition-all duration-300 ${darkmode ? 'invert' : 'invert'}`}
+          className={`w-5 cursor-pointer hidden sm:block transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`}
           alt="Search Icon"
         />
 
         {/* Profile Dropdown */}
         <Link to={linkProfile}>
           <div className="relative group">
-          <img src={assets.profile_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'invert'}`} alt="Profile Icon" />
+          <img src={assets.profile_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`} alt="Profile Icon" />
 
             {token && (
               <div className="hidden group-hover:block absolute z-50 right-0 pt-4">
@@ -92,7 +92,7 @@ function Navbar() {
 
         {/* Cart Icon */}
         <Link to="/cart" className="relative">
-          <img src={assets.cart_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'invert'}`} alt="Cart Icon" />
+          <img src={assets.cart_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`} alt="Cart Icon" />
           <p className={`absolute -right-[5px] -bottom-[5px] text-center w-4 h-4 rounded-full text-xs 
   ${darkmode ? 'bg-white text-black' : 'bg-black text-white'}`}>
   {getCartItem() || 0}
@@ -105,7 +105,7 @@ function Navbar() {
           onClick={() => setVisible(true)}
           src={assets.menu_icon}
           alt="Menu Icon"
-          className={`w-5 cursor-pointer sm:hidden block transition-all duration-300 ${darkmode ? 'invert' : ''}`}
+          className={`w-5  cursor-pointer sm:hidden block transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`}
           
         />
       </div>

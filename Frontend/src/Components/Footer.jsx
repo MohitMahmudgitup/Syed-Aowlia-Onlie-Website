@@ -2,20 +2,23 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import { assets } from "../assets/assets";
+import PaymentMethods from "./PaymentMethods";
 
 
 const Footer = () => {
   const { darkmode } = useContext(ShopContext);
 
   return (
-    <div className={`py-10 bg-[#FF8311]  `}>
-      <div className="flex flex-col sm:grid grid-cols-3 gap-8 mx-auto max-w-screen-xl text-sm px-6">
+    <>
+
+    <div className={`py-5 bg-[#FF8311] mt-10 text-white `}>
+      <div className="flex  flex-col sm:grid grid-cols-3 gap-8 mx-auto sm:w-[80vw] text-sm px-3 ">
         {/* Logo and Description */}
         <div className="flex flex-col">
-          <NavLink to={"/"}>
-            <img width={180} src={assets.onlineShopBD} alt="Online Shop BD" />
+          <NavLink to={"/"} className={" -ml-3 "}>
+            <img width={180} src={assets.syedAowlia} alt="Online Shop BD" />
           </NavLink>
-          <p className="leading-relaxed mt-4 text-gray-200">
+          <p className="leading-relaxed mt-4 ">
             Whether you need help expanding the team, ramping up marketing, or
             keeping surprise bestsellers in stock, Shopify Capital is here to
             lend a hand.
@@ -31,8 +34,8 @@ const Footer = () => {
                 <button
                   className={`transition duration-300 ${
                     darkmode
-                      ? "text-gray-300 hover:text-violet-400"
-                      : "text-gray-300 hover:text-indigo-400"
+                      ? " hover:text-violet-400"
+                      : " hover:text-indigo-400"
                   }`}
                 >
                   {item}
@@ -50,17 +53,21 @@ const Footer = () => {
               <span>📞</span> +88-0183-597-2300
             </li>
             <li className="flex items-center gap-2">
-              <span>✉️</span> mohitmahmud25@gmail.com
+              <span>✉️</span> syedaowliaonlineshop@gmail.com
+            </li>
+            <li>
+                  <PaymentMethods/>
             </li>
           </ul>
         </div>
       </div>
 
       <hr className="my-6 border-gray-700 mx-6" />
-      <p className="text-center text-xs text-gray-300 px-6">
+      <p className="text-center text-xs  px-6">
         Copyright © 2025 Mohit Mahmud - All Rights Reserved.
       </p>
     </div>
+    </>
   );
 };
 

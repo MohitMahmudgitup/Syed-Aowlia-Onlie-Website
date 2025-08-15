@@ -55,8 +55,8 @@ function Product() {
 
     return (
         <>
-            <div className={`container mx-auto my-10 p-5 rounded-lg  ${darkmode ? '' : 'bg-white shadow-lg'}`}>
-                <div className="flex flex-col lg:flex-row">
+            <div className={`container mx-auto sm:my-10 sm:p-5 rounded-lg  ${darkmode ? '' : 'sm:bg-white sm:shadow-lg'}`}>
+                <div className="flex flex-col lg:flex-row pt-2 ">
                     {/* Image Gallery */}
                     <div className="lg:w-1/2">
                         <div className="relative">
@@ -94,7 +94,7 @@ function Product() {
                     {/* Product Details */}
                     <div className={`lg:w-1/2 lg:pl-10 mt-4 lg:mt-0 ${darkmode ? 'text-white' : 'text-gray-800'}`}>
                         <h2 className="text-4xl font-bold mb-2">{productData.name}</h2>
-                        <p className="text-2xl font-semibold my-2">${productData.price}</p>
+                        <p className="text-2xl font-semibold my-2 text-red-600">${productData.price}</p>
                         <p>Select Size</p>
                         <div className="flex flex-wrap space-x-2 my-2">
                             {productData.sizes.map((item, index) => (
@@ -138,12 +138,12 @@ function Product() {
                         >
                             Details
                         </button>
-                        <button
+                        {/* <button
                             className={`py-2 px-4 ${activeTab === "reviews" ? "font-bold border-b-2 border-indigo-600" : "text-gray-600 hover:text-indigo-600"}`}
                             onClick={() => setActiveTab("reviews")}
                         >
                             Reviews
-                        </button>
+                        </button> */}
                     </div>
 
                     {activeTab === "details" && (

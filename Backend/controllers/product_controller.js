@@ -71,47 +71,40 @@ export const getProductById = async (req, res) => {
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
   const {
-    name,
-    price,
-    description,
-    category,
-    subcategory,
-    sizes,
-    bestseller,
-    product_type,
-    brand,
-    stock,
-    discount_price,
-  } = req.body;
-
-  try {
-    const images = req.files ? req.files.filename : null;
-    const updatedProduct = await Product.findByIdAndUpdate(
-      id,
-      {
         name,
-        price,
         description,
-        images,
-        category,
-        subcategory,
         sizes,
+        price,
         bestseller,
         product_type,
         brand,
         stock,
         discount_price,
-      },
-      { new: true } // Return the updated document
-    );
+  } = req.body;
 
+  try {
+    
+    const images = req.files ? req.files.map(file => file.filename) : [];
+    const updatedProduct = await Product.findById(id);
     if (!updatedProduct) {
       return res
         .status(404)
         .json({ message: "Product not found.", success: false });
     }
 
-    res.status(200).json({ product: updatedProduct, success: true, new: true });
+    if(name) updatedProduct.name = name;
+    if(description) updatedProduct.description = description;
+    if(sizes) updatedProduct.sizes = JSON.parse(sizes);
+    if(price) updatedProduct.price = price;
+    if(bestseller) updatedProduct.bestseller = bestseller === "true" || bestseller === true;;
+    if(product_type) updatedProduct.product_type = product_type;
+    if(brand) updatedProduct.brand = brand;
+    if(stock) updatedProduct.stock = stock;
+    if(discount_price) updatedProduct.discount_price = discount_price;
+    if(images && images.length > 0) updatedProduct.images = images;
+    await updatedProduct.save();
+ 
+    res.status(200).json({updatedProduct, success: true, new: true });
   } catch (error) {
     res
       .status(500)

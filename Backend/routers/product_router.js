@@ -22,7 +22,7 @@ router.post(
 // Other routes...
 router.get("/", getAllProducts);
 router.get("/:id",adminAuth, getProductById);
-router.post("/:id",adminAuth, updateProduct);
+router.put("/:id",upload.array("images", 5), adminAuth, updateProduct);
 router.delete("/:id",adminAuth, deleteProduct);
 
 export default router;

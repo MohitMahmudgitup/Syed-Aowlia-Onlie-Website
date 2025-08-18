@@ -18,13 +18,13 @@ function ProductItem({ id, image, name, price, description, cls }) {
             // }}
         >
             <div className='overflow-hidden rounded-xl'>
-                <img src={image} alt={name} className={` w-full h-40 sm:h-52  object-cover`} />
+                <img src={image} alt={name} className={` w-full h-36 sm:h-44  object-cover`} />
             </div>
             {/* <p className='pl-3 pt-3 pb-1 text-sm'>{name}</p> */}
-            <p className={`pl-3 pt-3 pb-1 text-sm  sm:text-xl ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className={`pl-3 pt-3 pb-1 text-sm  sm:text-sm ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>
                 {safeDescription.length > 25 ? safeDescription.slice(0, 39) + "..." : safeDescription}
             </p>
-            <p className='pl-3 text-lg sm:text-2xl font-medium text-[#FF8311]'>{currency}{price}</p>
+            <p className='pl-3 text-lg sm:text-xl font-medium text-[#FF8311]'>{currency}{price}</p>
             <img className='pl-2 pb-2' width={80}  src={assets.yellowFiveSter} alt="" />
         </Link>
     );

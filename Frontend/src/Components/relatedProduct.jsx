@@ -13,10 +13,6 @@ function RelatedProduct({ selectedCategories, selectedTypes }) {
       ? products
       : products?.products || [];
 
-    console.log("All Products:", productList);
-    console.log("Selected Category:", selectedCategories);
-    console.log("Selected Type:", selectedTypes);
-
     if (productList.length > 0) {
       const filtered = productList.filter((item) => {
         const categoryMatch = selectedCategories
@@ -28,9 +24,6 @@ function RelatedProduct({ selectedCategories, selectedTypes }) {
         return categoryMatch && typeMatch;
       });
 
-      console.log("Filtered Products:", filtered);
-
-      // If no matches, fallback to showing random products
       if (filtered.length === 0) {
         // Shuffle & pick first 5
         const shuffled = [...productList].sort(() => 0.5 - Math.random());
@@ -58,7 +51,7 @@ function RelatedProduct({ selectedCategories, selectedTypes }) {
               name={product.name}
               description={product.description}
               price={product.price}
-              image={product.images?.[0] || ""}
+               image={`http://localhost:4000/uploads/product/${product.images[0]}`}
             />
           ))}
         </div>

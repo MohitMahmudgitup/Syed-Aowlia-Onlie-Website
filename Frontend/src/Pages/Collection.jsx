@@ -40,7 +40,7 @@ export const Collection = () => {
     } else if (sortOption === "low-high") {
       filteredProducts.sort((a, b) => a.price - b.price);
     }
-
+    console.log(filteredProducts)
     setFilter(filteredProducts);
   };
 
@@ -167,12 +167,12 @@ export const Collection = () => {
           {filter.length > 0 ? (
             filter.map((item, index) => (
               //
-              <ProductItem
+              <ProductItem key={index}
                 id={item._id}
                 name={item.name}
                 price={item.price}
                 description={item.description}
-                image={item.images[0]}
+                image={`http://localhost:4000/uploads/product/${item.images[0]}`}
               />
               // </div>
             ))

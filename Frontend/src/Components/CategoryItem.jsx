@@ -1,31 +1,47 @@
-import React from 'react'
-import { IoMdWatch } from "react-icons/io";
-import { FaHeadphones } from "react-icons/fa";
-import { ImPower } from "react-icons/im";
-import { FaMobile } from "react-icons/fa6";
-import { BsPcDisplay } from "react-icons/bs";
+import axios from "axios";
+import { ShopContext } from "../Context/ShopContext";
+import { useContext, useEffect, useState } from "react";
+
 const CategoryItem = () => {
-  return (
-    <div className='flex gap-2'>
-        <div className='bg-white w-10 h-10 p-3 flex justify-center items-center rounded-xl shadow-md'>
-            <IoMdWatch size={30}/>
-        </div>
-        <div className='bg-white w-10 h-10 p-3 flex justify-center items-center rounded-xl shadow-md'>
-            <FaHeadphones size={30}/>
-        </div>
-        <div className='bg-white w-10 h-10 p-3 flex justify-center items-center rounded-xl shadow-md'>
-            <ImPower size={25}/>
-        </div>
-        <div className='bg-white w-10 h-10 p-3 flex justify-center items-center rounded-xl shadow-md'>
-            <FaMobile size={30}/>
-        </div>
-        <div className='bg-white w-10 h-10 p-3 flex justify-center items-center rounded-xl shadow-md'>
-            <BsPcDisplay  size={30}/>
-        </div>
-        
-    </div>
+    const { backend } = useContext(ShopContext);
+    const [categories, setCategories] = useState([]);
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get(backend + "/api/category/getCategory");
+            setCategories(response.data.categories); // JSON has "categories"
+            console.log(response.data.categories);
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+        }
+    };
 
-  )
-}
+    useEffect(() => {
+        fetchCategories();
+    }, [backend]);
 
-export default CategoryItem 
+    return (
+        <div className="flex gap-4 ">
+            {categories.map((item) => (
+                <div
+                    key={item._id}
+                    className="bg-white cursor-pointer w-10 sm:w-36 h-10 sm:h-24 p-3 flex justify-center items-center rounded-xl shadow-md 
+                     hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out 
+                     border border-gray-200 hover:border-orange-400"
+                >
+                    <div className="flex justify-center flex-col items-center ">
+                    <img
+                        src={`${backend}/uploads/category/${item.image}`} // Use backend path
+                        alt={item.name}
+                        className="w-6 sm:w-12 h-6 sm:h-12 object-cover rounded-lg"
+                    />
+                    <p className="sm:block hidden text-sm">{item.name}</p>
+
+                    </div>
+
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default CategoryItem;

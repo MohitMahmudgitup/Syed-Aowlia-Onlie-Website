@@ -4,6 +4,7 @@ import { ShopContext } from "../Context/ShopContext";
 import RelatedProduct from "../Components/relatedProduct";
 
 function Product() {
+    const backendURL = "http://localhost:4000/uploads/product/"; 
     const { productID } = useParams();
     const { products, addtocart, token, navigate, darkmode } = useContext(ShopContext);
     const [productData, setProductData] = useState(null);
@@ -11,7 +12,7 @@ function Product() {
     const [activeTab, setActiveTab] = useState("details");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [size, setSize] = useState("");
-
+    // console.log(productData.images[currentImageIndex])
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, [productID]);
@@ -19,9 +20,7 @@ function Product() {
     const fetchProductData = () => {
         if (Array.isArray(products.products)) {
             const foundProduct = products.products.find((item) => item._id === productID);
-            if (foundProduct) {
-                setProductData(foundProduct);
-            }
+            setProductData(foundProduct);
         }
     };
 
@@ -61,7 +60,7 @@ function Product() {
                     <div className="lg:w-1/2">
                         <div className="relative">
                             <img
-                                src={productData.images[currentImageIndex]}
+                                src={`${backendURL}${productData.images[currentImageIndex]}`}
                                 alt={productData.name}
                                 className="w-full h-80 object-cover rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 cursor-pointer"
                                 onClick={openModal}
@@ -168,7 +167,7 @@ function Product() {
                         </button>
                         <div className="relative">
                             <img
-                                src={productData.images[currentImageIndex]}
+                                src={`${backendURL}${productData.images[currentImageIndex]}`}
                                 alt={productData.name}
                                 className="max-w-full max-h-screen object-contain"
                             />

@@ -28,35 +28,40 @@ function BestSeller() {
         <Titel text1={"BEST"} text2={"SELLERS"} />
       </div>
 
-      <div className="flex gap-2 sm:gap-0 overflow-x-auto scrollbar-hide py-1 sm:py-0 px-2 sm:px-0">
+      <div className="flex gap-2 sm:gap-2 overflow-x-auto scrollbar-hide py-1 sm:py-0 px-2 sm:px-0">
         {bestSeller.length > 0
           ? bestSeller.map((item) => {
               const safeDescription = item.description || "";
               return (
                 <div
                   key={item._id}
-                  className="flex w-full relative sm:px-2 sm:py-4 justify-between"
+                  className="flex w-full sm:w-48  relative sm:px-2 sm:py-4 justify-between "
                 >
-                  <div className="absolute  -right-5 sm:-right-2 top-10 sm:top-32">
+                  <div className="absolute  -right-5 sm:right-5 top-10 sm:top-16">
                     <img width={80} src={assets.bestSeller} alt="Best Seller" />
                   </div>
 
                   <Link
-                    className={`cursor-pointer h-full  w-28 sm:w-full rounded-xl  ${
+                    className={`cursor-pointer h-full  w-28 sm:w-36   rounded-xl  ${
                       darkmode ? "text-gray-300" : "text-gray-700"
                     }`}
                     to={`/product/${item._id}`}
                   >
                     <div className="overflow-hidden rounded-xl">
                       <img
-                        src={item.images?.[0]}
+                        src={`http://localhost:4000/uploads/product/${item.images[0]}`}
                         alt={item.name}
-                        className="w-28 h-28 sm:h-52 object-cover"
+                        className=" sm:block hidden w-full h-28  object-cover"
+                      />
+                      <img
+                        src={`http://localhost:4000/uploads/product/${item.images[0]}`}
+                        alt={item.name}
+                        className="block sm:hidden w-28 h-28 sm:h-52 object-cover"
                       />
                     </div>
 
                     <p
-                      className={` pt-2 text-sm sm:text-xl ${
+                      className={` pt-2 text-sm sm:text-lg ${
                         darkmode ? "text-white" : "text-gray-100"
                       }`}
                     >
@@ -65,7 +70,7 @@ function BestSeller() {
                         : safeDescription}
                     </p>
 
-                    <p className=" text-lg sm:text-2xl font-medium text-[#ffffff]">
+                    <p className=" text-lg sm:text-xl font-medium text-[#ffffff]">
                       {currency}
                       {item.price}
                     </p>

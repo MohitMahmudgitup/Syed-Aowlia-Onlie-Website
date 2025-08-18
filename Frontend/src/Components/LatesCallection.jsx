@@ -32,7 +32,7 @@ function LatesCallection() {
         </p> */}
       </div>
       {/* Rendering products */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-x-2 gap-y-1 sm:gap-y-6 relative sm:px-0 px-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-x-6 gap-y-1 sm:gap-y-6 relative sm:px-0 px-2">
         {latestProducts.length > 0
           ? latestProducts.map((item) => (
               <ProductItem
@@ -41,7 +41,7 @@ function LatesCallection() {
                 name={item.name}
                 description={item.description}
                 price={item.price}
-                image={item.images[0]} // Accessing the first image from the images array
+                image={`http://localhost:4000/uploads/product/${item.images[0]}`} // Accessing the first image from the images array
               />
             ))
           : // Generate 10 skeleton loaders

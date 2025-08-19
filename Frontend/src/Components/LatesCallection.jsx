@@ -12,7 +12,7 @@ function LatesCallection() {
   useEffect(() => {
     if (products.products) {
       // console.log("LatesCallection:", products.products);
-      setLatestProducts(products.products.reverse().slice(0, 10)); // Access the products array from the object
+      setLatestProducts(products.products.reverse().slice(0, 12)); // Access the products array from the object
     } else {
       console.error("Products is not an array:", products);
     }

@@ -3,29 +3,83 @@ import { assets } from "../assets/assets";
 import Titel from "../Components/Titel";
 import { ShopContext } from "../Context/ShopContext";
 import ProductItem from "../Components/ProductItem";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export const Collection = () => {
-  const { products, darkmode } = useContext(ShopContext);
+  const { collectionID } = useParams()
+  const { products, darkmode, backend } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [filter, setFilter] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortOption, setSortOption] = useState("Relevant");
   const [searchQuery, setSearchQuery] = useState("");
+  const [subCategoryType, setSubCategoryType] = useState([]);
+  const [selectSubCat, setSelectSubCat] = useState([]);
+  const [categoryType, setCategoryType] = useState([]);
+
+  const fetchSubCategory = async () => {
+    try {
+      const res = await axios.get(backend + "/api/subcategory/getSubCategory");
+      const subCatData = res.data.categories;
+      setSubCategoryType(subCatData);
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+    }
+  }
+
+  const fetchCategory = async () => {
+    try {
+      const res = await axios.get(backend + "/api/category/getCategory");
+      const CatData = res.data.categories;
+      setCategoryType(CatData);
+      console.log("Category data:", CatData); // Debug log
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  }
+
+  // Fixed: Remove categoryType from dependency array to prevent infinite loop
+  useEffect(() => {
+    fetchCategory()
+  }, [backend]) // Only depend on backend, not categoryType
+
+  const subFilter = () => {
+    const subCatdata = subCategoryType || [];
+    
+    if (collectionID === "collection") {
+      // Show all subcategories when collectionID is "collection"
+      setSelectSubCat(subCatdata);
+    } else {
+      // Filter subcategories by specific collection
+      const filtersubcat = subCatdata.filter((p) => String(p.category) === String(collectionID));
+      setSelectSubCat(filtersubcat);
+    }
+  }
 
   const applyFilters = () => {
     let filteredProducts = products?.products || [];
-    // console.log("All Products:", products);
 
+    // Show all products if collectionID is "collection", otherwise filter by category
+    if (collectionID && collectionID !== "collection") {
+      filteredProducts = filteredProducts.filter((product) =>
+        String(product.category) === String(collectionID)
+      );
+    }
+    // If collectionID === "collection", don't filter by category (show all)
+
+    // Apply category filters (using ObjectId)
     if (selectedCategories.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
-        selectedCategories.includes(product.category)
+        selectedCategories.includes(String(product.category))
       );
     }
 
+    // Apply subcategory filters (using ObjectId)
     if (selectedTypes.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
-        selectedTypes.includes(product.subCategory)
+        selectedTypes.includes(String(product.subcategory))
       );
     }
 
@@ -35,33 +89,49 @@ export const Collection = () => {
       );
     }
 
+    // Apply sorting
     if (sortOption === "high-low") {
       filteredProducts.sort((a, b) => b.price - a.price);
     } else if (sortOption === "low-high") {
       filteredProducts.sort((a, b) => a.price - b.price);
     }
-    console.log(filteredProducts)
+
     setFilter(filteredProducts);
   };
 
+  // Fetch subcategories when component mounts or backend/collectionID changes
   useEffect(() => {
-    applyFilters();
-  }, [selectedCategories, selectedTypes, sortOption, searchQuery, products]);
+    fetchSubCategory();
+  }, [backend, collectionID]);
 
-  const handleCategoryChange = (category) => {
+  // Apply subfilter when subcategories are fetched or collectionID changes
+  useEffect(() => {
+    if (subCategoryType.length > 0) {
+      subFilter();
+    }
+  }, [subCategoryType, collectionID]);
+
+  // Apply filters when dependencies change
+  useEffect(() => {
+    if (products?.products) {
+      applyFilters();
+    }
+  }, [selectedCategories, selectedTypes, sortOption, searchQuery, products, collectionID]);
+
+  const handleCategoryChange = (categoryId) => {
     setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((cat) => cat !== category)
-        : [...prev, category]
+      prev.includes(String(categoryId)) 
+        ? prev.filter((cat) => cat !== String(categoryId)) 
+        : [...prev, String(categoryId)]
     );
   };
 
-  const handleTypeChange = (type) => {
+  const handleTypeChange = (subcategoryId) => {
     setSelectedTypes((prev) => {
-      const newSelectedTypes = prev.includes(type)
-        ? prev.filter((t) => t !== type)
-        : [...prev, type];
-      console.log("Updated Selected Types:", newSelectedTypes);
+      const stringId = String(subcategoryId);
+      const newSelectedTypes = prev.includes(stringId)
+        ? prev.filter((t) => t !== stringId)
+        : [...prev, stringId];
       return newSelectedTypes;
     });
   };
@@ -74,86 +144,112 @@ export const Collection = () => {
     setSearchQuery(event.target.value);
   };
 
+  // Helper function to get category name by ID
+  const getCategoryName = (categoryId) => {
+    const category = categoryType.find(cat => String(cat._id) === String(categoryId));
+    return category ? category.name || category.categoryName : `Category ${categoryId}`;
+  };
+
   return (
-    <div className={`flex flex-col sm:flex-row gap-6 pt-10  ${darkmode ? "border-t  border-t-gray-700" : "border-t"} `}>
-      <div className="w-full     sm:w-1/4">
-  <div className={`p-4 sticky top-[115px]  bg-black rounded-xl shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
-    {/* FILTERS HEADER */}
-    <div className=" flex   top-0 items-center justify-between mb-4">
-      <p
-        onClick={() => setShowFilter((prev) => !prev)}
-        className="text-xl font-semibold cursor-pointer flex items-center gap-2 transition-colors duration-300"
-      >
-        FILTERS
-        <img
-          className={`h-4 transition-transform sm:hidden ${showFilter ? "rotate-90" : ""}`}
-          src={assets.dropdown_icon}
-          alt="Toggle Filters"
-        />
-      </p>
-    </div>
-
-    {/* FILTER OPTIONS */}
-    <div className={`${showFilter ? "hidden" : "block"} sm:block`}>
-      {/* SEARCH BOX */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search products..."
-          className={`border-2 p-2 w-full rounded-lg transition-all duration-300 ${darkmode ? "border-gray-600 bg-gray-700 text-white" : "border-gray-300 text-gray-800"}`}
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-      </div>
-
-      {/* CATEGORIES */}
-      <div className="mb-6">
-        <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>CATEGORIES</p>
-        <div className="flex flex-col gap-3 text-sm">
-          {["Men", "Women", "Kids"].map((category) => (
-            <label className="flex items-center gap-2" key={category}>
-              <input
-                className="w-4 h-4 rounded-md transition-all duration-300"
-                type="checkbox"
-                value={category}
-                onChange={() => handleCategoryChange(category)}
-                checked={selectedCategories.includes(category)}
+    <div className={`flex flex-col sm:flex-row gap-6 pt-10 ${darkmode ? "border-t border-t-gray-700" : "border-t"}`}>
+      <div className="w-full sm:w-1/4">
+        <div className={`p-4 sticky top-[115px] rounded-xl shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
+          {/* FILTERS HEADER */}
+          <div className="flex items-center justify-between mb-4">
+            <p
+              onClick={() => setShowFilter((prev) => !prev)}
+              className="text-xl font-semibold cursor-pointer flex items-center gap-2 transition-colors duration-300"
+            >
+              FILTERS
+              <img
+                className={`h-4 transition-transform sm:hidden ${showFilter ? "rotate-90" : ""}`}
+                src={assets.dropdown_icon}
+                alt="Toggle Filters"
               />
-              <span className={darkmode ? "text-gray-300" : "text-gray-700"}>{category}</span>
-            </label>
-          ))}
+            </p>
+          </div>
+
+          {/* FILTER OPTIONS */}
+          <div className={`${showFilter ? "hidden" : "block"} sm:block`}>
+            {/* SEARCH BOX */}
+            <div className="mb-4">
+              <input
+                type="text"
+                placeholder="Search products..."
+                className={`border-2 p-2 w-full rounded-lg transition-all duration-300 ${darkmode ? "border-gray-600 bg-gray-700 text-white placeholder-gray-400" : "border-gray-300 text-gray-800 placeholder-gray-500"}`}
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+            </div>
+
+            {/* CATEGORIES - Show only when collectionID is "collection" */}
+            {collectionID === "collection" && categoryType.length > 0 && (
+              <div className="mb-6">
+                <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                  CATEGORIES
+                </p>
+                <div className="flex flex-col gap-3 text-sm">
+                  {/* Fixed: Use categoryType directly instead of trying to get unique categories */}
+                  {categoryType.map((categoryItem) => (
+                    <label className="flex items-center gap-2" key={categoryItem._id}>
+                      <input
+                        className="w-4 h-4 rounded-md transition-all duration-300"
+                        type="checkbox"
+                        value={categoryItem._id}
+                        onChange={() => handleCategoryChange(categoryItem._id)}
+                        checked={selectedCategories.includes(String(categoryItem._id))}
+                      />
+                      <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
+                        {/* Fixed: Use proper field name for category name */}
+                        {categoryItem.name || categoryItem.categoryName || 'Unnamed Category'}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* SUBCATEGORIES */}
+            {selectSubCat.length > 0 && (
+              <div className="mb-6">
+                <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                  SUBCATEGORIES
+                </p>
+                <div className="flex flex-col gap-3 text-sm">
+                  {selectSubCat.map((item) => (
+                    <label className="flex items-center gap-2" key={item._id || item.id}>
+                      <input
+                        className="w-4 h-4 rounded-md transition-all duration-300"
+                        type="checkbox"
+                        value={item._id || item.id}
+                        onChange={() => handleTypeChange(item._id || item.id)}
+                        checked={selectedTypes.includes(String(item._id || item.id))}
+                      />
+                      <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
+                        {item.name || 'Unnamed Subcategory'}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
-      {/* TYPE */}
-      <div>
-        <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>TYPE</p>
-        <div className="flex flex-col gap-3 text-sm">
-          {["Topwear", "Bottomwear", "Winterwear"].map((type) => (
-            <label className="flex items-center gap-2" key={type}>
-              <input
-                className="w-4 h-4 rounded-md transition-all duration-300"
-                type="checkbox"
-                value={type}
-                onChange={() => handleTypeChange(type)}
-                checked={selectedTypes.includes(type)}
-              />
-              <span className={darkmode ? "text-gray-300" : "text-gray-700"}>{type}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
       <div className="flex-1">
         <div className="flex justify-between mb-6 flex-col sm:flex-row">
-          <Titel text1={"ALL"} text2={" COLLECTIONS"} />
+          <Titel 
+            text1={"ALL"} 
+            text2={collectionID === "collection" ? " COLLECTIONS" : ` ${getCategoryName(collectionID)?.toUpperCase() || "COLLECTIONS"}`} 
+          />
 
           <select
-            className="border-2 border-gray-300 bg-gray-600 text-white text-sm px-3 py-1 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all"
+            className={`border-2 text-sm px-3 py-1 rounded-lg transition-all focus:outline-none focus:ring-2 ${
+              darkmode 
+                ? "border-gray-600 bg-gray-600 text-white hover:bg-gray-700 focus:bg-gray-700 focus:ring-gray-400" 
+                : "border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:ring-blue-400"
+            }`}
             value={sortOption}
             onChange={handleSortChange}
           >
@@ -163,26 +259,30 @@ export const Collection = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-2  lg:grid-cols-4 gap-2 sm:gap-2 overflow-y-scroll ">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2">
           {filter.length > 0 ? (
-            filter.map((item, index) => (
-              //
-              <ProductItem key={index}
+            filter.map((item) => (
+              <ProductItem 
+                key={item._id}
                 id={item._id}
                 name={item.name}
                 price={item.price}
                 description={item.description}
-                image={`http://localhost:4000/uploads/product/${item.images[0]}`}
+                image={item.images && item.images[0] ? `${backend}/uploads/product/${item.images[0]}` : ''}
               />
-              // </div>
             ))
           ) : (
-            <div className="sm:w-[60vw] flex items-center h-[100vh]">
-              <img
-                className="m-auto sm:w-40 md:w-80"
-                src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-illustration-download-in-svg-png-gif-file-formats--available-product-tokostore-pack-e-commerce-shopping-illustrations-2809510.png"
-                alt="No results found"
-              />
+            <div className="col-span-full flex items-center justify-center h-[50vh]">
+              <div className="text-center">
+                <img
+                  className="mx-auto w-40 md:w-60 mb-4"
+                  src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-illustration-download-in-svg-png-gif-file-formats--available-product-tokostore-pack-e-commerce-shopping-illustrations-2809510.png"
+                  alt="No results found"
+                />
+                <p className={`text-lg ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                  No products found
+                </p>
+              </div>
             </div>
           )}
         </div>

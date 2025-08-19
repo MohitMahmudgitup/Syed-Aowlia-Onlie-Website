@@ -36,7 +36,7 @@ function App() {
       {/* <SearchBer/> */}
       <Routes>
         {/* <Route path='/' element={<Home/>}/> */}
-        <Route path='/collection' element={<Collection/>}/>
+        <Route path='/:collectionID' element={<Collection/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/oders' element={<Oders/>}/>
@@ -47,6 +47,10 @@ function App() {
         <Route path='/verify' element={<VerifyStripe/>}/>
         <Route path="/login/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+
+
+        
       </Routes>
     </div>
       <Footer/>

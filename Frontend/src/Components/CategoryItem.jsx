@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ShopContext } from "../Context/ShopContext";
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const CategoryItem = () => {
     const { backend } = useContext(ShopContext);
@@ -8,8 +9,7 @@ const CategoryItem = () => {
     const fetchCategories = async () => {
         try {
             const response = await axios.get(backend + "/api/category/getCategory");
-            setCategories(response.data.categories); // JSON has "categories"
-            console.log(response.data.categories);
+            setCategories(response.data.categories); 
         } catch (error) {
             console.error("Error fetching categories:", error);
         }
@@ -22,7 +22,7 @@ const CategoryItem = () => {
     return (
         <div className="flex gap-4 ">
             {categories.map((item) => (
-                <div
+                <Link to = {item._id}
                     key={item._id}
                     className="bg-white cursor-pointer w-10 sm:w-36 h-10 sm:h-24 p-3 flex justify-center items-center rounded-xl shadow-md 
                      hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out 
@@ -38,7 +38,7 @@ const CategoryItem = () => {
 
                     </div>
 
-                </div>
+                </Link>
             ))}
         </div>
     );

@@ -12,7 +12,7 @@ function Product() {
     const [activeTab, setActiveTab] = useState("details");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [size, setSize] = useState("");
-    // console.log(productData.images[currentImageIndex])
+
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, [productID]);

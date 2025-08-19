@@ -18,6 +18,8 @@ import VerifyStripe from './Pages/verifyStripe.jsx'
 import ForgotPassword from './Components/ForgotPassword.jsx'
 import ResetPassword from './Components/ResetPassword.jsx'
 import Messenge from './Components/Messenge.jsx'
+import Admin from './Pages/Admin.jsx'
+import Adminpages from './Pages/Adminpages.jsx'
 
 
 
@@ -50,7 +52,12 @@ function App() {
 
 
 
-        
+
+        {/* Admin */}
+
+        <Route path="/admin-panal" element={<Admin />} />
+        <Route path="/adminPages/*" element={<Adminpages />} />
+
       </Routes>
     </div>
       <Footer/>

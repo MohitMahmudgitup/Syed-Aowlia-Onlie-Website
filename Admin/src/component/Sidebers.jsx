@@ -8,7 +8,7 @@ function Sidebar() {
     <aside className="w-full md:w-64 h-full">
       <div className="flex flex-row md:flex-col sm:justify-around justify-between">
         <NavLink
-          to="/"
+          to="/add"
           className="flex flex-col md:flex-row items-center gap-2 md:gap-4 py-3 px-5 bg-gray-100 hover:bg-gray-300 transition-colors duration-300 my-1 rounded-lg"
         >
           <img src={assets.add_icon} alt="Add Icon" className="w-6 h-6" />

@@ -78,8 +78,14 @@ import onlineShopBD from "./onlineShopBD.png"
 import syedAowlia from './syedAowlia.png'
 import bestSeller from "./bestSeller.png"
 import yellowFiveSter from "./yellowFiveSter.png"
+import add_icon from './add_icon.png'
+import order_icon from './order_icon.png'
+import upload_area from './upload_area.png'
 
 export const assets = {
+    upload_area,
+    order_icon,
+    add_icon,
     yellowFiveSter,
     bestSeller,
     onlineShopBD,

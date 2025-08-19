@@ -7,7 +7,7 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
 
 function Login({ setToken }) {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);

@@ -34,29 +34,32 @@ export const Collection = () => {
       const res = await axios.get(backend + "/api/category/getCategory");
       const CatData = res.data.categories;
       setCategoryType(CatData);
-      console.log("Category data:", CatData); // Debug log
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   }
 
-  // Fixed: Remove categoryType from dependency array to prevent infinite loop
-  useEffect(() => {
-    fetchCategory()
-  }, [backend]) // Only depend on backend, not categoryType
+const subFilter = () => {
+  const subCatdata = subCategoryType || [];
 
-  const subFilter = () => {
-    const subCatdata = subCategoryType || [];
-    
-    if (collectionID === "collection") {
-      // Show all subcategories when collectionID is "collection"
-      setSelectSubCat(subCatdata);
+  if (collectionID === "collection") {
+    if (selectedCategories.length > 0) {
+      const filteredSubCats = subCatdata.filter((subCat) => {
+        const catId = subCat.category?._id || subCat.category; // ✅ handle both object & string
+        return selectedCategories.includes(String(catId));
+      });
+      setSelectSubCat(filteredSubCats);
     } else {
-      // Filter subcategories by specific collection
-      const filtersubcat = subCatdata.filter((p) => String(p.category) === String(collectionID));
-      setSelectSubCat(filtersubcat);
+      setSelectSubCat(subCatdata);
     }
+  } else {
+    const filtersubcat = subCatdata.filter(
+      (p) => String(p.category?._id || p.category) === String(collectionID) // ✅ normalize
+    );
+    setSelectSubCat(filtersubcat);
   }
+};
+
 
   const applyFilters = () => {
     let filteredProducts = products?.products || [];
@@ -67,7 +70,6 @@ export const Collection = () => {
         String(product.category) === String(collectionID)
       );
     }
-    // If collectionID === "collection", don't filter by category (show all)
 
     // Apply category filters (using ObjectId)
     if (selectedCategories.length > 0) {
@@ -89,7 +91,6 @@ export const Collection = () => {
       );
     }
 
-    // Apply sorting
     if (sortOption === "high-low") {
       filteredProducts.sort((a, b) => b.price - a.price);
     } else if (sortOption === "low-high") {
@@ -99,17 +100,18 @@ export const Collection = () => {
     setFilter(filteredProducts);
   };
 
-  // Fetch subcategories when component mounts or backend/collectionID changes
+  // Fetch both categories and subcategories on mount
   useEffect(() => {
+    fetchCategory();
     fetchSubCategory();
-  }, [backend, collectionID]);
+  }, [backend]);
 
-  // Apply subfilter when subcategories are fetched or collectionID changes
+  // Apply subfilter when subcategories are fetched, collectionID changes, or category filters change
   useEffect(() => {
     if (subCategoryType.length > 0) {
       subFilter();
     }
-  }, [subCategoryType, collectionID]);
+  }, [subCategoryType, collectionID, selectedCategories]);
 
   // Apply filters when dependencies change
   useEffect(() => {
@@ -117,6 +119,18 @@ export const Collection = () => {
       applyFilters();
     }
   }, [selectedCategories, selectedTypes, sortOption, searchQuery, products, collectionID]);
+
+  // Clear filters when collectionID changes
+  useEffect(() => {
+    setSelectedCategories([]);
+    setSelectedTypes([]);
+    setSearchQuery("");
+  }, [collectionID]);
+
+  // Clear subcategory filters when category selection changes
+  useEffect(() => {
+    setSelectedTypes([]);
+  }, [selectedCategories]);
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories((prev) =>
@@ -129,8 +143,8 @@ export const Collection = () => {
   const handleTypeChange = (subcategoryId) => {
     setSelectedTypes((prev) => {
       const stringId = String(subcategoryId);
-      const newSelectedTypes = prev.includes(stringId)
-        ? prev.filter((t) => t !== stringId)
+      const newSelectedTypes = prev.includes(stringId) 
+        ? prev.filter((t) => t !== stringId) 
         : [...prev, stringId];
       return newSelectedTypes;
     });
@@ -147,8 +161,9 @@ export const Collection = () => {
   // Helper function to get category name by ID
   const getCategoryName = (categoryId) => {
     const category = categoryType.find(cat => String(cat._id) === String(categoryId));
-    return category ? category.name || category.categoryName : `Category ${categoryId}`;
+    return category ? (category.name || category.categoryName) : `Category ${categoryId}`;
   };
+
 
   return (
     <div className={`flex flex-col sm:flex-row gap-6 pt-10 ${darkmode ? "border-t border-t-gray-700" : "border-t"}`}>
@@ -181,15 +196,19 @@ export const Collection = () => {
                 onChange={handleSearchChange}
               />
             </div>
+            
+              <div
+    className={`p-4 sticky top-[115px]  transition-all duration-300 
+      max-h-[80vh] overflow-y-auto`}  // ✅ add scroll
+  >
 
-            {/* CATEGORIES - Show only when collectionID is "collection" */}
+                          {/* CATEGORIES - Show only when collectionID is "collection" */}
             {collectionID === "collection" && categoryType.length > 0 && (
               <div className="mb-6">
                 <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                  CATEGORIES
+                  CATEGORIES ({categoryType.length})
                 </p>
                 <div className="flex flex-col gap-3 text-sm">
-                  {/* Fixed: Use categoryType directly instead of trying to get unique categories */}
                   {categoryType.map((categoryItem) => (
                     <label className="flex items-center gap-2" key={categoryItem._id}>
                       <input
@@ -200,7 +219,6 @@ export const Collection = () => {
                         checked={selectedCategories.includes(String(categoryItem._id))}
                       />
                       <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
-                        {/* Fixed: Use proper field name for category name */}
                         {categoryItem.name || categoryItem.categoryName || 'Unnamed Category'}
                       </span>
                     </label>
@@ -213,7 +231,7 @@ export const Collection = () => {
             {selectSubCat.length > 0 && (
               <div className="mb-6">
                 <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                  SUBCATEGORIES
+                  SUBCATEGORIES ({selectSubCat.length})
                 </p>
                 <div className="flex flex-col gap-3 text-sm">
                   {selectSubCat.map((item) => (
@@ -233,6 +251,38 @@ export const Collection = () => {
                 </div>
               </div>
             )}
+
+            {/* ACTIVE FILTERS DISPLAY */}
+            {(selectedCategories.length > 0 || selectedTypes.length > 0) && (
+              <div className="mb-4">
+                <p className={`mb-2 text-sm font-bold ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                  Active Filters:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {selectedCategories.map(catId => (
+                    <span 
+                      key={catId}
+                      className={`px-2 py-1 text-xs rounded-full ${darkmode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"}`}
+                    >
+                      {getCategoryName(catId)}
+                    </span>
+                  ))}
+                  {selectedTypes.map(subId => (
+                    <span 
+                      key={subId}
+                      className={`px-2 py-1 text-xs rounded-full ${darkmode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"}`}
+                    >
+                      {selectSubCat.find(sub => String(sub._id || sub.id) === String(subId))?.name || 'Subcategory'}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            </div>
+
+
+
           </div>
         </div>
       </div>
@@ -259,6 +309,14 @@ export const Collection = () => {
           </select>
         </div>
 
+        {/* Products Count */}
+        <div className="mb-4">
+          <p className={`text-sm ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+            Showing {filter.length} product{filter.length !== 1 ? 's' : ''}
+            {searchQuery && ` for "${searchQuery}"`}
+          </p>
+        </div>
+
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2">
           {filter.length > 0 ? (
             filter.map((item) => (
@@ -282,6 +340,11 @@ export const Collection = () => {
                 <p className={`text-lg ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
                   No products found
                 </p>
+                {(selectedCategories.length > 0 || selectedTypes.length > 0 || searchQuery) && (
+                  <p className={`text-sm mt-2 ${darkmode ? "text-gray-500" : "text-gray-500"}`}>
+                    Try adjusting your filters or search terms
+                  </p>
+                )}
               </div>
             </div>
           )}

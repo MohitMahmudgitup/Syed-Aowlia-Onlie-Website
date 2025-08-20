@@ -22,7 +22,7 @@ const CategoryItem = () => {
     return (
         <div className="flex gap-4 ">
             {categories.map((item) => (
-                <Link to = {item._id}
+                <Link to = {`/collection/${item._id}`}
                     key={item._id}
                     className="bg-white cursor-pointer w-10 sm:w-36 h-10 sm:h-24 p-3 flex justify-center items-center rounded-xl shadow-md 
                      hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out 

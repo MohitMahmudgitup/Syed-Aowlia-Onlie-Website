@@ -1,9 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
-import { AdminAdd } from '../AdminItems/AdminAdd'
+import { AdminAdd } from '../AdminItems/AdminAdd.jsx'
 import { AdminEditProduct } from '../AdminItems/AdminEditProduct.jsx'
 import { AdminList } from '../AdminItems/AdminList.jsx'
 import { AdminOrders } from '../AdminItems/AdminOrders.jsx'
 import Sidebar from '../Components/Sidebers.jsx'
+import Gadget from '../AdminComponents/Gadget.jsx'
+import { Garments } from '../AdminComponents/garments.jsx'
 
 const Adminpages = () => {
     return (
@@ -13,8 +15,10 @@ const Adminpages = () => {
                 <div className="flex-1 p-6">
                     <Routes>
                         <Route index element={<AdminAdd />} />          
-                        <Route path="list" element={<AdminList />} />   
+                        <Route path="list" element={<AdminList />} />     
                         <Route path="orders" element={<AdminOrders />} />
+                        <Route path=":id" element={<Gadget />} />
+                        <Route path="68a3658d3ff9ff3fd861d318" element={<Garments />} />
                         <Route path="products/edit/:id" element={<AdminEditProduct />} />
                     </Routes>
 

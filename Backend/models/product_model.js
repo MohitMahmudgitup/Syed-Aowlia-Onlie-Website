@@ -13,6 +13,7 @@ const productSchema = new mongoose.Schema(
     stock: { type: Number, default: 0 },
     product_type: { type: String , enum: ["gadget", "garments"], default: "gadget" },
     brand: { type: String },
+    model: { type: String },
     bestseller: { type: Boolean, default: false },
     date: { type: Date, default: Date.now },
   },

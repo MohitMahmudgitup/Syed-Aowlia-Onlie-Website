@@ -38,7 +38,7 @@ function App() {
       {/* <SearchBer/> */}
       <Routes>
         {/* <Route path='/' element={<Home/>}/> */}
-        <Route path='/collection/:collectionID' element={<Collection/>}/>
+        <Route path='/:collectionID' element={<Collection/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/oders' element={<Oders/>}/>

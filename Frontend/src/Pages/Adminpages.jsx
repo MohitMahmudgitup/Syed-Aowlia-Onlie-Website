@@ -6,6 +6,7 @@ import { AdminOrders } from '../AdminItems/AdminOrders.jsx'
 import Sidebar from '../Components/Sidebers.jsx'
 import Gadget from '../AdminComponents/Gadget.jsx'
 import { Garments } from '../AdminComponents/garments.jsx'
+import Computer from '../AdminComponents/Computer.jsx'
 
 const Adminpages = () => {
     return (
@@ -18,6 +19,7 @@ const Adminpages = () => {
                         <Route path="list" element={<AdminList />} />     
                         <Route path="orders" element={<AdminOrders />} />
                         <Route path=":id" element={<Gadget />} />
+                        <Route path="68a366123ff9ff3fd861d31c" element={<Computer />} />
                         <Route path="68a3658d3ff9ff3fd861d318" element={<Garments />} />
                         <Route path="products/edit/:id" element={<AdminEditProduct />} />
                     </Routes>

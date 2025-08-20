@@ -2,9 +2,12 @@ import Product from "../models/product_model.js";
 
 export const createProduct = async (req, res) => {
   try {
-    const { name, discount_price, brand, stock, price, description, category, subcategory, sizes, bestseller, product_type, model } = req.body;
+    const { name, discount_price, brand, stock, price, description, category, subcategory, sizes, bestseller, product_type, model, color } = req.body;
 
      const images = req.files ? req.files.map(file => file.filename) : [];
+     if (!name || !price || !category) {
+      return res.status(400).json({ message: "Name, price, and category are required", success: false });
+    }
 
     // Prepare product data for saving
     const productData = {
@@ -18,9 +21,10 @@ export const createProduct = async (req, res) => {
       images,
       product_type,
       brand,
-      stock,
-      discount_price,
+      stock: Number(stock) || 0,
+      discount_price: Number(discount_price) || 0,
       model,
+      color:JSON.parse(color),
       date: Date.now(),
     };
 
@@ -70,7 +74,7 @@ export const getProductById = async (req, res) => {
 // Update a product
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, description, sizes, price, bestseller, product_type, brand, stock, discount_price, model } = req.body;
+  const { name, description, sizes, price, bestseller, product_type, brand, stock, discount_price, model, color } = req.body;
 
   try {
     
@@ -91,6 +95,7 @@ export const updateProduct = async (req, res) => {
     if(brand) updatedProduct.brand = brand;
     if(model) updatedProduct.model = model;
     if(stock) updatedProduct.stock = stock;
+    if(color) updatedProduct.color = color;
     if(discount_price) updatedProduct.discount_price = discount_price;
     if(images && images.length > 0) updatedProduct.images = images;
     await updatedProduct.save();

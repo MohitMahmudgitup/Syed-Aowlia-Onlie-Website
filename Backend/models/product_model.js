@@ -14,6 +14,7 @@ const productSchema = new mongoose.Schema(
     product_type: { type: String , enum: ["gadget", "garments"], default: "gadget" },
     brand: { type: String },
     model: { type: String },
+    color: { type: [String] },
     bestseller: { type: Boolean, default: false },
     date: { type: Date, default: Date.now },
   },
@@ -22,6 +23,5 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-const ProductModel =
-  mongoose.model.product || mongoose.model("Product", productSchema);
+const ProductModel = mongoose.model.product || mongoose.model("Product", productSchema);
 export default ProductModel;

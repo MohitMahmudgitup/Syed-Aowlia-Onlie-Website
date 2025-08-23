@@ -16,7 +16,7 @@ export const createProduct = async (req, res) => {
       description,
       category,
       subcategory,
-      sizes: JSON.parse(sizes),
+      sizes,
       bestseller: bestseller === "true",
       images,
       product_type,
@@ -24,7 +24,7 @@ export const createProduct = async (req, res) => {
       stock: Number(stock) || 0,
       discount_price: Number(discount_price) || 0,
       model,
-      color:JSON.parse(color),
+      color,
       date: Date.now(),
     };
 
@@ -43,7 +43,8 @@ export const createProduct = async (req, res) => {
 // Get all products
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find()
+  
     res.status(200).json({ products, success: true });
   } catch (error) {
     res

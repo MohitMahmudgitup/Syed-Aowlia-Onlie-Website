@@ -20,9 +20,21 @@ router.post(
 ); 
 
 // Other routes...
+// router.get("/", getAllProducts);
+// router.get("/:id",adminAuth, getProductById);
+// router.put("/:id",upload.array("images", 5), adminAuth, updateProduct);
+// router.delete("/:id",adminAuth, deleteProduct);
+
+
+// router.post(
+//   "/add",
+//   upload.array("images", 5),
+//   createProduct
+// ); 
+
 router.get("/", getAllProducts);
-router.get("/:id",adminAuth, getProductById);
-router.put("/:id",upload.array("images", 5), adminAuth, updateProduct);
-router.delete("/:id",adminAuth, deleteProduct);
+router.get("/:id", getProductById);
+router.put("/:id",upload.array("images", 5), updateProduct);
+router.delete("/:id", deleteProduct);
 
 export default router;

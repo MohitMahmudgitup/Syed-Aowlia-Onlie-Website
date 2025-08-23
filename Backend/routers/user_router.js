@@ -1,4 +1,5 @@
 import express from "express";
+import { authUser } from "../middleware/auth.js";
 import { 
   registerUser, 
   loginUser, 
@@ -26,7 +27,7 @@ router.get("/admin", admin);
 router.post("/adminLogin", adminLogin);
 
 // Route to get user details by ID
-router.get("/:id", getUser);
+router.post("/",authUser, getUser);
 
 // Route to update user details
 router.put("/:id", updateUser);

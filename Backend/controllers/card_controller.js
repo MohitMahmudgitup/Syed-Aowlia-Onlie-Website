@@ -1,48 +1,65 @@
 // Add product to user's cart
 
-import User from '../models/user_model.js'; // Assuming you have a User model
+import User from "../models/user_model.js";
 
+// Add product to user's cart
 export const addProductToUserCart = async (req, res) => {
-    const { userId, itemId, size, quantity = 1 } = req.body;  // Default quantity to 1 if not provided
 
-    try {
-        // Validate input data
-        if (!userId || !itemId || !size) {
-            return res.json({ message: "Missing required fields", success: false });
-        }
+  const { userId, itemId, size, quantity = 1, color = null } = req.body;
+  console.log("userId :",userId)
+  try {
 
-        // Find the user by ID
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.json({ message: 'User not found', success: false });
-        }
-
-        let cartdata = user.cartdata || {}; // Initialize cartdata if it doesn't exist
-
-        // Check if the item already exists in the user's cart
-        if (cartdata[itemId]) {
-            if (cartdata[itemId][size]) {
-                cartdata[itemId][size] += quantity; // Increment the existing size quantity
-            } else {
-                cartdata[itemId][size] = quantity; // Add the size with the given quantity
-            }
-        } else {
-            cartdata[itemId] = { [size]: quantity }; // Add a new product with size
-        }
-
-        // Update the user's cart
-        await User.findByIdAndUpdate(userId, { cartdata });
-
-        res.status(200).json({
-            message: 'Product added to cart successfully',
-            success: true,
-            cartdata,
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error', success: false });
+    if (!userId || !itemId) {
+      return res.status(400).json({ message: "Missing required fields", success: false });
     }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found", success: false });
+    }
+
+    // Initialize cart
+    let cartdata = user.cartdata || {};
+
+    // Update size quantity
+    if (cartdata[itemId]) {
+      if (cartdata[itemId][size]) {
+        cartdata[itemId][size] += quantity;
+      } else {
+        cartdata[itemId][size] = quantity;
+      }
+    } else {
+      cartdata[itemId] = { [size]: quantity };
+    }
+
+    // Add color (avoid duplicates)
+    if (color) {
+      console.log(`Adding color: ${color}`);
+      if (!Array.isArray(cartdata[itemId].color)) {
+        cartdata[itemId].color = [];
+      }
+      if (!cartdata[itemId].color.includes(color)) {
+        cartdata[itemId].color.push(color);
+      } 
+    }
+
+    // Save updated cart
+    await User.findByIdAndUpdate(userId, { cartdata }, { new: true });
+
+    res.status(200).json({
+      message: "Product added to cart successfully",
+      success: true,
+      cartdata,
+    });
+
+  } catch (error) {
+    console.error("Error adding product to cart:", error);
+    res.status(500).json({ message: "Internal server error", success: false });
+  }
 };
+
+
+
+
 
 
 
@@ -92,7 +109,7 @@ export const updateProductInUserCart = async (req, res) => {
 // Get  user's cart
 
 export const getUserCart = async (req, res) => {
-    const { userId } = req.params; // Assume userId is passed as a URL parameter
+    const { userId } = req.body; // Assume userId is passed as a URL parameter
 
     try {
         // Validate input
@@ -120,6 +137,7 @@ export const getUserCart = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', success: false });
     }
 };
+
 
 export const deleteProductFromUserCart = async (req, res) => {
     const { userId, itemId, size } = req.body;

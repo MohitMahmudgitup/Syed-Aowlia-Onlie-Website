@@ -45,7 +45,7 @@ const subFilter = () => {
   if (collectionID === "collection") {
     if (selectedCategories.length > 0) {
       const filteredSubCats = subCatdata.filter((subCat) => {
-        const catId = subCat.category?._id || subCat.category; // ✅ handle both object & string
+        const catId = subCat.category?._id || subCat.category; 
         return selectedCategories.includes(String(catId));
       });
       setSelectSubCat(filteredSubCats);

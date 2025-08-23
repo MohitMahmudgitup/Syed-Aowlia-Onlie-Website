@@ -265,7 +265,7 @@ const PlaceOrder = () => {
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-0 gap-5">
-            <div className="flex items-center gap-2 ">
+            {/* <div className="flex items-center gap-2 ">
               <p
                 onClick={() => setMethod("stripe")}
                 className={` cursor-pointer min-w-3.5 h-3.5 border rounded-full ${
@@ -273,8 +273,8 @@ const PlaceOrder = () => {
                 }`}
               ></p>
               <img className="h-5 mx-5" src={assets.stripe_logo} alt="" />
-            </div>
-            <div className="flex items-center gap-2">
+            </div> */}
+            {/* <div className="flex items-center gap-2">
               <p
                 onClick={() => setMethod("razorpay")}
                 className={` cursor-pointer min-w-3.5 h-3.5 border rounded-full ${
@@ -282,15 +282,15 @@ const PlaceOrder = () => {
                 }`}
               ></p>
               <img className="h-5 mx-5" src={assets.razorpay_logo} alt="" />
-            </div>
-            <div className="flex items-center  gap-2">
+            </div> */}
+            <div className="flex items-center  w-56  gap-2">
               <p
                 onClick={() => setMethod("cod")}
                 className={` cursor-pointer min-w-3.5 h-3.5 border rounded-full ${
                   method === "cod" && "bg-black"
                 }`}
               ></p>
-              <p className="text-sm h-5 mx-5 text-gray-600">CASH ON DELIVERY</p>
+              <p className="text-sm  h-5 mx-5 text-gray-600">CASH ON DELIVERY</p>
             </div>
           </div>
           <button

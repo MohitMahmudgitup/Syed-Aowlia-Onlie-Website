@@ -81,7 +81,7 @@ function Orders() {
   {/* Product Details */}
   <div className="flex items-start gap-6 text-sm md:w-2/3">
     <img
-      src={item.images[0]}
+      src={`${backend}/uploads/product/${item.images[0]}`}
       alt={item.name}
       className="w-24 h-24 object-cover rounded-lg"
     />

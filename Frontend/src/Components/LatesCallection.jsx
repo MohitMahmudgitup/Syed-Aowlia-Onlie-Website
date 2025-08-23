@@ -9,14 +9,25 @@ function LatesCallection() {
   const { products, darkmode } = useContext(ShopContext);
   const [latestProducts, setLatestProducts] = useState([]); // Initialize with an empty array
 
-  useEffect(() => {
-    if (products.products) {
-      // console.log("LatesCallection:", products.products);
-      setLatestProducts(products.products.reverse().slice(0, 12)); // Access the products array from the object
-    } else {
-      console.error("Products is not an array:", products);
-    }
-  }, [products]);
+useEffect(() => {
+  let productsArray = [];
+
+  // If products is an object with a products array
+  if (products?.products && Array.isArray(products.products)) {
+    productsArray = products.products;
+  }
+  // If products itself is an array
+  else if (Array.isArray(products)) {
+    productsArray = products;
+  } else {
+    console.error("Products is not an array:", products);
+    return; // Exit early
+  }
+
+  // Now productsArray is guaranteed to be an array
+  setLatestProducts(productsArray.slice().slice(0, 12));
+}, [products]);
+
 
   return (
     <div>

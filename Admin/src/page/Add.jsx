@@ -1,215 +1,311 @@
-import React, { useState } from 'react';
-import { assets } from '../assets/assets';
-import axios from 'axios';
-import { backend } from '../App';
-import { toast } from 'react-toastify';
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function Add({ token }) {
-  const [images, setImages] = useState([null, null, null, null]);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Men');
-  const [subCategory, setSubCategory] = useState('Topwear');
-  const [price, setPrice] = useState('');
-  const [sizes, setSizes] = useState([]);
-  const [bestseller, setBestseller] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+// Combobox component implementation (basic)
+const Combobox = ({ value, onChange, multiple, children }) => {
+  return <div className="relative">{children}</div>;
+};
 
-  // Handle image change for product images
-  const handleImageChange = (index, e) => {
-    const newImages = [...images];
-    newImages[index] = e.target.files[0];
-    setImages(newImages);
-  };
+Combobox.Input = ({ className, placeholder, onChange, displayValue }) => (
+  <input
+    type="text"
+    className={className}
+    placeholder={placeholder}
+    onChange={onChange}
+  />
+);
 
-  // Handle size toggle
-  const toggleSize = (size) => {
-    if (sizes.includes(size)) {
-      setSizes(sizes.filter((s) => s !== size)); // Remove if already selected
-    } else {
-      setSizes([...sizes, size]); // Add if not selected
-    }
-  };
+Combobox.Options = ({ className, children }) => (
+  <div className={className}>{children}</div>
+);
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+Combobox.Option = ({ value, className, children }) => (
+  <div className={className} data-value={value}>
+    {typeof children === "function" ? children({ selected: false, active: false }) : children}
+  </div>
+);
 
-    const formData = new FormData();
-    images.forEach((image, index) => {
-      if (image) {
-        formData.append(`image${index + 1}`, image);
-      }
-    });
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('category', category);
-    formData.append('subcategory', subCategory);
-    formData.append('price', price);
-    formData.append('sizes', JSON.stringify(sizes)); // Send sizes as a comma-separated string
-    formData.append('bestseller', bestseller);
+const colors = [
+  "red","blue","black","green","white","yellow","orange","pink","purple","brown",
+  "gray","violet","indigo","turquoise","teal","magenta","cyan","lime","maroon","navy",
+  "olive","silver","gold","beige","coral","lavender","mint","peach","salmon","khaki",
+  "crimson","amber","apricot","plum","orchid","sienna","tan","chocolate","mustard","rose",
+  "emerald","aquamarine","fuchsia","cerulean","jade","scarlet","periwinkle","charcoal","azure","ivory",
+  "bronze","burgundy","cobalt","cream","denim","eggplant","flax","garnet","honey","ice",
+  "mahogany","mauve","navyblue","ochre","onyx","pearl","quartz","ruby","sand","sepia",
+  "smoke","snow","tangerine","taupe","topaz","umber","vermilion","wheat","wine","zinc"
+];
 
+const Gadget = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    brand: "",
+    model: "",
+    price: "",
+    description: ""
+  });
+  const [images, setImages] = useState([]);
+  const [selectedColors, setSelectedColors] = useState([]);
+  const [query, setQuery] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  const fetchCategories = async () => {
     try {
-      const response = await axios.post(backend + "/api/product/add", formData, {
-        headers: { token },
-      });
-
-      if (response.data.success) {
-        toast.success(response.data.message || 'Product added successfully!');
-        // Reset form fields
-        setImages([null, null, null, null]);
-        setName('');
-        setDescription('');
-        setCategory('Men');
-        setSubCategory('Topwear');
-        setPrice('');
-        setSizes([]);
-        setBestseller(false);
-      }
+      const mockCategories = [
+        { id: 1, name: "Electronics" },
+        { id: 2, name: "Mobile Phones" },
+        { id: 3, name: "Laptops" },
+        { id: 4, name: "Gaming" },
+        { id: 5, name: "Audio" }
+      ];
+      setCategories(mockCategories);
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'Error adding product';
-      toast.error(errorMessage);
-    } finally {
-      setIsLoading(false);
+      console.error("Error fetching categories:", error);
+      toast.error("Failed to fetch categories");
     }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const filteredColors =
+    query === ""
+      ? colors.slice(0, 10)
+      : colors.filter((color) => color.toLowerCase().includes(query.toLowerCase())).slice(0, 10);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length) {
+      const newImages = files.map((file) => ({
+        file,
+        preview: URL.createObjectURL(file)
+      }));
+      setImages((prev) => [...prev, ...newImages]);
+    }
+  };
+
+  const handleColorSelect = (color) => {
+    if (!selectedColors.includes(color)) {
+      setSelectedColors([...selectedColors, color]);
+      toast.success(`${color} added to colors`);
+    }
+    setQuery("");
+    setShowOptions(false);
+  };
+
+  const removeColor = (colorToRemove) => {
+    setSelectedColors(selectedColors.filter((c) => c !== colorToRemove));
+    toast.info(`${colorToRemove} removed from colors`);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.brand || !formData.price) {
+      toast.error("Please fill in all required fields (Name, Brand, Price)");
+      return;
+    }
+
+    const gadgetData = {
+      ...formData,
+      colors: selectedColors,
+      images: images.map((img) => img.file),
+      timestamp: new Date().toISOString()
+    };
+
+    console.log("Gadget Data:", gadgetData);
+    toast.success(`Gadget "${formData.name}" submitted successfully!`);
+
+    setFormData({ name: "", brand: "", model: "", price: "", description: "" });
+    setSelectedColors([]);
+    setImages([]);
+    setQuery("");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
-      <div className="bg-white md:p-8 rounded-lg w-full max-w-2xl">
-        <h2 className="text-2xl md:text-4xl font-bold md:text-center text-gray-800 mb-8">Add Product</h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Image upload */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {images.map((image, index) => (
-              <label key={index} htmlFor={`image${index + 1}`} className="relative cursor-pointer group">
-                <img
-                  src={image ? URL.createObjectURL(image) : assets.upload_area}
-                  alt={`Image ${index + 1}`}
-                  className="w-24 h-24 object-cover border-2 border-gray-300 rounded-lg group-hover:opacity-80 transition duration-200 group-hover:scale-105"
-                />
-                <input
-                  type="file"
-                  id={`image${index + 1}`}
-                  onChange={(e) => handleImageChange(index, e)}
-                  hidden
-                />
-                {!image && (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-xs font-semibold text-white bg-gray-800 px-2 py-1 rounded">Upload</span>
-                  </div>
-                )}
-              </label>
-            ))}
-          </div>
-
-          {/* Product Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-6 mt-6">
+      <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Add New Gadget</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex justify-between gap-4">
+          <div className="w-full">
+            <label className="block mb-1 font-medium text-gray-700">Gadget Name *</label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              placeholder="Enter gadget name"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 outline-none transition"
               required
             />
           </div>
-
-          {/* Product Description */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Product Description</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
-              rows="4"
+          <div className="w-full">
+            <label className="block mb-1 font-medium text-gray-700">Brand *</label>
+            <input
+              type="text"
+              name="brand"
+              value={formData.brand}
+              onChange={handleInputChange}
+              placeholder="Enter brand"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 outline-none transition"
               required
-            ></textarea>
+            />
           </div>
-
-          {/* Product Category and Subcategory */}
-          <div className="flex justify-between flex-col sm:flex-row gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Product Category</label>
-              <select
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
-                <option value="Kids">Kids</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sub Category</label>
-              <select
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
-                value={subCategory}
-                onChange={(e) => setSubCategory(e.target.value)}
-              >
-                <option value="Topwear">Topwear</option>
-                <option value="Bottomwear">Bottomwear</option>
-                <option value="Winterwear">Winterwear</option>
-              </select>
-            </div>
-
-            {/* Product Price */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Product Price(৳)</label>
-              <input
-                type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
-                required
-              />
-            </div>
+        </div>
+        <div className="flex justify-between gap-4">
+          <div className="w-full">
+            <label className="block mb-1 font-medium text-gray-700">Model</label>
+            <input
+              type="text"
+              name="model"
+              value={formData.model}
+              onChange={handleInputChange}
+              placeholder="Enter model"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 outline-none transition"
+            />
           </div>
+          <div className="w-full">
+            <label className="block mb-1 font-medium text-gray-700">Price (৳) *</label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleInputChange}
+              placeholder="Enter price"
+              min="0"
+              step="0.01"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 outline-none transition"
+              required
+            />
+          </div>
+        </div>
 
-          {/* Product Sizes */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Product Sizes</label>
-            <div className="flex gap-4">
-              {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
-                <div
-                  key={size}
-                  className={`px-4 py-2 cursor-pointer rounded-lg text-sm font-semibold ${
-                    sizes.includes(size) ? 'bg-purple-600 text-white' : 'bg-gray-200'
-                  } hover:bg-purple-500 transition duration-300`}
-                  onClick={() => toggleSize(size)}
+        {/* Color Selection */}
+        <div className="w-full">
+          <label className="block mb-1 font-medium text-gray-700">Colors</label>
+          <div className="relative">
+            <div className="flex flex-wrap gap-2 mb-2">
+              {selectedColors.map((color) => (
+                <span
+                  key={color}
+                  className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm capitalize"
                 >
-                  {size}
+                  <div
+                    className="w-3 h-3 rounded-full mr-2 border border-gray-300"
+                    style={{ backgroundColor: color === "white" ? "#f9fafb" : color }}
+                  ></div>
+                  {color}
+                  <button
+                    type="button"
+                    className="ml-2 text-blue-600 hover:text-blue-900 font-bold text-lg leading-none"
+                    onClick={() => removeColor(color)}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+            <input
+              type="text"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 outline-none transition"
+              placeholder="Type to search colors..."
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setShowOptions(true);
+              }}
+              onFocus={() => setShowOptions(true)}
+              onBlur={() => setTimeout(() => setShowOptions(false), 200)}
+            />
+            {showOptions && filteredColors.length > 0 && (
+              <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
+                {filteredColors.map((color) => (
+                  <div
+                    key={color}
+                    className="cursor-pointer px-3 py-2 hover:bg-blue-50 flex items-center capitalize"
+                    onClick={() => handleColorSelect(color)}
+                    onMouseDown={(e) => e.preventDefault()}
+                  >
+                    <div
+                      className="w-4 h-4 rounded-full mr-3 border border-gray-300"
+                      style={{ backgroundColor: color === "white" ? "#f9fafb" : color }}
+                    ></div>
+                    {color}
+                    {selectedColors.includes(color) && (
+                      <span className="ml-auto text-blue-600 font-semibold">✓</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            placeholder="Enter gadget description"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 outline-none transition resize-vertical"
+            rows="4"
+          ></textarea>
+        </div>
+
+        {/* Image Upload */}
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">Upload Images</label>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImageChange}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          />
+          {images.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-4">
+              {images.map((img, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={img.preview}
+                    alt={`Preview ${index}`}
+                    className="w-32 h-32 object-cover rounded-lg border border-gray-300 shadow-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setImages(images.filter((_, i) => i !== index))}
+                    className="absolute top-1 right-1 text-red-600 hover:text-red-800 font-bold bg-white rounded-full p-1"
+                  >
+                    ×
+                  </button>
                 </div>
               ))}
             </div>
-          </div>
+          )}
+        </div>
 
-          {/* Bestseller */}
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              checked={bestseller}
-              onChange={() => setBestseller(!bestseller)}
-              className="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
-            />
-            <label className="ml-2 block text-sm font-medium text-gray-700">Add to Bestseller</label>
-          </div>
+        {/* Submit */}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-medium text-lg shadow-md hover:shadow-lg"
+        >
+          Add Gadget
+        </button>
+      </form>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className={`w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300 ${
-              isLoading ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Adding...' : 'Add Product'}
-          </button>
-        </form>
-      </div>
+      {/* Toast Container */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </div>
   );
-}
+};
+
+export default Gadget;

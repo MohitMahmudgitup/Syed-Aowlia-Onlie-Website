@@ -6,7 +6,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate} from 'react-router-dom';
 import { ShopContext } from '../Context/ShopContext';
 
-function Login({ setToken }) {
+function Login({ setAdmintoken }) {
   
   const { backend } = useContext(ShopContext);
   const navigate = useNavigate()
@@ -22,8 +22,8 @@ function Login({ setToken }) {
     try {
       const response = await axios.post(`${backend}/api/user/adminLogin`, { email, password });
       if (response.data.success) {
-        setToken && setToken(response.data.token);
-        localStorage.setItem('token', response.data.token);
+        setAdmintoken && setAdmintoken(response.data.token);
+        if(response.data.role === "admin")  localStorage.setItem('admintoken', response.data.token);
         toast.success(response.data.message);
         navigate('/adminPages')
       } else {
@@ -98,4 +98,3 @@ function Login({ setToken }) {
 }
 
 export default Login;
-// ...existing code...

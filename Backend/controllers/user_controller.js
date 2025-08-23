@@ -73,21 +73,25 @@ export const loginUser = async (req, res) => {
 
 // Get user details
 export const getUser = async (req, res) => {
-  const { id } = req.params;
-
+  const { userId } = req.body;
+  console.log("userId :",userId)
   try {
-    const user = await User.findById(id);
-    if (!user) {
-      return res
-        .status(404)
-        .json({ message: "User not found.", success: false });
+    if (!userId) {
+      return res.status(400).json({ message: "User ID missing", success: false });
     }
 
-    res.status(200).json(user);
+    const user = await User.findById(userId).select("-password -__v");
+    if (!user) {
+      return res.status(404).json({ message: "User not found", success: false });
+    }
+
+    res.status(200).json({ success: true, user });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong.", success: false });
+    console.error("GetUser error:", error); // <-- log the error
+    res.status(500).json({ message: "Something went wrong.", success: false, error: error.message });
   }
 };
+
 
 // Update user data
 export const updateUser = async (req, res) => {
@@ -142,13 +146,13 @@ export const admin = (req,res) =>{
 // Admin login
 export const adminLogin = async (req, res) => {
   try {
-    const  { email, password } = req.body;
-
+    const  { email, password,   } = req.body;
+    let role = "admin"
     if ( email === process.env.ADMIN_EMAIL &&  password  === process.env.ADMIN_PASSWORD) {
-      const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ email , role: role  }, process.env.JWT_SECRET, {
         expiresIn: "365d",
       });      
-      return res.status(200).json({ token, success: true ,  message: "Admin logged in successfully." });
+      return res.status(200).json({ token,role, success: true ,  message: "Admin logged in successfully." });
 
     }else{
       return res.status(401).json({ message: "Invalid email or password backend.", success: false})

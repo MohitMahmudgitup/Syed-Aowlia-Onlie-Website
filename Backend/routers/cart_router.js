@@ -12,6 +12,7 @@ router.put('/update', authUser , updateProductInUserCart);
 
 // Get user's cart
 router.get('/get', authUser , getUserCart);
+
 router.post('/delete', deleteProductFromUserCart);
 
 

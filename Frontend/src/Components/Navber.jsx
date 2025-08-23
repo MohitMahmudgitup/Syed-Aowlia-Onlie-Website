@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { assets} from "../assets/assets";
-import {  Link , NavLink, useNavigate } from "react-router-dom";
+import { assets } from "../assets/assets";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
-import Switch from "./Switch";
+import axios from "axios";
 
-function Navbar() {
+function Navbar({ admintoken }) {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
-  const { getCartItem, setToken, setCartItem, token, getUserCart, darkmode } = useContext(ShopContext);
-  
+  const { getCartItem, setToken, setCartItem, token, darkmode, backend } = useContext(ShopContext);
+  const [userdata, setUserData] = useState(null); // Initialize as null for better conditional checking
   const [linkProfile, setLinkProfile] = useState("/login");
 
   const handleLogout = () => {
@@ -22,17 +22,33 @@ function Navbar() {
     navigate("/collection");
   };
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token"); 
-    if (storedToken) {
-      // getUserCart(storedToken);
-      setLinkProfile("/"); 
-    } else {
-      setLinkProfile("/login"); 
-    }
-  }, []); 
+  const getUserId = async () => {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+        backend + "/api/user",  // POST route
+        {},                      // empty body
+        { headers: { token } }   // token header
+      );
 
-  return ( 
+      setUserData(res.data.user); // should show user data now
+  };
+
+  useEffect(() => {
+    getUserId()
+  }, [])
+
+  console.log(userdata)
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setLinkProfile("/");
+    } else {
+      setLinkProfile("/login");
+    }
+  }, []);
+
+  return (
     <div className={`  px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex sticky top-0  z-50 items-center justify-between py-1 font-medium   ${darkmode ? 'bg-zinc-900 text-white  ' : 'bg-[#FF8311] text-white '}`}>
       {/* Logo */}
       <NavLink to={"/"} className={"-ml-4 sm:ml-0"} >
@@ -42,44 +58,65 @@ function Navbar() {
       {/* Links for larger screens */}
       <div className="flex justify-center gap-5 items-center ">
         <ul className="hidden sm:flex gap-5 text-sm">
-          <NavLink to="/" className="flex flex-col items-center gap-1">HOME</NavLink>
+          {/* <NavLink to="/" className="flex flex-col items-center gap-1">HOME</NavLink>
           <NavLink to="/collection" className="flex flex-col items-center gap-1">COLLECTION</NavLink>
           <NavLink to="/about" className="flex flex-col items-center gap-1">ABOUT</NavLink>
-          <NavLink to="/contact" className="flex flex-col items-center gap-1">CONTACT</NavLink>
+          <NavLink to="/contact" className="flex flex-col items-center gap-1">CONTACT</NavLink> */}
         </ul>
-        {/* <NavLink
-          to="https://full-stack-e-commerce-admin.onrender.com"
-          target="_blank"
-          className={`hidden lg:flex  px-5 py-2 ${darkmode ? "bordersdark" : "borderslight"}`}
-          
-        >
-          ADMIN PANEL
-        </NavLink> */}
-        {/* <div className="hidden sm:block">
-          <Switch />
-        </div> */}
+
+        {admintoken && (
+          <NavLink
+            to="/adminPages"
+            target="_blank"
+            className={`hidden lg:flex  px-5 py-2 ${darkmode ? "bordersdark" : "borderslight"}`}
+          >
+            ADMIN PANEL
+          </NavLink>
+        )}
       </div>
 
       {/* Icons Section */}
       <div className="flex items-center gap-6">
         {/* Search Icon */}
-        <img
-          onClick={handleSearch}
-          src={assets.search_icon}
-        
-          className={`w-5 cursor-pointer hidden sm:block transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`}
-          alt="Search Icon"
-        />
+        <div onClick={handleSearch} className="bg-[#ffffff] hover:bg-[#ffffffec] cursor-pointer px-4 py-2 w-60 flex justify-between rounded-2xl">
+          <p className="text-zinc-600 text-sm">Search...</p>
+          <img
+            src={assets.search_icon}
+            className={`w-5 cursor-pointer hidden sm:block transition-all duration-300 `}
+            alt="Search Icon"
+          />
+        </div>
 
         {/* Profile Dropdown */}
         <Link to={linkProfile}>
           <div className="relative group">
-          <img src={assets.profile_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`} alt="Profile Icon" />
+            {token ? (
+              <div className="bg-[#ffffff] hover:bg-[#ffffffec] cursor-pointer px-4 py-2 w-40 flex gap-2 items-center rounded-2xl">
+                <img
+                  src={assets.profile_icon}
+                  className="w-5 cursor-pointer transition-all duration-300"
+                  alt="Profile Icon"
+                />
+                <p className="text-zinc-600 text-sm">
+                  {userdata?.username || "Loading..."}
+                </p>
+              </div>
+            ) : (
+              <div className="relative w-9 h-9 flex justify-center items-center rounded-full overflow-hidden">
+                <div className="absolute inset-0 animate-gradient bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"></div>
+                <img
+                  src={assets.profile_icon}
+                  className={`relative w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`}
+                  alt="Profile Icon"
+                />
+              </div>
+
+
+            )}
 
             {token && (
               <div className="hidden group-hover:block absolute z-50 right-0 pt-4">
                 <div className={`flex flex-col gap-4 ${darkmode ? "bg-gray-800 text-gray-200 hover:text-white " : "bg-white text-gray-700"}  w-36 px-5 py-4 rounded-md shadow-md `}>
-                  {/* <p className={`${darkmode ? "bg-gray-800 text-gray-200 hover:text-white " : "bg-white text-gray-700 hover:text-black"}  cursor-pointer`}>Profile</p> */}
                   <Link to="/oders">
                     <p className={`${darkmode ? "bg-gray-800 text-gray-200 hover:text-white " : "bg-white text-gray-700 hover:text-black"}  cursor-pointer`}>Orders</p>
                   </Link>
@@ -95,9 +132,8 @@ function Navbar() {
           <img src={assets.cart_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`} alt="Cart Icon" />
           <p className={`absolute -right-[5px] -bottom-[5px] text-center w-4 h-4 rounded-full text-xs 
   ${darkmode ? 'bg-white text-black' : 'bg-black text-white'}`}>
-  {getCartItem() || 0}
-</p>
-
+            {getCartItem() || 0}
+          </p>
         </Link>
 
         {/* Mobile Menu Icon */}
@@ -106,7 +142,6 @@ function Navbar() {
           src={assets.menu_icon}
           alt="Menu Icon"
           className={`w-5  cursor-pointer sm:hidden block transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`}
-          
         />
       </div>
 
@@ -123,10 +158,6 @@ function Navbar() {
           <NavLink onClick={() => setVisible(false)} to="/about" className="py-3 pl-6 border-b text-black">ABOUT</NavLink>
           <NavLink onClick={() => setVisible(false)} to="/collection" className="py-3 pl-6 border-b text-black">COLLECTION</NavLink>
           <NavLink onClick={() => setVisible(false)} to="/contact" className="py-3 pl-6 border-b text-black">CONTACT</NavLink>
-          {/* <NavLink onClick={() => setVisible(false)} to="https://full-stack-e-commerce-admin.onrender.com" className="py-3 pl-6  bg-black text-white">ADMIN PANEL</NavLink> */}
-          {/* <div className="mt-5 ml-5 sm:hidden block">
-            <Switch />
-          </div> */}
         </div>
       </div>
     </div>

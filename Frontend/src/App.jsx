@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Routes,Route } from 'react-router-dom'
+import {  Routes,Route } from 'react-router-dom'
 import Home from './Pages/Home'
 import { Collection } from './Pages/Collection'
 import About from './Pages/About'
@@ -13,7 +13,7 @@ import Navber from './Components/Navber.jsx'
 import Footer from './Components/Footer.jsx'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ShopContext } from './Context/ShopContext'
+import { ShopContext } from './Context/ShopContext.jsx'
 import VerifyStripe from './Pages/verifyStripe.jsx'
 import ForgotPassword from './Components/ForgotPassword.jsx'
 import ResetPassword from './Components/ResetPassword.jsx'
@@ -24,11 +24,11 @@ import Adminpages from './Pages/Adminpages.jsx'
 
 
 function App() {
-  const { darkmode, setDarkmode } = useContext(ShopContext);
-
+  const { darkmode} = useContext(ShopContext);
+  const [admintoken, setAdmintoken] = useState(localStorage.getItem('admintoken') || null);
   return (
     <main className={` ${darkmode ? ' bg-zinc-900   text-white' : 'bg-[#F5F5F5] text-black'}`}>
-      <Navber/>
+      <Navber admintoken={admintoken}/>
       <Routes>
         <Route path='/' element={<Home/>}/>
       </Routes>
@@ -55,8 +55,9 @@ function App() {
 
         {/* Admin */}
 
-        <Route path="/admin-panal" element={<Admin />} />
-        <Route path="/adminPages/*" element={<Adminpages />} />
+        <Route path="/admin-panal" element={<Admin setAdmintoken={setAdmintoken}/>} />
+
+        <Route path="/adminPages/*" element={<Adminpages admintoken={admintoken} setAdmintoken={setAdmintoken}/>} />
 
       </Routes>
     </div>

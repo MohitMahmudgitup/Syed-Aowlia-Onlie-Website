@@ -6,10 +6,8 @@ function Navbar({ setToken }) {
 
 
   const handleLogout = () => {
-    // Clear the token from state and localStorage
     setToken("")
     localStorage.removeItem('token')
-    // Redirect to the login page
     navigate('/login')
   }
 
@@ -19,7 +17,6 @@ function Navbar({ setToken }) {
       <Link
         onClick={handleLogout}
         className='px-5 py-2 bg-gray-950 hover:bg-gray-900 text-white rounded-md font-medium'
-        // disabled={false} // Ensure logout is always enabled
       >
         Logout
       </Link>

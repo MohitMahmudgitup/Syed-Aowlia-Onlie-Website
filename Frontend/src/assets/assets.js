@@ -81,8 +81,10 @@ import yellowFiveSter from "./yellowFiveSter.png"
 import add_icon from './add_icon.png'
 import order_icon from './order_icon.png'
 import upload_area from './upload_area.png'
+import SyedAowliaBlack from "./SyedAowliaBlack.png"
 
 export const assets = {
+    SyedAowliaBlack,
     upload_area,
     order_icon,
     add_icon,

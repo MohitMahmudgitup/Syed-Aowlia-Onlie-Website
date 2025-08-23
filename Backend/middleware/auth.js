@@ -9,7 +9,8 @@ export const authUser = (req, res, next) => {
   }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.body.userId = decoded.id;
+    
+    req.body.userId = decoded.id; 
     next();
   } catch (error) {
     if (error.name === 'TokenExpiredError') {

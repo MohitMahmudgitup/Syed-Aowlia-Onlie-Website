@@ -4,7 +4,7 @@ import { ShopContext } from "../Context/ShopContext";
 import RelatedProduct from "../Components/relatedProduct";
 
 function Product() {
-  const backendURL = "http://localhost:4000/uploads/product/";
+  const { backend } = useContext(ShopContext);
   const { productID } = useParams();
   const { products, addtocart, token, navigate, darkmode } = useContext(ShopContext);
   const [productData, setProductData] = useState(null);
@@ -58,7 +58,7 @@ function Product() {
           <div className="lg:w-1/2">
             <div className="relative">
               <img
-                src={`${backendURL}${productData.images[currentImageIndex]}`}
+                src={`${backend}/uploads/product/${productData.images[currentImageIndex]}`}
                 alt={productData.name}
                 className="w-full h-80 object-cover rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 cursor-pointer"
                 onClick={openModal}
@@ -81,9 +81,8 @@ function Product() {
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`w-3 h-3 mx-1 rounded-full ${
-                      currentImageIndex === index ? "bg-gray-800" : "bg-gray-300"
-                    }`}
+                    className={`w-3 h-3 mx-1 rounded-full ${currentImageIndex === index ? "bg-gray-800" : "bg-gray-300"
+                      }`}
                   />
                 ))}
               </div>
@@ -104,11 +103,9 @@ function Product() {
                     <span
                       key={index}
                       onClick={() => setSize(item)}
-                      className={`${
-                        item === size ? "bg-gray-200" : ""
-                      } border cursor-pointer border-gray-300 rounded-md px-3 py-1 hover:bg-gray-200 transition ${
-                        darkmode ? "text-white hover:text-black" : "text-gray-800"
-                      }`}
+                      className={`${item === size ? "bg-gray-200" : ""
+                        } border cursor-pointer border-gray-300 rounded-md px-3 py-1 hover:bg-gray-200 transition ${darkmode ? "text-white hover:text-black" : "text-gray-800"
+                        }`}
                     >
                       {item}
                     </span>
@@ -126,9 +123,8 @@ function Product() {
                     <span
                       key={index}
                       onClick={() => setColor(c)}
-                      className={`px-3 py-1 rounded-md border cursor-pointer transition ${
-                        color === c ? "bg-gray-800 text-white" : "bg-gray-200 text-gray-800"
-                      }`}
+                      className={`px-3 py-1 rounded-md border cursor-pointer transition ${color === c ? "bg-gray-800 text-white" : "bg-gray-200 text-gray-800"
+                        }`}
                     >
                       {c}
                     </span>
@@ -137,13 +133,13 @@ function Product() {
               </>
             )}
             {
-                productData.brand &&
-            <div>
-                <h1 className="mt-4 font-medium"> Brand : <span  className="font-normal">{productData.brand}</span></h1>
-            </div>
+              productData.brand &&
+              <div>
+                <h1 className="mt-4 font-medium"> Brand : <span className="font-normal">{productData.brand}</span></h1>
+              </div>
 
             }
-            
+
 
             {/* Add to Cart */}
             {token ? (
@@ -176,9 +172,8 @@ function Product() {
         <div className="mt-6">
           <div className="flex space-x-4 border-b border-gray-300">
             <button
-              className={`py-2 px-4 ${
-                activeTab === "details" ? "font-bold border-b-2 border-indigo-600" : "text-gray-600 hover:text-indigo-600"
-              }`}
+              className={`py-2 px-4 ${activeTab === "details" ? "font-bold border-b-2 border-indigo-600" : "text-gray-600 hover:text-indigo-600"
+                }`}
               onClick={() => setActiveTab("details")}
             >
               Details
@@ -186,9 +181,8 @@ function Product() {
           </div>
 
           {activeTab === "details" && (
-            <div className="mt-4">
-              <h3 className="text-2xl font-semibold">Product Description</h3>
-              <p>{productData.description}</p>
+            <div className="mt-4 bg-slate-100">
+              <p className="whitespace-pre-line">{productData.description}</p>
             </div>
           )}
         </div>
@@ -201,7 +195,7 @@ function Product() {
             </button>
             <div className="relative">
               <img
-                src={`${backendURL}${productData.images[currentImageIndex]}`}
+                src={`${backend}/uploads/product/${productData.images[currentImageIndex]}`}
                 alt={productData.name}
                 className="max-w-full max-h-screen object-contain"
               />

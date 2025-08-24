@@ -7,7 +7,7 @@ import axios from "axios";
 function Navbar({ admintoken }) {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
-  const { getCartItem, setToken, setCartItem, token, darkmode, backend } = useContext(ShopContext);
+  const { getCartItem, setToken, setCartItem, token, darkmode, backend,     searchQuery, setSearchQuery } = useContext(ShopContext);
   const [userdata, setUserData] = useState(null); // Initialize as null for better conditional checking
   const [linkProfile, setLinkProfile] = useState("/login");
 
@@ -37,7 +37,6 @@ function Navbar({ admintoken }) {
     getUserId()
   }, [])
 
-  console.log(userdata)
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -47,6 +46,10 @@ function Navbar({ admintoken }) {
       setLinkProfile("/login");
     }
   }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   return (
     <div className={`  px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex sticky top-0  z-50 items-center justify-between py-1 font-medium   ${darkmode ? 'bg-zinc-900 text-white  ' : 'bg-[#FF8311] text-white '}`}>
@@ -78,13 +81,21 @@ function Navbar({ admintoken }) {
       {/* Icons Section */}
       <div className="flex items-center gap-6">
         {/* Search Icon */}
-        <div onClick={handleSearch} className="bg-[#ffffff] hover:bg-[#ffffffec] cursor-pointer px-4 py-2 w-60 flex justify-between rounded-2xl">
-          <p className="text-zinc-600 text-sm">Search...</p>
-          <img
+        <div onClick={handleSearch} className="hover:bg-[#ffffff] items-center bg-[#ffffffec] cursor-pointer px-4 py-2 w-60 flex gap-4 rounded-2xl">
+          <input className="w-40 border-none outline-none bg-[#0000] text-black"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          type="text" 
+          placeholder="Search..." />
+          <div className=" w-12  flex justify-center items-center">
+                      <img
             src={assets.search_icon}
-            className={`w-5 cursor-pointer hidden sm:block transition-all duration-300 `}
+            className={`w-6 cursor-pointer hidden sm:block transition-all duration-300 `}
             alt="Search Icon"
           />
+
+          </div>
+
         </div>
 
         {/* Profile Dropdown */}

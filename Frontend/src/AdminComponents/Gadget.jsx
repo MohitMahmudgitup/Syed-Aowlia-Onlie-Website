@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ShopContext } from "../Context/ShopContext";
-import { useParams } from "react-router-dom";
 
-const Gadget = ({ token }) => {
-  const {categoryId} =  useParams()
+const Gadget = ({ admintoken }) => {
     const { backend } = useContext(ShopContext);
   const [formData, setFormData] = useState({
     name: "",
@@ -36,7 +34,7 @@ const Gadget = ({ token }) => {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/category/getCategory");
+      const res = await axios.get(backend + "/api/category/getCategory");
       setCategories(res.data.categories || []);
     } catch (err) {
       console.error("Error fetching categories:", err);
@@ -110,9 +108,9 @@ const Gadget = ({ token }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/product/add",
+        backend + "/api/product/add",
         formDataObj,
-        { headers: { token } }
+        { headers: { admintoken } }
       );
       alert("Product added successfully!");
       console.log("Response:", res.data);
@@ -154,7 +152,9 @@ const Gadget = ({ token }) => {
           </div>
         </div>
 
-        {/* Category */}
+<div className="flex gap-4">
+
+          {/* Category */}
         <div className="w-full">
           <label className="block mb-1 font-medium">Category *</label>
           <select name="category" value={formData.category} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required>
@@ -171,6 +171,11 @@ const Gadget = ({ token }) => {
             {subCategories.map((sub) => <option key={sub._id} value={sub._id}>{sub.name}</option>)}
           </select>
         </div>
+
+
+</div>
+
+
 
         {/* Colors */}
         <div className="w-full">

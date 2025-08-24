@@ -4,7 +4,7 @@ import ProductItem from "./ProductItem";
 import Titel from "./Titel";
 
 function RelatedProduct({ selectedCategories, selectedTypes }) {
-  const { products } = useContext(ShopContext);
+  const { products, backend } = useContext(ShopContext);
   const [related, setRelated] = useState([]);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function RelatedProduct({ selectedCategories, selectedTypes }) {
               name={product.name}
               description={product.description}
               price={product.price}
-               image={`http://localhost:4000/uploads/product/${product.images[0]}`}
+               image={`${backend}/uploads/product/${product.images[0]}`}
             />
           ))}
         </div>

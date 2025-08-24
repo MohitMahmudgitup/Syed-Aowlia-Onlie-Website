@@ -8,13 +8,13 @@ import axios from "axios";
 
 export const Collection = () => {
   const { collectionID } = useParams()
-  const { products, darkmode, backend } = useContext(ShopContext);
+  const { products, darkmode, backend, searchQuery, setSearchQuery } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [filter, setFilter] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortOption, setSortOption] = useState("Relevant");
-  const [searchQuery, setSearchQuery] = useState("");
+
   const [subCategoryType, setSubCategoryType] = useState([]);
   const [selectSubCat, setSelectSubCat] = useState([]);
   const [categoryType, setCategoryType] = useState([]);
@@ -39,26 +39,26 @@ export const Collection = () => {
     }
   }
 
-const subFilter = () => {
-  const subCatdata = subCategoryType || [];
+  const subFilter = () => {
+    const subCatdata = subCategoryType || [];
 
-  if (collectionID === "collection") {
-    if (selectedCategories.length > 0) {
-      const filteredSubCats = subCatdata.filter((subCat) => {
-        const catId = subCat.category?._id || subCat.category; 
-        return selectedCategories.includes(String(catId));
-      });
-      setSelectSubCat(filteredSubCats);
+    if (collectionID === "collection") {
+      if (selectedCategories.length > 0) {
+        const filteredSubCats = subCatdata.filter((subCat) => {
+          const catId = subCat.category?._id || subCat.category;
+          return selectedCategories.includes(String(catId));
+        });
+        setSelectSubCat(filteredSubCats);
+      } else {
+        setSelectSubCat(subCatdata);
+      }
     } else {
-      setSelectSubCat(subCatdata);
+      const filtersubcat = subCatdata.filter(
+        (p) => String(p.category?._id || p.category) === String(collectionID) // ✅ normalize
+      );
+      setSelectSubCat(filtersubcat);
     }
-  } else {
-    const filtersubcat = subCatdata.filter(
-      (p) => String(p.category?._id || p.category) === String(collectionID) // ✅ normalize
-    );
-    setSelectSubCat(filtersubcat);
-  }
-};
+  };
 
 
   const applyFilters = () => {
@@ -134,8 +134,8 @@ const subFilter = () => {
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories((prev) =>
-      prev.includes(String(categoryId)) 
-        ? prev.filter((cat) => cat !== String(categoryId)) 
+      prev.includes(String(categoryId))
+        ? prev.filter((cat) => cat !== String(categoryId))
         : [...prev, String(categoryId)]
     );
   };
@@ -143,8 +143,8 @@ const subFilter = () => {
   const handleTypeChange = (subcategoryId) => {
     setSelectedTypes((prev) => {
       const stringId = String(subcategoryId);
-      const newSelectedTypes = prev.includes(stringId) 
-        ? prev.filter((t) => t !== stringId) 
+      const newSelectedTypes = prev.includes(stringId)
+        ? prev.filter((t) => t !== stringId)
         : [...prev, stringId];
       return newSelectedTypes;
     });
@@ -170,7 +170,7 @@ const subFilter = () => {
       <div className="w-full sm:w-1/4">
         <div className={`p-4 sticky top-[115px] rounded-xl shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
           {/* FILTERS HEADER */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             <p
               onClick={() => setShowFilter((prev) => !prev)}
               className="text-xl font-semibold cursor-pointer flex items-center gap-2 transition-colors duration-300"
@@ -186,98 +186,88 @@ const subFilter = () => {
 
           {/* FILTER OPTIONS */}
           <div className={`${showFilter ? "hidden" : "block"} sm:block`}>
-            {/* SEARCH BOX */}
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Search products..."
-                className={`border-2 p-2 w-full rounded-lg transition-all duration-300 ${darkmode ? "border-gray-600 bg-gray-700 text-white placeholder-gray-400" : "border-gray-300 text-gray-800 placeholder-gray-500"}`}
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-            
-              <div
-    className={`p-4 sticky top-[115px]  transition-all duration-300 
+
+            <div
+              className={`p-4 sticky top-[115px]  transition-all duration-300 
       max-h-[80vh] overflow-y-auto`}  // ✅ add scroll
-  >
+            >
 
-                          {/* CATEGORIES - Show only when collectionID is "collection" */}
-            {collectionID === "collection" && categoryType.length > 0 && (
-              <div className="mb-6">
-                <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                  CATEGORIES ({categoryType.length})
-                </p>
-                <div className="flex flex-col gap-3 text-sm">
-                  {categoryType.map((categoryItem) => (
-                    <label className="flex items-center gap-2" key={categoryItem._id}>
-                      <input
-                        className="w-4 h-4 rounded-md transition-all duration-300"
-                        type="checkbox"
-                        value={categoryItem._id}
-                        onChange={() => handleCategoryChange(categoryItem._id)}
-                        checked={selectedCategories.includes(String(categoryItem._id))}
-                      />
-                      <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
-                        {categoryItem.name || categoryItem.categoryName || 'Unnamed Category'}
+              {/* CATEGORIES - Show only when collectionID is "collection" */}
+              {collectionID === "collection" && categoryType.length > 0 && (
+                <div className="mb-6">
+                  <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                    CATEGORIES ({categoryType.length})
+                  </p>
+                  <div className="flex flex-col gap-3 text-sm">
+                    {categoryType.map((categoryItem) => (
+                      <label className="flex items-center gap-2" key={categoryItem._id}>
+                        <input
+                          className="w-4 h-4 rounded-md transition-all duration-300"
+                          type="checkbox"
+                          value={categoryItem._id}
+                          onChange={() => handleCategoryChange(categoryItem._id)}
+                          checked={selectedCategories.includes(String(categoryItem._id))}
+                        />
+                        <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
+                          {categoryItem.name || categoryItem.categoryName || 'Unnamed Category'}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* SUBCATEGORIES */}
+              {selectSubCat.length > 0 && (
+                <div className="mb-6">
+                  <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                    SUBCATEGORIES ({selectSubCat.length})
+                  </p>
+                  <div className="flex flex-col gap-3 text-sm">
+                    {selectSubCat.map((item) => (
+                      <label className="flex items-center gap-2" key={item._id || item.id}>
+                        <input
+                          className="w-4 h-4 rounded-md transition-all duration-300"
+                          type="checkbox"
+                          value={item._id || item.id}
+                          onChange={() => handleTypeChange(item._id || item.id)}
+                          checked={selectedTypes.includes(String(item._id || item.id))}
+                        />
+                        <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
+                          {item.name || 'Unnamed Subcategory'}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* ACTIVE FILTERS DISPLAY */}
+              {(selectedCategories.length > 0 || selectedTypes.length > 0) && (
+                <div className="mb-4">
+                  <p className={`mb-2 text-sm font-bold ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                    Active Filters:
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedCategories.map(catId => (
+                      <span
+                        key={catId}
+                        className={`px-2 py-1 text-xs rounded-full ${darkmode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"}`}
+                      >
+                        {getCategoryName(catId)}
                       </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* SUBCATEGORIES */}
-            {selectSubCat.length > 0 && (
-              <div className="mb-6">
-                <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                  SUBCATEGORIES ({selectSubCat.length})
-                </p>
-                <div className="flex flex-col gap-3 text-sm">
-                  {selectSubCat.map((item) => (
-                    <label className="flex items-center gap-2" key={item._id || item.id}>
-                      <input
-                        className="w-4 h-4 rounded-md transition-all duration-300"
-                        type="checkbox"
-                        value={item._id || item.id}
-                        onChange={() => handleTypeChange(item._id || item.id)}
-                        checked={selectedTypes.includes(String(item._id || item.id))}
-                      />
-                      <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
-                        {item.name || 'Unnamed Subcategory'}
+                    ))}
+                    {selectedTypes.map(subId => (
+                      <span
+                        key={subId}
+                        className={`px-2 py-1 text-xs rounded-full ${darkmode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"}`}
+                      >
+                        {selectSubCat.find(sub => String(sub._id || sub.id) === String(subId))?.name || 'Subcategory'}
                       </span>
-                    </label>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {/* ACTIVE FILTERS DISPLAY */}
-            {(selectedCategories.length > 0 || selectedTypes.length > 0) && (
-              <div className="mb-4">
-                <p className={`mb-2 text-sm font-bold ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                  Active Filters:
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {selectedCategories.map(catId => (
-                    <span 
-                      key={catId}
-                      className={`px-2 py-1 text-xs rounded-full ${darkmode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"}`}
-                    >
-                      {getCategoryName(catId)}
-                    </span>
-                  ))}
-                  {selectedTypes.map(subId => (
-                    <span 
-                      key={subId}
-                      className={`px-2 py-1 text-xs rounded-full ${darkmode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"}`}
-                    >
-                      {selectSubCat.find(sub => String(sub._id || sub.id) === String(subId))?.name || 'Subcategory'}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+              )}
 
             </div>
 
@@ -289,17 +279,16 @@ const subFilter = () => {
 
       <div className="flex-1">
         <div className="flex justify-between mb-6 flex-col sm:flex-row">
-          <Titel 
-            text1={"ALL"} 
-            text2={collectionID === "collection" ? " COLLECTIONS" : ` ${getCategoryName(collectionID)?.toUpperCase() || "COLLECTIONS"}`} 
+          <Titel
+            text1={"ALL"}
+            text2={collectionID === "collection" ? " COLLECTIONS" : ` ${getCategoryName(collectionID)?.toUpperCase() || "COLLECTIONS"}`}
           />
 
           <select
-            className={`border-2 text-sm px-3 py-1 rounded-lg transition-all focus:outline-none focus:ring-2 ${
-              darkmode 
-                ? "border-gray-600 bg-gray-600 text-white hover:bg-gray-700 focus:bg-gray-700 focus:ring-gray-400" 
+            className={`border-2 text-sm px-3 py-1 rounded-lg transition-all focus:outline-none focus:ring-2 ${darkmode
+                ? "border-gray-600 bg-gray-600 text-white hover:bg-gray-700 focus:bg-gray-700 focus:ring-gray-400"
                 : "border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:ring-blue-400"
-            }`}
+              }`}
             value={sortOption}
             onChange={handleSortChange}
           >
@@ -320,7 +309,7 @@ const subFilter = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2">
           {filter.length > 0 ? (
             filter.map((item) => (
-              <ProductItem 
+              <ProductItem
                 key={item._id}
                 id={item._id}
                 name={item.name}

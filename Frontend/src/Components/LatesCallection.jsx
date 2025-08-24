@@ -6,7 +6,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 
 function LatesCallection() {
-  const { products, darkmode } = useContext(ShopContext);
+  const { products, darkmode, backend } = useContext(ShopContext);
   const [latestProducts, setLatestProducts] = useState([]); // Initialize with an empty array
 
 useEffect(() => {
@@ -52,7 +52,7 @@ useEffect(() => {
                 name={item.name}
                 description={item.description}
                 price={item.price}
-                image={`http://localhost:4000/uploads/product/${item.images[0]}`} // Accessing the first image from the images array
+                image={`${backend}/uploads/product/${item.images[0]}`} // Accessing the first image from the images array
               />
             ))
           : // Generate 10 skeleton loaders

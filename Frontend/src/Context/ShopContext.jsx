@@ -14,10 +14,11 @@ const ShopContextProvider = (props) => {
   const [showsearch, setShowsearch] = useState(false);
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const [darkmode, setDarkmode] = useState(() => {
-    const savedDarkmode = localStorage.getItem("darkmode");
-    return savedDarkmode ? JSON.parse(savedDarkmode) : false;
+  const savedDarkmode = localStorage.getItem("darkmode");
+  return savedDarkmode ? JSON.parse(savedDarkmode) : false;
   });
   useEffect(() => {
     localStorage.setItem("darkmode", JSON.stringify(darkmode));
@@ -234,7 +235,8 @@ if (cardData[itemId]) {
     token,
     setToken,
     setCartItem,
-    darkmode, setDarkmode
+    darkmode, setDarkmode,
+    searchQuery, setSearchQuery
 
   };
 

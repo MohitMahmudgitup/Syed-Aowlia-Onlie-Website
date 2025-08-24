@@ -20,7 +20,7 @@ const CategoryItem = () => {
     }, [backend]);
 
     return (
-        <div className="flex gap-4 ">
+        <div className="grid grid-cols-6 gap-10 ">
             {categories.map((item) => (
                 <Link to = {`${item._id}`}
                     key={item._id}

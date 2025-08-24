@@ -7,7 +7,7 @@ import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
 
 function BestSeller() {
-  const { currency, products, darkmode } = useContext(ShopContext);
+  const { currency, products, darkmode , backend } = useContext(ShopContext);
   const [bestSeller, setBestSeller] = useState([]);
 
  useEffect(() => {
@@ -82,7 +82,7 @@ function BestSeller() {
                 <div className="relative overflow-hidden rounded-t-2xl">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
                   <img
-                    src={`http://localhost:4000/uploads/product/${item.images[0]}`}
+                    src={`${backend}/uploads/product/${item.images[0]}`}
                     alt={item.name}
                     className="w-full h-36 sm:h-40 object-cover transform transition-transform duration-700 group-hover:scale-110"
                   />

@@ -2,18 +2,17 @@ import { Route, Routes } from 'react-router-dom'
 import { AdminAdd } from '../AdminPages/AdminAdd.jsx'
 import { AdminEditProduct } from '../AdminPages/AdminEditProduct.jsx'
 import { AdminList } from '../AdminPages/AdminList.jsx'
-import { AdminOrders } from '../AdminPages/AdminOrders.jsx'
+import  AdminOrders  from '../AdminPages/AdminOrders.jsx'
 import Sidebar from '../AdminComponents/Sidebers.jsx'
 import Gadget from '../AdminComponents/Gadget.jsx'
 import { Garments } from '../AdminComponents/garments.jsx'
 import Computer from '../AdminComponents/Computer.jsx'
 import { useEffect } from 'react'
 import AdminNavbar from '../AdminComponents/AdminNavbar.jsx'
+import Footer from "../Components/Footer.jsx"
+import AdminCategory from '../AdminPages/AdminCategory.jsx'
 
 const Adminpages = ({ admintoken ,setAdmintoken}) => {
-    //     useEffect(() => {
-    //         console.log("Adminpages token:", token);
-    // }, [token]);
 
 
     return (
@@ -29,14 +28,16 @@ const Adminpages = ({ admintoken ,setAdmintoken}) => {
                                 <Route index element={<AdminAdd admintoken={admintoken} />} />
                                 <Route path="list" element={<AdminList admintoken={admintoken} />} />
                                 <Route path="orders" element={<AdminOrders admintoken={admintoken} />} />
-                                <Route path="/:id" element={<Gadget admintoken={admintoken} />} />
+                                <Route path="/68ab0454fb0a9a4e20f5d78b" element={<Gadget admintoken={admintoken} />} />
                                 <Route path="68a366123ff9ff3fd861d31c" element={<Computer admintoken={admintoken} />} />
                                 <Route path="68a3658d3ff9ff3fd861d318" element={<Garments admintoken={admintoken} />} />
+                                <Route path="category" element={<AdminCategory admintoken={admintoken} />} />
                                 <Route path="products/edit/:id" element={<AdminEditProduct admintoken={admintoken} />} />
                             </Routes>
                         </div>
                     </div>
                     
+                    <Footer/>
                     
                     </>
                   
@@ -46,7 +47,6 @@ const Adminpages = ({ admintoken ,setAdmintoken}) => {
                     </div>
                 )
             }
-
 
         </div>
     )

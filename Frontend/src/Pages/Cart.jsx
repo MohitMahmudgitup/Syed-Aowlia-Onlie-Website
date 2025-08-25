@@ -41,7 +41,7 @@ export const Cart = () => {
   const totalAmount = getTotalAmount();
 
   return (
-    <div className={`min-h-screen transition-all duration-300 ${darkmode ? "bg-gray-900 text-gray-300" : "bg-gray-100 text-gray-900"}`}>
+    <div className={`min-h-screen transition-all duration-300 ${darkmode ? "bg-gray-900 text-gray-300" : " text-gray-900"}`}>
       <div className="container mx-auto px-4 py-8">
         <Titel text1="Shopping" text2="Cart" />
 
@@ -143,7 +143,7 @@ export const Cart = () => {
                 </div>
                 <button
                   onClick={() => navigate("/place-order")}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold transition-all"
+                  className="w-full bg-[#F97316] hover:bg-orange-600 text-white py-3 rounded-xl font-semibold transition-all"
                 >
                   Proceed to Checkout
                 </button>

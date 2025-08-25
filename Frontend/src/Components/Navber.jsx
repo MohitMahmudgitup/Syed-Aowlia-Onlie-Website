@@ -3,13 +3,18 @@ import { assets } from "../assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function Navbar({ admintoken }) {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
-  const { getCartItem, setToken, setCartItem, token, darkmode, backend,     searchQuery, setSearchQuery } = useContext(ShopContext);
+  const { getCartItem, setToken, setCartItem, token, darkmode, backend, searchQuery, setSearchQuery } = useContext(ShopContext);
   const [userdata, setUserData] = useState(null); // Initialize as null for better conditional checking
   const [linkProfile, setLinkProfile] = useState("/login");
+  const [isOpen, setIsOpen] = useState(false);
+
+
+  const toggleSearch = () => setIsOpen((prev) => !prev);
 
   const handleLogout = () => {
     navigate("/login");
@@ -23,14 +28,14 @@ function Navbar({ admintoken }) {
   };
 
   const getUserId = async () => {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        backend + "/api/user",  // POST route
-        {},                      // empty body
-        { headers: { token } }   // token header
-      );
+    const token = localStorage.getItem("token");
+    const res = await axios.post(
+      backend + "/api/user",  // POST route
+      {},                      // empty body
+      { headers: { token } }   // token header
+    );
 
-      setUserData(res.data.user); // should show user data now
+    setUserData(res.data.user); // should show user data now
   };
 
   useEffect(() => {
@@ -52,75 +57,77 @@ function Navbar({ admintoken }) {
   };
 
   return (
-    <div className={`  px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex sticky top-0  z-50 items-center justify-between py-1 font-medium   ${darkmode ? 'bg-zinc-900 text-white  ' : 'bg-[#FF8311] text-white '}`}>
+    <div className={`  px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex sticky top-0  z-50 items-center justify-between py-1 font-medium   ${darkmode ? 'bg-zinc-900 text-white  ' : 'bg-[#B8D9DC] text-white '}`}>
       {/* Logo */}
       <NavLink to={"/"} className={"-ml-4 sm:ml-0"} >
         <img width={180} src={assets.syedAowlia} alt="" />
       </NavLink>
 
-      {/* Links for larger screens */}
-      <div className="flex justify-center gap-5 items-center ">
-        <ul className="hidden sm:flex gap-5 text-sm">
-          {/* <NavLink to="/" className="flex flex-col items-center gap-1">HOME</NavLink>
-          <NavLink to="/collection" className="flex flex-col items-center gap-1">COLLECTION</NavLink>
-          <NavLink to="/about" className="flex flex-col items-center gap-1">ABOUT</NavLink>
-          <NavLink to="/contact" className="flex flex-col items-center gap-1">CONTACT</NavLink> */}
-        </ul>
-
+      {/* Icons Section */}
+      <div className="flex items-center  gap-2">
         {admintoken && (
           <NavLink
             to="/adminPages"
             target="_blank"
-            className={`hidden lg:flex  px-5 py-2 ${darkmode ? "bordersdark" : "borderslight"}`}
+            className={`hidden  lg:flex text-zinc-400  px-5 py-2 bg-white rounded-full`}
           >
             ADMIN PANEL
           </NavLink>
         )}
-      </div>
-
-      {/* Icons Section */}
-      <div className="flex items-center gap-6">
         {/* Search Icon */}
-        <div onClick={handleSearch} className="hover:bg-[#ffffff] items-center bg-[#ffffffec] cursor-pointer px-4 py-2 w-60 flex gap-4 rounded-2xl">
-          <input className="w-40 border-none outline-none bg-[#0000] text-black"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          type="text" 
-          placeholder="Search..." />
-          <div className=" w-12  flex justify-center items-center">
-                      <img
-            src={assets.search_icon}
-            className={`w-6 cursor-pointer hidden sm:block transition-all duration-300 `}
-            alt="Search Icon"
-          />
+        <div className="pr-3  py-2  bg-[#ffffffec] hidden sm:block  rounded-full">
 
+          <div onClick={handleSearch} className="items-center  cursor-pointer  w-full flex justify-center rounded-full">
+            <motion.input
+              initial={{ width: "0rem", opacity: 0.8 }}
+              animate={{ width: isOpen ? "10rem" : "0rem", opacity: isOpen ? 1 : 0.8 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="border-none outline-none pl-3 bg-[#0000] text-black "
+              value={searchQuery}
+              onChange={handleSearchChange}
+              type="text"
+              placeholder="Search..."
+            />
+
+            <motion.div
+              whileHover={{ scale: 1.2, rotate: 15 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="w-6 flex justify-center items-center "
+              onClick={toggleSearch} // click toggles search open
+            >
+              <img
+                src={assets.search_icon}
+                className="w-5  cursor-pointer hidden sm:block"
+                alt="Search Icon"
+              />
+            </motion.div>
           </div>
-
         </div>
+
 
         {/* Profile Dropdown */}
         <Link to={linkProfile}>
           <div className="relative group">
             {token ? (
-              <div className="bg-[#ffffff] hover:bg-[#ffffffec] cursor-pointer px-4 py-2 w-40 flex gap-2 items-center rounded-2xl">
+              <div className="bg-[#ffffffec] cursor-pointer px-4 py-2 sm:w-40 flex gap-2 items-center rounded-full">
                 <img
                   src={assets.profile_icon}
                   className="w-5 cursor-pointer transition-all duration-300"
                   alt="Profile Icon"
                 />
-                <p className="text-zinc-600 text-sm">
+                <p className="text-zinc-600 sm:block hidden text-sm">
                   {userdata?.username || "Loading..."}
                 </p>
               </div>
             ) : (
-              <div className="relative w-9 h-9 flex justify-center items-center rounded-full overflow-hidden">
-                <div className="absolute inset-0 animate-gradient bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"></div>
+              <div className="relative w-9 h-9 flex justify-center items-center rounded-full bg-[#ffffffec] overflow-hidden">
                 <img
                   src={assets.profile_icon}
-                  className={`relative w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`}
+                  className={`relative w-5 cursor-pointer transition-all duration-300`}
                   alt="Profile Icon"
                 />
               </div>
+
 
 
             )}
@@ -142,7 +149,7 @@ function Navbar({ admintoken }) {
         <Link to="/cart" className="relative">
           <img src={assets.cart_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`} alt="Cart Icon" />
           <p className={`absolute -right-[5px] -bottom-[5px] text-center w-4 h-4 rounded-full text-xs 
-  ${darkmode ? 'bg-white text-black' : 'bg-black text-white'}`}>
+  ${darkmode ? 'bg-white text-black' : 'bg-[#ECFF8E] text-black'}`}>
             {getCartItem() || 0}
           </p>
         </Link>

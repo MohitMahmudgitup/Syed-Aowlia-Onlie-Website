@@ -119,7 +119,7 @@ const AdminCategory = ({ admintoken }) => {
         }
     };
     return (
-        <div className="min-h-screen bg-gradient-to-br p-4">
+        <div className="min-h-screen bg-gradient-to-br sm:p-4">
             {/* Stats Cards */}
             <div className="flex flex-wrap gap-4 mb-6">
                 {/* Total Categories */}
@@ -166,7 +166,7 @@ const AdminCategory = ({ admintoken }) => {
             <div className="flex flex-col md:flex-row mt-2 gap-6">
                 {/* Category Form */}
                 {!godata && (
-                    <div className="bg-white shadow-lg rounded-2xl p-6 w-96 border border-gray-200">
+                    <div className="bg-white shadow-lg rounded-2xl p-6  sm:w-96 border border-gray-200">
                         <h2 className="text-2xl font-bold text-gray-800 mb-6 ">
                             Create Category
                         </h2>

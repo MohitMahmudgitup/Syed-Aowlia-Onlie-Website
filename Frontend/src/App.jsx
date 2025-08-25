@@ -27,7 +27,7 @@ function App() {
   const { darkmode} = useContext(ShopContext);
   const [admintoken, setAdmintoken] = useState(localStorage.getItem('admintoken') || null);
   return (
-    <main className={` ${darkmode ? ' bg-zinc-900   text-white' : 'bg-[#F5F5F5] text-black'}`}>
+    <main className={` ${darkmode ? ' bg-zinc-900   text-white' : 'bg-[#E5EEEF] text-black'}`}>
       <Navber admintoken={admintoken}/>
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -50,9 +50,11 @@ function App() {
         <Route path="/login/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-
-
-
+      </Routes>
+       
+    </div>
+    <Routes>
+    
         {/* Admin */}
 
         <Route path="/admin-panal" element={<Admin setAdmintoken={setAdmintoken}/>} />
@@ -60,7 +62,6 @@ function App() {
         <Route path="/adminPages/*" element={<Adminpages admintoken={admintoken} setAdmintoken={setAdmintoken}/>} />
 
       </Routes>
-    </div>
       <Footer/>
       <Messenge/>
     </main>

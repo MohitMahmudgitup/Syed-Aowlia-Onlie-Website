@@ -10,7 +10,7 @@ function ProductItem({ id, image, name, price, description, cls }) {
 
     return (
         <Link 
-            className={`${cls} cursor-pointer h-full shadow-sm w-40 sm:w-full  rounded-xl bg-white hover:shadow-md ${darkmode ? 'text-gray-300' : 'text-gray-700'}`} 
+            className={`${cls} cursor-pointer h-full shadow-sm w-40 sm:w-full  rounded-xl bg-[#C8E6E7] hover:shadow-md ${darkmode ? 'text-gray-300' : 'text-gray-700'}`} 
             to={`/product/${id}`}
         >
             <div className='overflow-hidden rounded-xl'>

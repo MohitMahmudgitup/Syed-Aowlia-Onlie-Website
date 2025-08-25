@@ -29,10 +29,10 @@ function Sidebar() {
 
   return (
     <>
-    <aside className="w-full  md:w-64 h-screen bg-gradient-to-b from-slate-50 to-white shadow-lg border-r border-gray-200">
+    <aside className="w-full   md:w-64  sm:h-screen sm:bg-gradient-to-b from-slate-50 to-white sm:shadow-lg sm:border-r sm:border-gray-200">
       {/* Navigation */}
-      <nav className="p-4">
-        <div className="flex flex-row md:flex-col gap-2">
+      <nav className="sm:p-4  flex bg-white w-full">
+        <div className="flex flex-row w-full justify-between sm:px-0 px-4  md:flex-col sm:gap-2">
           {navItems.map((item, index) => (
             <NavLink
               key={index}
@@ -56,7 +56,7 @@ function Sidebar() {
               <div className="flex-shrink-0">{item.icon}</div>
 
               {/* Label */}
-              <span className="text-xs md:text-base font-medium whitespace-nowrap">
+              <span className="text-xs sm:block hidden md:text-base font-medium whitespace-nowrap">
                 {item.label}
               </span>
 

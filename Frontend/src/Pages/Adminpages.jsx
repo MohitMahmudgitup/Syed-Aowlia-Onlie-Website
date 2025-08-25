@@ -16,14 +16,14 @@ const Adminpages = ({ admintoken ,setAdmintoken}) => {
 
 
     return (
-        <div className="min-h-screen bg-gray-100 absolute left-0 top-0 z-50 w-full">
+        <div className=" bg-gray-100 absolute left-0 top-0 z-50 w-full">
             {
                 admintoken ? (
                     <>
                     <AdminNavbar setAdmintoken={setAdmintoken}/>
-                    <div className="flex w-[80vw] m-auto">
+                    <div className="flex sm:flex-row flex-col sm:w-[80vw] m-auto">
                         <Sidebar />
-                        <div className="flex-1 p-6">
+                        <div className="flex-1 p-2 sm:p-6">
                             <Routes>
                                 <Route index element={<AdminAdd admintoken={admintoken} />} />
                                 <Route path="list" element={<AdminList admintoken={admintoken} />} />

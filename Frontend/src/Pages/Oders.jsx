@@ -75,7 +75,7 @@ function Orders() {
             <div
   key={index}
   className={`py-6 px-4 ${
-    darkmode ? "bg-gray-800 border-zinc-800 text-gray-200" : "bg-white text-gray-800"
+    darkmode ? "bg-gray-800 border-zinc-800 text-gray-200" : "bg-[#FAFCFC] text-gray-800"
   } shadow border rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-xl transition-shadow duration-300`}
 >
   {/* Product Details */}
@@ -112,8 +112,8 @@ function Orders() {
     <button
       onClick={loadOrder}  // ✅ Fixed onClick issue
       className={`py-2 px-6 rounded-lg shadow transition-colors duration-300 ${
-        darkmode ? "bg-indigo-500 hover:bg-indigo-400" : "bg-indigo-600 hover:bg-indigo-700"
-      } text-white`}
+        darkmode ? "bg-indigo-500 hover:bg-indigo-400" : "bg-[#B8D9DC] hover:bg-[#E5EEEF]"
+      } text-black font-medium`}
     >
       Track Order
     </button>

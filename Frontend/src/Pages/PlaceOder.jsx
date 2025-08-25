@@ -119,7 +119,7 @@ const PlaceOrder = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="max-w-xl mx-auto  p-6 rounded-lg shadow"
+        className="max-w-xl mx-auto bg-[#FAFCFC]  p-6 rounded-lg shadow"
       >
         <div className="grid grid-cols-1 gap-4">
           <div className="grid grid-cols-2 gap-2">
@@ -296,7 +296,7 @@ const PlaceOrder = () => {
           <button
             // onClick={() => navigate("/oders")}
             type="submit"
-            className="w-full bg-black text-white py-2 rounded-md mt-4 hover:bg-gray-700 transition duration-200"
+            className="w-full bg-[#B8D9DC] text-black py-2 rounded-md mt-4 hover:bg-[#E5EEEF] transition duration-200"
           >
             Place Order
           </button>

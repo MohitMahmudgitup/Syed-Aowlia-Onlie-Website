@@ -18,7 +18,7 @@ function Home() {
       <Category/>
       <BestSeller/>
       <LatesCallection/>
-      {/* <OuerPolicy/> */}
+      <OuerPolicy/>
       {/* <NewsLetterBox/> */}
       </div>
     </div>

@@ -15,7 +15,7 @@ function OuerPolicy() {
         {/* Easy Exchange Policy */}
         <div
           className={`flex flex-col items-center ${
-            darkmode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+            darkmode ? "bg-gray-800 text-white" : "bg-[#ECFF8E] text-gray-900"
           } shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`}
         >
           
@@ -33,7 +33,7 @@ function OuerPolicy() {
         {/* 7 Days Return Policy */}
         <div
           className={`flex flex-col items-center ${
-            darkmode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+            darkmode ? "bg-gray-800 text-white" : "bg-[#ECFF8E] text-gray-900"
           } shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`}
         >
           <img
@@ -54,7 +54,7 @@ function OuerPolicy() {
         {/* Best Customer Support */}
         <div
           className={`flex flex-col items-center ${
-            darkmode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+            darkmode ? "bg-gray-800 text-white" : "bg-[#ECFF8E] text-gray-900"
           } shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`}
         >
           <BiSupport  size={60}/>

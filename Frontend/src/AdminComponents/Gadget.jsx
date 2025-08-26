@@ -3,7 +3,7 @@ import axios from "axios";
 import { ShopContext } from "../Context/ShopContext";
 
 const Gadget = ({ admintoken }) => {
-    const { backend } = useContext(ShopContext);
+  const { backend } = useContext(ShopContext);
   const [formData, setFormData] = useState({
     name: "",
     brand: "",
@@ -12,6 +12,8 @@ const Gadget = ({ admintoken }) => {
     description: "",
     category: "",
     subcategory: "",
+    bestseller: "false",
+    discount_price: ""
   });
   const [images, setImages] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
@@ -21,14 +23,14 @@ const Gadget = ({ admintoken }) => {
   const [subCategories, setSubCategories] = useState([]);
   // console.log(subCategories)
   const colors = [
-    "red","blue","black","green","white","yellow","orange","pink","purple","brown",
-    "gray","violet","indigo","turquoise","teal","magenta","cyan","lime","maroon","navy",
-    "olive","silver","gold","beige","coral","lavender","mint","peach","salmon","khaki",
-    "crimson","amber","apricot","plum","orchid","sienna","tan","chocolate","mustard","rose",
-    "emerald","aquamarine","fuchsia","cerulean","jade","scarlet","periwinkle","charcoal","azure","ivory",
-    "bronze","burgundy","cobalt","cream","denim","eggplant","flax","garnet","honey","ice",
-    "mahogany","mauve","navyblue","ochre","onyx","pearl","quartz","ruby","sand","sepia",
-    "smoke","snow","tangerine","taupe","topaz","umber","vermilion","wheat","wine","zinc"
+    "red", "blue", "black", "green", "white", "yellow", "orange", "pink", "purple", "brown",
+    "gray", "violet", "indigo", "turquoise", "teal", "magenta", "cyan", "lime", "maroon", "navy",
+    "olive", "silver", "gold", "beige", "coral", "lavender", "mint", "peach", "salmon", "khaki",
+    "crimson", "amber", "apricot", "plum", "orchid", "sienna", "tan", "chocolate", "mustard", "rose",
+    "emerald", "aquamarine", "fuchsia", "cerulean", "jade", "scarlet", "periwinkle", "charcoal", "azure", "ivory",
+    "bronze", "burgundy", "cobalt", "cream", "denim", "eggplant", "flax", "garnet", "honey", "ice",
+    "mahogany", "mauve", "navyblue", "ochre", "onyx", "pearl", "quartz", "ruby", "sand", "sepia",
+    "smoke", "snow", "tangerine", "taupe", "topaz", "umber", "vermilion", "wheat", "wine", "zinc"
   ];
 
   // Fetch categories
@@ -96,7 +98,7 @@ const Gadget = ({ admintoken }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.brand || !formData.price || !formData.category ) {
+    if (!formData.name || !formData.brand || !formData.price || !formData.category) {
       alert("Please fill all required fields.");
       return;
     }
@@ -115,7 +117,7 @@ const Gadget = ({ admintoken }) => {
       alert("Product added successfully!");
       console.log("Response:", res.data);
 
-      setFormData({ name: "", brand: "", model: "", price: "", description: "", category: "", subcategory: "" });
+      setFormData({ name: "", brand: "", model: "", price: "", description: "", category: "", subcategory: "", color: "", bestseller: "false", discount_price: "" });
       setSelectedColors([]);
       setImages([]);
     } catch (err) {
@@ -150,32 +152,32 @@ const Gadget = ({ admintoken }) => {
             <label className="block mb-1 font-medium">Price (৳) *</label>
             <input type="number" name="price" value={formData.price} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required />
           </div>
+          <div className="w-full">
+            <label className="block mb-1 font-medium text-red-600">Discount price (৳) *</label>
+            <input type="number" name="discount_price" value={formData.discount_price} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" />
+          </div>
+
         </div>
 
-<div className="flex gap-4">
-
+        <div className="flex gap-4">
           {/* Category */}
-        <div className="w-full">
-          <label className="block mb-1 font-medium">Category *</label>
-          <select name="category" value={formData.category} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required>
-            <option value="">Select category</option>
-            {categories.map((cat) => <option key={cat._id} value={cat._id}>{cat.name}</option>)}
-          </select>
+          <div className="w-full">
+            <label className="block mb-1 font-medium">Category *</label>
+            <select name="category" value={formData.category} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required>
+              <option value="">Select category</option>
+              {categories.map((cat) => <option key={cat._id} value={cat._id}>{cat.name}</option>)}
+            </select>
+          </div>
+
+          {/* Subcategory */}
+          <div className="w-full">
+            <label className="block mb-1 font-medium">Subcategory *</label>
+            <select name="subcategory" value={formData.subcategory} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" >
+              <option value="">Select subcategory</option>
+              {subCategories.map((sub) => <option key={sub._id} value={sub._id}>{sub.name}</option>)}
+            </select>
+          </div>
         </div>
-
-        {/* Subcategory */}
-        <div className="w-full">
-          <label className="block mb-1 font-medium">Subcategory *</label>
-          <select name="subcategory" value={formData.subcategory} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" >
-            <option value="">Select subcategory</option>
-            {subCategories.map((sub) => <option key={sub._id} value={sub._id}>{sub.name}</option>)}
-          </select>
-        </div>
-
-
-</div>
-
-
 
         {/* Colors */}
         <div className="w-full">
@@ -202,6 +204,13 @@ const Gadget = ({ admintoken }) => {
                 ))}
               </div>
             )}
+          </div>
+          <div className="w-full">
+            <label className="block mb-1 font-medium">bestseller</label>
+            <select name="bestseller" required value={formData.bestseller} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" >
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+            </select>
           </div>
         </div>
 

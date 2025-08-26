@@ -248,8 +248,8 @@ function Product() {
               <div className={`py-4 ${darkmode ? 'bg-gray-800' : 'bg-white'} rounded-xl mt-6 shadow-lg`}>
                 <div className="px-2">
                   <h3 className={`text-2xl sm:pl-2 font-bold  ${darkmode ? 'text-white' : 'text-gray-900'}`}>Description</h3>
-                  <div className={`prose sm:p-4 p-0 rounded-lg sm:bg-[#E5EEEF] max-w-none ${darkmode ? 'text-gray-300' : 'text-gray-700'}`}>
-                    <p className="whitespace-pre-line text-lg leading-relaxed">{productData.description}</p>
+                  <div className={`prose sm:p-4 p-0 rounded-lg max-w-none ${darkmode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <p className="whitespace-pre-line text-sm leading-relaxed">{productData.description}</p>
                   </div>
                 </div>
               </div>

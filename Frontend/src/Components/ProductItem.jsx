@@ -3,14 +3,14 @@ import { ShopContext } from '../Context/ShopContext';
 import { Link } from 'react-router-dom';
 import { assets } from '../assets/assets';
 
-function ProductItem({ id, image, name, price, description, cls }) {
+function ProductItem({ id, image, name, price, description, discountprice, cls }) {
     const { currency, darkmode } = useContext(ShopContext); 
 
     const safeDescription = description || ''; 
 
     return (
         <Link 
-            className={`${cls} cursor-pointer h-full shadow-sm w-40 sm:w-full  rounded-xl bg-[#C8E6E7] hover:shadow-md ${darkmode ? 'text-gray-300' : 'text-gray-700'}`} 
+            className={`${cls} cursor-pointer h-full shadow-sm w-40 sm:w-full  rounded-xl bg-[#FAFCFC] hover:shadow-md ${darkmode ? 'text-gray-300' : 'text-gray-700'}`} 
             to={`/product/${id}`}
         >
             <div className='overflow-hidden rounded-xl'>
@@ -19,7 +19,20 @@ function ProductItem({ id, image, name, price, description, cls }) {
             <p className={`pl-3 pt-3 pb-1 text-sm  sm:text-sm ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>
                 {safeDescription.length > 25 ? safeDescription.slice(0, 39) + "..." : safeDescription}
             </p>
-            <p className='pl-3 text-lg sm:text-xl font-medium text-[#FF8311]'>{currency}{price}</p>
+            <div className='flex items-center'>
+                {
+                    discountprice ? 
+                    (
+                        <>
+                            <p className='pl-3 text-lg sm:text-xl font-medium text-[#ff0404]'>{currency}{discountprice}</p>
+                            <p className='pl-1 text-lg sm:text-xs  text-[#7c7c7c] line-through'>{currency}{price}</p>
+                        </>
+                        
+                    ):(
+                        <p className='pl-3 text-lg sm:text-xl font-medium text-[#ff0404]'>{currency}{price}</p>
+                    )
+                }
+            </div>
             <img className='pl-2 pb-2' width={80}  src={assets.yellowFiveSter} alt="" />
         </Link>
     );

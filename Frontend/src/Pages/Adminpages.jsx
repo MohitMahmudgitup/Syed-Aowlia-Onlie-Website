@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import AdminNavbar from '../AdminComponents/AdminNavbar.jsx'
 import Footer from "../Components/Footer.jsx"
 import AdminCategory from '../AdminPages/AdminCategory.jsx'
+import CreateNewProduct from '../AdminPages/CreateNewProduct.jsx'
 
 const Adminpages = ({ admintoken ,setAdmintoken}) => {
 
@@ -28,7 +29,7 @@ const Adminpages = ({ admintoken ,setAdmintoken}) => {
                                 <Route index element={<AdminAdd admintoken={admintoken} />} />
                                 <Route path="list" element={<AdminList admintoken={admintoken} />} />
                                 <Route path="orders" element={<AdminOrders admintoken={admintoken} />} />
-                                <Route path="/68ab0454fb0a9a4e20f5d78b" element={<Gadget admintoken={admintoken} />} />
+                                <Route path="/createproduct" element={<CreateNewProduct admintoken={admintoken} />} />
                                 <Route path="68a366123ff9ff3fd861d31c" element={<Computer admintoken={admintoken} />} />
                                 <Route path="68a3658d3ff9ff3fd861d318" element={<Garments admintoken={admintoken} />} />
                                 <Route path="category" element={<AdminCategory admintoken={admintoken} />} />

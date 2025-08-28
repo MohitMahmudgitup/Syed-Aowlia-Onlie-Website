@@ -176,6 +176,12 @@ function Navbar({ admintoken }) {
           <NavLink onClick={() => setVisible(false)} to="/about" className="py-3 pl-6 border-b text-black">ABOUT</NavLink>
           <NavLink onClick={() => setVisible(false)} to="/collection" className="py-3 pl-6 border-b text-black">COLLECTION</NavLink>
           <NavLink onClick={() => setVisible(false)} to="/contact" className="py-3 pl-6 border-b text-black">CONTACT</NavLink>
+          {
+            
+            admintoken &&
+            <NavLink onClick={() => setVisible(false)} to="/adminPages" className="py-3 pl-6 border-b text-white bg-black">ADMIN PANAL</NavLink>
+
+          }
         </div>
       </div>
     </div>

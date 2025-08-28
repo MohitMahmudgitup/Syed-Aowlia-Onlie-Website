@@ -166,7 +166,7 @@ export const Collection = () => {
 
 
   return (
-    <div className={`flex flex-col sm:flex-row gap-6 pt-10 ${darkmode ? "border-t border-t-gray-700" : "border-t"}`}>
+    <div className={`flex flex-col sm:flex-row gap-6 sm:pt-10 pt-2  ${darkmode ? "border-t border-t-gray-700" : "border-t"}`}>
       <div className="w-full sm:w-1/4">
         <div className={`p-4 sticky top-[115px] rounded-xl shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
           {/* FILTERS HEADER */}
@@ -189,7 +189,7 @@ export const Collection = () => {
 
             <div
               className={`p-4 sticky top-[115px]  transition-all duration-300 
-      max-h-[80vh] overflow-y-auto`}  // ✅ add scroll
+      max-h-[80vh] overflow-y-auto bg-[#FAFCFC] rounded-md`}  // ✅ add scroll
             >
 
               {/* CATEGORIES - Show only when collectionID is "collection" */}
@@ -278,23 +278,23 @@ export const Collection = () => {
       </div>
 
       <div className="flex-1">
-        <div className="flex justify-between mb-6 flex-col sm:flex-row">
+        <div className="flex items-center justify-between mb-6  gap-2 sm:flex-row">
           <Titel
             text1={"ALL"}
             text2={collectionID === "collection" ? " COLLECTIONS" : ` ${getCategoryName(collectionID)?.toUpperCase() || "COLLECTIONS"}`}
           />
 
           <select
-            className={`border-2 text-sm px-3 py-1 rounded-lg transition-all focus:outline-none focus:ring-2 ${darkmode
+            className={`border-2 text-sm sm:px-3 sm:py-1 rounded-lg transition-all focus:outline-none focus:ring-2 ${darkmode
                 ? "border-gray-600 bg-gray-600 text-white hover:bg-gray-700 focus:bg-gray-700 focus:ring-gray-400"
                 : "border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:ring-blue-400"
               }`}
             value={sortOption}
             onChange={handleSortChange}
           >
-            <option value="Relevant">Sort by: Relevant</option>
-            <option value="low-high">Sort by: Low-High</option>
-            <option value="high-low">Sort by: High-Low</option>
+            <option value="Relevant">Relevant</option>
+            <option value="low-high">Low-High</option>
+            <option value="high-low">High-Low</option>
           </select>
         </div>
 
@@ -305,8 +305,8 @@ export const Collection = () => {
             {searchQuery && ` for "${searchQuery}"`}
           </p>
         </div>
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2">
+              <div className="flex justify-center">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-2">
           {filter.length > 0 ? (
             filter.map((item) => (
               <ProductItem
@@ -315,6 +315,7 @@ export const Collection = () => {
                 name={item.name}
                 price={item.price}
                 description={item.description}
+                 discountprice={item.discount_price}
                 image={item.images && item.images[0] ? `${backend}/uploads/product/${item.images[0]}` : ''}
               />
             ))
@@ -338,6 +339,9 @@ export const Collection = () => {
             </div>
           )}
         </div>
+
+              </div>
+
       </div>
     </div>
   );

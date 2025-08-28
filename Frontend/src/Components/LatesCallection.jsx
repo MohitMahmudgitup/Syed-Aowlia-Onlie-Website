@@ -43,7 +43,8 @@ useEffect(() => {
         </p> */}
       </div>
       {/* Rendering products */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-x-2 gap-y-1 sm:gap-y-2 relative sm:px-0 px-2">
+      <div className="flex justify-center ">
+      <div className="grid grid-cols-2  gap-6  sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-x-2 gap-y-3 sm:gap-y-2 relative sm:px-0 px-2">
         {latestProducts.length > 0
           ? latestProducts.map((item) => (
               <ProductItem
@@ -52,6 +53,7 @@ useEffect(() => {
                 name={item.name}
                 description={item.description}
                 price={item.price}
+                discountprice={item.discount_price}
                 image={`${backend}/uploads/product/${item.images[0]}`} // Accessing the first image from the images array
               />
             ))
@@ -63,6 +65,8 @@ useEffect(() => {
                 <Skeleton width={100} baseColor={darkmode ? "#374151" : "#e0e0e0"} highlightColor={darkmode ? "#4b5563" : "#f5f5f5"} /> {/* Simulate price skeleton */}
               </div>
             ))}
+      </div>
+
       </div>
     </div>
   );

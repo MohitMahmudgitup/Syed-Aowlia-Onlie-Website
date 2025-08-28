@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContext } from "../Context/ShopContext";
 import { Link } from "react-router-dom";
+import { IoCreateOutline } from "react-icons/io5";
 
 const CartItem = () => {
   const { backend } = useContext(ShopContext);
@@ -22,19 +23,10 @@ const CartItem = () => {
 
   return (
     <div className="flex flex-wrap gap-4">
-      {cart.map((item, index) => (
-        <Link to={item._id}
-          key={index}
-          className="bg-white gap-4 w-36 hover:shadow-md cursor-pointer rounded-md h-28 flex flex-col justify-center items-center p-5"
-        >
-          <img
-            className="w-10 h-10 object-contain"
-            src={`${backend}/uploads/category/${item.image}`}
-            alt={item.name}
-          />
-          <p className="text-sm font-medium text-gray-700">{item.name}</p>
-        </Link>
-      ))}
+     <Link to={"createproduct"} className=" px-5 py-2 bg-white border rounded-full shadow flex items-center gap-2 hover:scale-105 transition-transform">
+     <IoCreateOutline size={25} />
+      <p>Create a new product</p>
+     </Link>
     </div>
   );
 };

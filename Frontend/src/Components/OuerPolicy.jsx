@@ -11,7 +11,7 @@ function OuerPolicy() {
   return (
     <div className="my-16 mx-auto max-w-screen-xl px-4">
         <Titel text1={"OUR "} text2={"POLICIES"} />
-      <div className="flex flex-col sm:flex-row justify-between gap-8 pt-8">
+      <div className="flex flex-col sm:flex-row justify-between gap-4">
         {/* Easy Exchange Policy */}
         <div
           className={`flex flex-col items-center ${

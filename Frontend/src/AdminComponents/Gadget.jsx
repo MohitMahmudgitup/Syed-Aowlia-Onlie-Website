@@ -13,7 +13,8 @@ const Gadget = ({ admintoken }) => {
     category: "",
     subcategory: "",
     bestseller: "false",
-    discount_price: ""
+    discount_price: "",
+    stock: ""
   });
   const [images, setImages] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
@@ -21,7 +22,8 @@ const Gadget = ({ admintoken }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-  // console.log(subCategories)
+  // console.log(formData)
+  console.log("admintoken:", admintoken)
   const colors = [
     "red", "blue", "black", "green", "white", "yellow", "orange", "pink", "purple", "brown",
     "gray", "violet", "indigo", "turquoise", "teal", "magenta", "cyan", "lime", "maroon", "navy",
@@ -45,11 +47,11 @@ const Gadget = ({ admintoken }) => {
 
   // Fetch subcategories
   const fetchSubCategories = async () => {
-    // console.log(categoryId)
     try {
       const res = await axios.get(backend + "/api/subcategory/getSubCategory");
       const subCatData = res.data.categories;
-      setSubCategories(subCatData);
+      const result =  subCatData.filter((p) => p.category._id === formData.category);
+      setSubCategories(result);
     } catch (err) {
       console.error("Error fetching subcategories:", err);
     }
@@ -115,20 +117,17 @@ const Gadget = ({ admintoken }) => {
         { headers: { admintoken } }
       );
       alert("Product added successfully!");
-      console.log("Response:", res.data);
-
-      setFormData({ name: "", brand: "", model: "", price: "", description: "", category: "", subcategory: "", color: "", bestseller: "false", discount_price: "" });
+      console.log(res)
+      setFormData({ name: "", brand: "", model: "", price: "", description: "", category: "", subcategory: "", color: "", bestseller: "false", discount_price: "", stock: "" });
       setSelectedColors([]);
       setImages([]);
     } catch (err) {
-      console.error("Error adding product:", err.response?.data || err);
       alert("Failed to add product. Make sure subcategory is valid.");
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-6 mt-6">
-      <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Add New Gadget</h2>
+    <div className="max-w-2xl  bg-white shadow-lg rounded-2xl p-6 ">
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Name + Brand */}
         <div className="flex gap-4">
@@ -170,13 +169,20 @@ const Gadget = ({ admintoken }) => {
           </div>
 
           {/* Subcategory */}
-          <div className="w-full">
+          {subCategories.length > 0 && 
+          (
+            <div className="w-full">
             <label className="block mb-1 font-medium">Subcategory *</label>
             <select name="subcategory" value={formData.subcategory} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" >
               <option value="">Select subcategory</option>
               {subCategories.map((sub) => <option key={sub._id} value={sub._id}>{sub.name}</option>)}
             </select>
           </div>
+          )
+          
+          
+          }
+          
         </div>
 
         {/* Colors */}
@@ -205,13 +211,22 @@ const Gadget = ({ admintoken }) => {
               </div>
             )}
           </div>
+          <div className="flex gap-4 mt-4">
           <div className="w-full">
             <label className="block mb-1 font-medium">bestseller</label>
             <select name="bestseller" required value={formData.bestseller} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" >
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>
+            
           </div>
+          <div className="w-full">
+            <label className="block mb-1 font-medium">stock *</label>
+            <input type="number" name="stock" value={formData.stock} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required />
+          </div>
+
+          </div>
+
         </div>
 
         {/* Description */}

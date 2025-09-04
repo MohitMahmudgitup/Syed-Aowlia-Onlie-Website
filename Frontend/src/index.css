@@ -20,9 +20,6 @@ a.active hr{
   }
   /* Scrollbar styles for WebKit browsers */
 
-::-webkit-scrollbar {
-    width: 0px; /* Width of the scrollbar */
-  }
 
   /* castom color */
   .hbgbtn {
@@ -66,4 +63,9 @@ a.active hr{
 .animate-gradient {
   background-size: 200% 200%;
   animation: gradient 3s ease infinite;
+}
+@media (max-width: 640px) {
+::-webkit-scrollbar {
+    width: 0px; 
+  }
 }

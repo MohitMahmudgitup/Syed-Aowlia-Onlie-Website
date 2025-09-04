@@ -12,6 +12,8 @@ export const AdminList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isReversed, setIsReversed] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [deletingId, setDeletingId] = useState(null); // Track deleting product
+  const token = localStorage.getItem("adminToken");
 
   // ✅ Fetch all products
   const fetchAllProduct = async () => {
@@ -26,7 +28,25 @@ export const AdminList = () => {
       setIsLoading(false);
     }
   };
-  console.log(selectedProduct)
+
+
+  const handleDelete = async (productId) => {
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
+
+    try {
+      setDeletingId(productId);
+      await axios.delete(`${backend}/api/product/${productId}`, {
+        headers: { token },
+      });
+      setProducts(products.filter(product => product._id !== productId));
+      toast.success('Product deleted successfully');
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      toast.error('Failed to delete product');
+    } finally {
+      setDeletingId(null);
+    }
+  };
   useEffect(() => {
     fetchAllProduct();
   }, [backend]);
@@ -139,6 +159,7 @@ export const AdminList = () => {
 
                 {/* Delete Button */}
                 <button
+                  onClick={() => handleDelete(product._id)}
                   style={{
                     background: "linear-gradient(210deg, rgba(255, 0, 0, 1) 0%, rgba(145, 31, 63, 1) 50%, rgba(31, 31, 31, 1) 100%)"
                   }}

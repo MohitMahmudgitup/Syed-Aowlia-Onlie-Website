@@ -24,7 +24,7 @@ function BestSeller() {
 
   return (
     <div
-      className="sm:my-12  rounded-2xl sm:py-8 py-6 relative overflow-hidden shadow-2xl"
+      className="sm:my-4  rounded-2xl sm:py-8 py-4 relative shadow-2xl"
       style={{
         background: darkmode
           ? "linear-gradient(135deg, rgba(30, 30, 46, 0.95) 0%, rgba(45, 45, 65, 0.95) 50%, rgba(60, 60, 85, 0.95) 100%)"
@@ -47,7 +47,7 @@ function BestSeller() {
         </div>
 
         {/* Products Row Scroll */}
-        <div className="flex overflow-x-auto space-x-4 px-4 sm:space-x-6 scrollbar-hide">
+        <div className="flex overflow-x-auto space-x-1 px-4 ">
           {bestSeller.length > 0
             ? bestSeller.map((item, index) => {
                 const safeDescription = item.description || "";
@@ -58,7 +58,7 @@ function BestSeller() {
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     {/* Best Seller Badge */}
-                    <div className="absolute -top-2 -right-2 z-20 transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                    <div className="absolute sm:-top-2 -top-1 sm:-right-2 right-7 z-20 transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
                       <div className="relative">
                         <img
                           width={60}
@@ -71,7 +71,7 @@ function BestSeller() {
                     </div>
 
                     <Link
-                      className="block cursor-pointer rounded-2xl h-full transform transition-all duration-500"
+                      className="block w-36  sm:w-full  cursor-pointer rounded-2xl h-full transform transition-all duration-500"
                       to={`/product/${item._id}`}
                     >
                       {/* Card Container */}
@@ -88,7 +88,7 @@ function BestSeller() {
                           <img
                             src={`${backend}/uploads/product/${item.images[0]}`}
                             alt={item.name}
-                            className="w-full h-36 sm:h-40 object-cover transform transition-transform duration-700 group-hover:scale-110"
+                            className="w-36 sm:w-full h-24 sm:h-40 object-cover transform transition-transform duration-700 group-hover:scale-110"
                           />
                           {/* Shine Effect */}
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
@@ -111,19 +111,6 @@ function BestSeller() {
                               {currency}
                               {item.price}
                             </p>
-                          </div>
-
-                          {/* Rating */}
-                          <div className="flex items-center space-x-1">
-                            <img
-                              width={70}
-                              src={assets.yellowFiveSter}
-                              alt="Rating"
-                              className="drop-shadow-sm"
-                            />
-                            <span className="text-xs text-white/80 ml-1">
-                              (4.8)
-                            </span>
                           </div>
                         </div>
                       </div>

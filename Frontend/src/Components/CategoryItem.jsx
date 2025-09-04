@@ -21,7 +21,7 @@ const CategoryItem = () => {
     }, [backend]);
 
     return (
-        <div className="flex overflow-x-auto space-x-4 p-2 sm:space-x-2 scrollbar-hide">
+        <div className="flex overflow-x-auto space-x-2 p-2  scrollbar-hide">
             {categories.map((item) => (
                 <Link
                     to={`${item._id}`}

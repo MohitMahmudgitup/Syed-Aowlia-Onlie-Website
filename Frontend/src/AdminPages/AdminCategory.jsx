@@ -3,6 +3,8 @@ import axios from "axios";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { MdOutlineCategory } from "react-icons/md";
 import { ShopContext } from "../Context/ShopContext";
+import { assets } from "../assets/assets";
+import { Link } from "react-router-dom";
 
 const AdminCategory = ({ admintoken }) => {
     const { backend } = useContext(ShopContext);
@@ -166,10 +168,19 @@ const AdminCategory = ({ admintoken }) => {
             <div className="flex flex-col md:flex-row mt-2 gap-6">
                 {/* Category Form */}
                 {!godata && (
-                    <div className="bg-white shadow-lg rounded-2xl p-6  sm:w-96 border border-gray-200">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6 ">
+                    <div className="bg-white  shadow-lg rounded-2xl p-6  sm:w-96 border border-gray-200">
+                        <div className="flex justify-between items-center  mb-6 ">
+                        <h2 className="text-2xl font-bold text-gray-800 ">
                             Create Category
                         </h2>
+                        <Link to={"editcat"} className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition">
+                        <img className="w-6 h-6" src={assets.edit} alt="" />
+                        </Link>
+
+
+
+                        </div>
+                        
                         <form onSubmit={handleSubmitCategory} className="space-y-5">
                             <div>
                                 <label className="block text-gray-700 font-medium mb-1">

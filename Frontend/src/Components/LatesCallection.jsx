@@ -43,8 +43,8 @@ useEffect(() => {
         </p> */}
       </div>
       {/* Rendering products */}
-      <div className="flex justify-center ">
-      <div className="grid grid-cols-2  gap-6  sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-x-2 gap-y-3 sm:gap-y-2 relative sm:px-0 px-2">
+      <div className="flex justify-center  ">
+      <div className="grid grid-cols-2    sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4   ">
         {latestProducts.length > 0
           ? latestProducts.map((item) => (
               <ProductItem
@@ -57,7 +57,7 @@ useEffect(() => {
                 image={`${backend}/uploads/product/${item.images[0]}`} // Accessing the first image from the images array
               />
             ))
-          : // Generate 10 skeleton loaders
+          :
             [...Array(10)].map((_, index) => (
               <div key={index}>
                 <Skeleton height={200} baseColor={darkmode ? "#374151" : "#e0e0e0"} highlightColor={darkmode ? "#4b5563" : "#f5f5f5"} /> {/* Simulate image skeleton */}

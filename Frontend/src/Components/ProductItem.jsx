@@ -10,14 +10,14 @@ function ProductItem({ id, image, name, price, description, discountprice, cls }
 
     return (
         <Link 
-            className={`${cls} cursor-pointer h-full shadow-sm w-40 sm:w-full  rounded-xl bg-[#FAFCFC] hover:shadow-md ${darkmode ? 'text-gray-300' : 'text-gray-700'}`} 
+            className={`${cls} cursor-pointer  shadow-sm w-40 sm:w-full  rounded-xl bg-[#FAFCFC] hover:shadow-md ${darkmode ? 'text-gray-300' : 'text-gray-700'}`} 
             to={`/product/${id}`}
         >
-            <div className='overflow-hidden rounded-xl'>
-                <img src={image} alt={name} className={` w-full h-36 sm:h-44  object-cover`} />
+            <div className='overflow-hidden rounded-t-xl shadow-xl'>
+                <img src={image} alt={name} className={` w-full h-40  sm:h-44  object-cover`} />
             </div>
             <p className={`pl-3 pt-3 pb-1 text-sm  sm:text-sm ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>
-                {safeDescription.length > 25 ? safeDescription.slice(0, 39) + "..." : safeDescription}
+                {safeDescription.length > 25 ? safeDescription.slice(0, 25) + "..." : safeDescription}
             </p>
             <div className='flex items-center'>
                 {
@@ -25,7 +25,7 @@ function ProductItem({ id, image, name, price, description, discountprice, cls }
                     (
                         <>
                             <p className='pl-3 text-lg sm:text-xl font-medium text-[#ff0404]'>{currency}{discountprice}</p>
-                            <p className='pl-1 text-lg sm:text-xs  text-[#7c7c7c] line-through'>{currency}{price}</p>
+                            <p className='pl-1 text-xs sm:text-xs  text-[#7c7c7c] line-through'>{currency}{price}</p>
                         </>
                         
                     ):(

@@ -14,6 +14,8 @@ export const Collection = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortOption, setSortOption] = useState("Relevant");
+  console.log(filter)
+  console.log(sortOption)
 
   const [subCategoryType, setSubCategoryType] = useState([]);
   const [selectSubCat, setSelectSubCat] = useState([]);
@@ -92,13 +94,20 @@ export const Collection = () => {
     }
 
     if (sortOption === "high-low") {
-      filteredProducts.sort((a, b) => b.price - a.price);
-    } else if (sortOption === "low-high") {
-      filteredProducts.sort((a, b) => a.price - b.price);
+      filteredProducts= [...filteredProducts].sort((a, b) => b.price - a.price);
     }
-
+    
+    if (sortOption === "low-high") {
+      filteredProducts =  [...filteredProducts].sort((c, d) => c.price - d.price);
+    } 
+    if (sortOption === "Relevant") {
+      filteredProducts = [...filteredProducts]
+    }
+  
     setFilter(filteredProducts);
   };
+
+  
 
   // Fetch both categories and subcategories on mount
   useEffect(() => {
@@ -152,10 +161,6 @@ export const Collection = () => {
 
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
   };
 
   // Helper function to get category name by ID

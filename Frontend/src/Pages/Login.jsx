@@ -55,7 +55,7 @@ function SignUp() {
   }, [token, navigate]);
 
   return (
-    <div className="flex justify-center items-center right-0 top-0 absolute loginbg z-50 w-[100vw] h-[100vh]">
+   <div className="fixed inset-0 flex justify-center items-center overflow-hidden z-50 loginbg">
       <NavLink to={"/"} className={"absolute top-10 sm:left-16  left-4" } >
                   <img width={180} src={assets.syedAowlia} alt="" />
       </NavLink>

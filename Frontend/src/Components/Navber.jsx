@@ -104,6 +104,21 @@ function Navbar({ admintoken }) {
           </div>
         </div>
 
+        <Link to={"collection"} className="relative w-9 h-9 flex justify-center items-center rounded-full bg-[#ffffffec] overflow-hidden">
+                            <motion.div
+              whileHover={{ scale: 1.2, rotate: 15 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="w-6 flex justify-center items-center "
+              onClick={toggleSearch} // click toggles search open
+            >
+              <img
+                src={assets.allProduct}
+                className="relative w-5 cursor-pointer transition-all duration-300"
+                alt="Search Icon"
+              />
+            </motion.div>
+              </Link>
+
 
         {/* Profile Dropdown */}
         <Link to={linkProfile}>
@@ -121,11 +136,19 @@ function Navbar({ admintoken }) {
               </div>
             ) : (
               <div className="relative w-9 h-9 flex justify-center items-center rounded-full bg-[#ffffffec] overflow-hidden">
-                <img
-                  src={assets.profile_icon}
-                  className={`relative w-5 cursor-pointer transition-all duration-300`}
-                  alt="Profile Icon"
-                />
+                                            <motion.div
+              whileHover={{ scale: 1.2, rotate: 15 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="w-6 flex justify-center items-center "
+              onClick={toggleSearch} // click toggles search open
+            >
+              <img
+                src={assets.profile_icon}
+                className="relative w-5 cursor-pointer transition-all duration-300"
+                alt="Search Icon"
+              />
+            </motion.div>
+                
               </div>
 
 
@@ -155,16 +178,16 @@ function Navbar({ admintoken }) {
         </Link>
 
         {/* Mobile Menu Icon */}
-        <img
+        {/* <img
           onClick={() => setVisible(true)}
           src={assets.menu_icon}
           alt="Menu Icon"
           className={`w-5  cursor-pointer sm:hidden block transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`}
-        />
+        /> */}
       </div>
 
       {/* Sidebar for small screens */}
-      <div
+      {/* <div
         className={`fixed z-40 top-0 right-0 bottom-0 ${darkmode ? "bg-zinc-900 text-white" : "bg-white"} transition-all duration-300 ${visible ? "w-64" : "w-0"} overflow-hidden`}
       >
         <div className="flex flex-col">
@@ -183,7 +206,7 @@ function Navbar({ admintoken }) {
 
           }
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

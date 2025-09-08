@@ -12,14 +12,16 @@ function Home() {
 
   return (
     <div>
-      <Search/>
+      {/* <Search/> */}
       <Hero/>
       <div className={` sm:px-[5vw] md:px-[7vw] lg:px-[9vw] `}>
       <Category/>
+      <div className='sm:px-0 px-2'>
       <BestSeller/>
+      </div>
       <LatesCallection/>
       <OuerPolicy/>
-      {/* <NewsLetterBox/> */}
+      <NewsLetterBox/>
       </div>
     </div>
   )

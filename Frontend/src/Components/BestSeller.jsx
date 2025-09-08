@@ -24,7 +24,7 @@ function BestSeller() {
 
   return (
     <div
-      className="sm:my-4  rounded-2xl sm:py-8 py-4 relative shadow-2xl"
+      className=" sm:my-4  rounded-2xl sm:py-8 py-4 relative shadow-2xl"
       style={{
         background: darkmode
           ? "linear-gradient(135deg, rgba(30, 30, 46, 0.95) 0%, rgba(45, 45, 65, 0.95) 50%, rgba(60, 60, 85, 0.95) 100%)"

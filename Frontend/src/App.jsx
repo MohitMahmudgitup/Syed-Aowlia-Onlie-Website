@@ -39,8 +39,8 @@ function App() {
       <Routes>
         {/* <Route path='/' element={<Home/>}/> */}
         <Route path='/:collectionID' element={<Collection/>}/>
-        <Route path='/about' element={<About/>}/>
-        <Route path='/contact' element={<Contact/>}/>
+        {/* <Route path='/about' element={<About/>}/> */}
+        {/* <Route path='/contact' element={<Contact/>}/> */}
         <Route path='/oders' element={<Oders/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/product/:productID' element={<Product/>}/>

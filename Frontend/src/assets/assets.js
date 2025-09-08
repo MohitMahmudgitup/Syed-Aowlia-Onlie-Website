@@ -83,8 +83,10 @@ import order_icon from './order_icon.png'
 import upload_area from './upload_area.png'
 import SyedAowliaBlack from "./SyedAowliaBlack.png"
 import edit from "./edit.png"
+import allProduct from "./allProduct.png"
 
 export const assets = {
+    allProduct,
     edit,
     SyedAowliaBlack,
     upload_area,

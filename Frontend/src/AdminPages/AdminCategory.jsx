@@ -176,9 +176,6 @@ const AdminCategory = ({ admintoken }) => {
                         <Link to={"editcat"} className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition">
                         <img className="w-6 h-6" src={assets.edit} alt="" />
                         </Link>
-
-
-
                         </div>
                         
                         <form onSubmit={handleSubmitCategory} className="space-y-5">
@@ -236,6 +233,7 @@ const AdminCategory = ({ admintoken }) => {
                     </div>
                 )}
 
+
                 {/* SubCategory Form */}
                 {godata && (
                     <div className="bg-white shadow-lg rounded-2xl p-6 w-96 border border-gray-200">
@@ -276,6 +274,13 @@ const AdminCategory = ({ admintoken }) => {
                         )}
                     </div>
                 )}
+                                <button className=" flex justify-between items-center gap-10 h-16 rounded-xl shadow-lg border  px-5 py-2 bg-white ">
+                    <h1>Edit SubCategory</h1>
+                    <Link to={"editsubcat"} className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition">
+                        <img className="w-6 h-6" src={assets.edit} alt="" />
+                </Link>
+
+                </button>
             </div>
         </div>
     );

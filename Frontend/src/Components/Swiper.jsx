@@ -17,7 +17,7 @@ const SwiperComponent = () => {
   const { darkmode } = useContext(ShopContext);
   
   return (
-    <div className="relative sm:w-[85vw] w-full p-4 mx-auto sm:h-[60vh] h-[25vh] group">
+    <div className="relative sm:w-[85vw] w-full sm:p-4 p-2 mx-auto sm:h-[60vh] h-[25vh] group">
       {/* Custom CSS for pagination bullets */}
 <style dangerouslySetInnerHTML={{
   __html: `
@@ -74,7 +74,7 @@ const SwiperComponent = () => {
             <img
               src="https://img.lazcdn.com/us/domino/a63e3b50-41a3-46b9-a07e-d7d3b9e4ed5b_BD-1976-688.jpg_2200x2200q80.jpg_.webp"
               alt="Special Offer"
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              className="w-full h-full   "
             />
             
           </div>
@@ -85,7 +85,7 @@ const SwiperComponent = () => {
             <img
               src="https://img.lazcdn.com/us/domino/75f23fa5-e4d4-4f0e-b889-ce1aa49ea824_BD-1976-688.jpg_2200x2200q80.jpg_.webp"
               alt="Shop Collection"
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              className="w-full h-full   "
             />
             
           </div>
@@ -96,7 +96,7 @@ const SwiperComponent = () => {
             <img
               src="https://img.lazcdn.com/us/domino/8dad4f81-bd40-4442-bf6d-da537dfc2177_BD-1976-688.jpg_2200x2200q80.jpg_.webp"
               alt="Featured Products"
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              className="w-full h-full   "
             />
           </div>
         </SwiperSlide>
@@ -106,17 +106,12 @@ const SwiperComponent = () => {
             <img
               src="https://img.lazcdn.com/us/domino/1fc78564-7bde-4325-8dbb-9a3bc14fe5c2_BD-1976-688.jpg_2200x2200q80.jpg_.webp"
               alt="Best Sellers"
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              className="w-full h-full  "
             />
           </div>
         </SwiperSlide>
       </Swiper>
 
-      {/* Progress indicator */}
-      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-20">
-        <div className="flex space-x-2">
-        </div>
-      </div>
     </div>
   );
 };

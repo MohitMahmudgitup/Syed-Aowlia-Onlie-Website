@@ -13,6 +13,7 @@ import Footer from "../Components/Footer.jsx"
 import AdminCategory from '../AdminPages/AdminCategory.jsx'
 import CreateNewProduct from '../AdminPages/CreateNewProduct.jsx'
 import Editcat from '../AdminComponents/Editcat.jsx'
+import EditSubCat from '../AdminComponents/EditSubCat.jsx'
 
 const Adminpages = ({ admintoken ,setAdmintoken}) => {
 
@@ -36,6 +37,7 @@ const Adminpages = ({ admintoken ,setAdmintoken}) => {
                                 <Route path="category" element={<AdminCategory admintoken={admintoken} />} />
                                 <Route path="products/edit/:id" element={<AdminEditProduct admintoken={admintoken} />} />
                                 <Route path="category/editcat" element={<Editcat admintoken={admintoken} />} />
+                                <Route path="category/editsubcat" element={<EditSubCat admintoken={admintoken} />} />
                             </Routes>
                         </div>
                     </div>

@@ -39,7 +39,7 @@ function Login({ setAdmintoken }) {
 
   return (
     
-    <section className="min-h-screen flex items-center justify-center absolute bg-slate-100 left-0 w-full h-[100vh] top-0 z-50">
+    <section className="min-h-screen flex items-center justify-center fixed bg-slate-100 left-0 w-full h-[100vh] top-0 z-50">
 
       <div className="flex items-center justify-center h-[80vh] w-full px-4">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm border">

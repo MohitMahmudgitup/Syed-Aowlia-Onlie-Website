@@ -4,11 +4,6 @@ import orderModel from "../models/order_model.js";
 import userModel from "../models/user_model.js";
 import Stripe from "stripe";
 
-// Global variable
-const currency = "USD";
-const deliveryCharge = 10;
-
-// Get Stripe secret key from environment variable
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const placeOrder = async (req , res)=>{
@@ -31,7 +26,6 @@ export const placeOrder = async (req , res)=>{
         await userModel.findByIdAndUpdate(userId, {cartdata:{}})
         res.status(201).json({message : "Order Placed Successfully" , data : newOrder , success: true})
 
-        
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to place order" ,success: false });
@@ -124,7 +118,7 @@ export const placeOrderRazorpay = async (req , res)=>{
 
 }
 
-// All oder data for  admin panel
+
 
 export const getAllOrders = async (req , res)=>{
   try {
@@ -144,9 +138,7 @@ export const getAllOrders = async (req , res)=>{
 export const getUserOrder = async (req, res) => {
     try {
       const { userId } = req.body;
-      // console.log("User ID received:", userId);  // Log the userId
       const userOrder = await orderModel.find({ userId });
-      // console.log("Orders found:", userOrder);  // Log the retrieved orders
       res.status(200).json({ message: "User Order Data", data: userOrder, success: true });
     } catch (error) {
       console.error(error);
@@ -155,24 +147,21 @@ export const getUserOrder = async (req, res) => {
   };
   
 
-// update  order status from admin  panel
+
 
 export const updateOrderStatus = async (req, res) => {
   try {
     const { orderId, status } = req.body;
 
-    // Check if orderId and status are provided
     if (!orderId || !status) {
       return res.status(400).json({ 
         message: "Order ID and status are required", 
         success: false 
       });
     }
-
-    // Update the order status
     const order = await orderModel.findByIdAndUpdate(orderId, { status }, { new: true });
 
-    // If no order found, return error
+
     if (!order) {
       return res.status(404).json({ 
         message: "Order not found", 
@@ -180,7 +169,6 @@ export const updateOrderStatus = async (req, res) => {
       });
     }
 
-    // Success response
     res.status(200).json({ 
       message: "Order Status Updated", 
       data: order, 

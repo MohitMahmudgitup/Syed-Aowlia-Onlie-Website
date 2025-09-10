@@ -13,7 +13,6 @@ const AdminCategory = ({ admintoken }) => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    // SubCategory States
     const [subName, setSubName] = useState("");
     const [godata, setGodata] = useState();
     const [categories, setCategories] = useState([]);
@@ -21,10 +20,8 @@ const AdminCategory = ({ admintoken }) => {
     const [subMessage, setSubMessage] = useState("");
     const [subLoading, setSubLoading] = useState(false);
 
-    // ✅ New state for subcategories
     const [subCategories, setSubCategories] = useState([]);
 
-    // ✅ Fetch categories
     const fetchCategories = async () => {
         try {
             const res = await axios.get(
@@ -88,7 +85,6 @@ const AdminCategory = ({ admintoken }) => {
             setLoading(false);
         }
     };
-    console.log(selectedCategory)
 
     // ✅ Create SubCategory
     const handleSubmitSubCategory = async (e) => {
@@ -109,12 +105,11 @@ const AdminCategory = ({ admintoken }) => {
                 setSubMessage("✅ SubCategory created successfully!");
                 setSubName("");
                 setSelectedCategory("");
-                fetchSubCategories(); // refresh subcategory list
+                fetchSubCategories(); 
             } else {
                 setSubMessage("⚠️ Something went wrong!");
             }
         } catch (err) {
-            console.error(err);
             setSubMessage("❌ Error creating subcategory!");
         } finally {
             setSubLoading(false);

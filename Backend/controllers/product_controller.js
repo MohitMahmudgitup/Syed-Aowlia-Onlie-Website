@@ -2,11 +2,35 @@ import Product from "../models/product_model.js";
 
 export const createProduct = async (req, res) => {
   try {
-    const { name, discount_price, brand, stock, price, description, category, subcategory, sizes, bestseller, product_type, model, color } = req.body;
+    const {
+      name,
+      discount_price,
+      brand,
+      stock,
+      price,
+      description,
+      category,
+      subcategory,
+      sizes,
+      bestseller,
+      product_type,
+      model,
+      color,
+      ram,
+      rom,
+      storage,
+      processor,
+      display,
+      battery,
+      os,
+    } = req.body;
 
-     const images = req.files ? req.files.map(file => file.filename) : [];
-     if (!name || !price || !category) {
-      return res.status(400).json({ message: "Name, price, and category are required", success: false });
+    const images = req.files ? req.files.map(file => file.filename) : [];
+
+    if (!name || !price || !category) {
+      return res
+        .status(400)
+        .json({ message: "Name, price, and category are required", success: false });
     }
 
     // Prepare product data for saving
@@ -26,18 +50,32 @@ export const createProduct = async (req, res) => {
       model,
       color,
       date: Date.now(),
+      ram,
+      rom,
+      storage,
+      processor,
+      display,
+      battery,
+      os,
     };
 
     // Save the product to the database
     const savedProduct = new Product(productData);
     await savedProduct.save();
 
-    return res.json({ message: 'Product created successfully', product: savedProduct, success: true });
+    return res.json({
+      message: "Product created successfully",
+      product: savedProduct,
+      success: true,
+    });
   } catch (error) {
     console.error(error);
-    return res.json({ message: 'Internal server error', success: false });
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false });
   }
 };
+
 
 
 // Get all products

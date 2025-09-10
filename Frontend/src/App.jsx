@@ -63,7 +63,7 @@ function App() {
 
       </Routes>
       <Footer/>
-      <Messenge/>
+      <Messenge admintoken={admintoken}/>
     </main>
   )
 }

@@ -13,7 +13,6 @@ const AdminOrders = ({ admintoken }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch orders from backend
   const fetchOrders = async () => {
     try {
       const response = await axios.post(
@@ -35,7 +34,6 @@ const AdminOrders = ({ admintoken }) => {
     }
   };
 
-  // Update order status
   const statusHandler = async (event, orderId) => {
     try {
       const response = await axios.post(
@@ -165,7 +163,7 @@ const AdminOrders = ({ admintoken }) => {
 
       {/* Modal */}
       {isModalOpen && selectedOrder && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white rounded-lg p-4 max-w-[85vw] md:max-w-lg w-full">
             <h2 className="text-xl font-bold mb-4">Order Details</h2>
             <div>

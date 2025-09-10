@@ -42,11 +42,8 @@ export const Garments = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className=" flex items-center ">
       <div className="bg-white md:p-8 rounded-lg w-full max-w-2xl shadow-lg">
-        <h2 className="text-2xl md:text-4xl font-bold md:text-center text-gray-800 mb-8">
-          Admin Add Product
-        </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Image upload */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

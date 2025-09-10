@@ -23,9 +23,13 @@ const CartItem = () => {
 
   return (
     <div className="flex flex-wrap gap-4">
-     <Link to={"createproduct"} className=" px-5 py-2 bg-white border rounded-full shadow flex items-center gap-2 hover:scale-105 transition-transform">
-     <IoCreateOutline size={25} />
-      <p>Create a new product</p>
+     <Link to={"createproduct"}
+     style={{
+            background: "linear-gradient(210deg, rgba(255, 0, 0, 1) 0%, rgba(145, 31, 63, 1) 50%, rgba(31, 31, 31, 1) 100%)"
+          }}
+      className=" px-5 py-2 bg-white border rounded-full shadow flex items-center gap-2 hover:scale-105 transition-transform">
+     <IoCreateOutline size={25} color="white" />
+      <p className="text-white">Create a new product</p>
      </Link>
     </div>
   );

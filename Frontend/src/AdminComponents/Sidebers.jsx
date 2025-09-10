@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineFormatListBulleted, MdDashboard, MdShoppingCart } from "react-icons/md";
 import { BiSolidCategoryAlt } from "react-icons/bi";

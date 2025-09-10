@@ -14,8 +14,7 @@ export const Collection = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortOption, setSortOption] = useState("Relevant");
-  console.log(filter)
-  console.log(sortOption)
+
 
   const [subCategoryType, setSubCategoryType] = useState([]);
   const [selectSubCat, setSelectSubCat] = useState([]);

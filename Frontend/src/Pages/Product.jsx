@@ -74,7 +74,7 @@ function Product() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-zoom-in"
                     onClick={openModal}
                   />
-                  
+
                   {/* Navigation Arrows */}
                   {productData.images.length > 1 && (
                     <>
@@ -112,11 +112,10 @@ function Product() {
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
-                          currentImageIndex === index
+                        className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${currentImageIndex === index
                             ? 'border-indigo-500 ring-2 ring-indigo-200'
                             : `border-transparent ${darkmode ? 'hover:border-gray-600' : 'hover:border-gray-300'}`
-                        }`}
+                          }`}
                       >
                         <img
                           src={`${backend}/uploads/product/${productData.images[index]}`}
@@ -135,7 +134,7 @@ function Product() {
               {/* Title and Price */}
               <div className="space-y-4">
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight">{productData.name}</h1>
-                
+
                 <div className="flex items-center space-x-4">
                   <span className="text-4xl font-bold text-indigo-600">৳{productData.price}</span>
                   {/* {productData.discount_price && (
@@ -153,19 +152,64 @@ function Product() {
                       <p className="font-semibold">{productData.brand}</p>
                     </div>
                   )}
+
                   {productData.model && (
                     <div>
                       <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>Model</span>
                       <p className="font-semibold">{productData.model}</p>
                     </div>
                   )}
-                  {productData.date && (
+
+                  {productData.ram && (
                     <div>
-                      <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>Date</span>
-                      {new Date(productData.date).toLocaleString()}
+                      <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>RAM</span>
+                      <p className="font-semibold">{productData.ram} GB</p>
+                    </div>
+                  )}
+
+                  {productData.rom && (
+                    <div>
+                      <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>ROM</span>
+                      <p className="font-semibold">{productData.rom} GB</p>
+                    </div>
+                  )}
+
+                  {productData.storage && (
+                    <div>
+                      <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>Storage</span>
+                      <p className="font-semibold">{productData.storage} GB</p>
+                    </div>
+                  )}
+
+                  {productData.processor && (
+                    <div>
+                      <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>Processor</span>
+                      <p className="font-semibold">{productData.processor}</p>
+                    </div>
+                  )}
+
+                  {productData.display && (
+                    <div>
+                      <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>Display</span>
+                      <p className="font-semibold">{productData.display}</p>
+                    </div>
+                  )}
+
+                  {productData.battery && (
+                    <div>
+                      <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>Battery</span>
+                      <p className="font-semibold">{productData.battery} mAh</p>
+                    </div>
+                  )}
+
+                  {productData.os && (
+                    <div>
+                      <span className={`text-sm font-medium ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>OS</span>
+                      <p className="font-semibold">{productData.os}</p>
                     </div>
                   )}
                 </div>
+
               </div>
 
               {/* Size Selection */}
@@ -177,11 +221,10 @@ function Product() {
                       <button
                         key={index}
                         onClick={() => setSize(item)}
-                        className={`px-6 py-3 rounded-lg border-2 font-medium transition-all duration-200 ${
-                          item === size
+                        className={`px-6 py-3 rounded-lg border-2 font-medium transition-all duration-200 ${item === size
                             ? 'border-indigo-500 bg-indigo-500 text-white shadow-lg'
                             : `border-gray-300 ${darkmode ? 'text-white hover:border-gray-500 hover:bg-gray-800' : 'text-gray-700 hover:border-gray-400 hover:bg-gray-50'}`
-                        }`}
+                          }`}
                       >
                         {item}
                       </button>
@@ -199,11 +242,10 @@ function Product() {
                       <button
                         key={index}
                         onClick={() => setColor(c)}
-                        className={`px-6 py-3 rounded-lg border-2 font-medium transition-all duration-200 ${
-                          color === c
+                        className={`px-6 py-3 rounded-lg border-2 font-medium transition-all duration-200 ${color === c
                             ? 'border-indigo-500 bg-indigo-500 text-white shadow-lg'
                             : `border-gray-300 ${darkmode ? 'text-white hover:border-gray-500 hover:bg-gray-800' : 'text-gray-700 hover:border-gray-400 hover:bg-gray-50'}`
-                        }`}
+                          }`}
                       >
                         {c}
                       </button>
@@ -245,15 +287,15 @@ function Product() {
 
           {/* Product Details Tabs */}
           {activeTab === "details" && (
-              <div className={`py-4 ${darkmode ? 'bg-gray-800' : 'bg-white'} rounded-xl mt-6 shadow-lg`}>
-                <div className="px-2">
-                  <h3 className={`text-2xl sm:pl-2 font-bold  ${darkmode ? 'text-white' : 'text-gray-900'}`}>Description</h3>
-                  <div className={`prose sm:p-4 p-0 rounded-lg max-w-none ${darkmode ? 'text-gray-300' : 'text-gray-700'}`}>
-                    <p className="whitespace-pre-line text-sm leading-relaxed">{productData.description}</p>
-                  </div>
+            <div className={`py-4 ${darkmode ? 'bg-gray-800' : 'bg-white'} rounded-xl mt-6 shadow-lg`}>
+              <div className="px-2">
+                <h3 className={`text-2xl sm:pl-2 font-bold  ${darkmode ? 'text-white' : 'text-gray-900'}`}>Description</h3>
+                <div className={`prose sm:p-4 p-0 rounded-lg max-w-none ${darkmode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <p className="whitespace-pre-line text-sm leading-relaxed">{productData.description}</p>
                 </div>
               </div>
-            )}
+            </div>
+          )}
         </div>
 
         {/* Full-Screen Image Modal */}
@@ -267,14 +309,14 @@ function Product() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            
+
             <div className="relative w-full h-full flex items-center justify-center">
               <img
                 src={`${backend}/uploads/product/${productData.images[currentImageIndex]}`}
                 alt={productData.name}
                 className="max-w-full max-h-full object-contain rounded-lg"
               />
-              
+
               {productData.images.length > 1 && (
                 <>
                   <button

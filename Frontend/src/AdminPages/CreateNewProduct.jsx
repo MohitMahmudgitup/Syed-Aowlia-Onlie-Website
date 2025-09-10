@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Gadget from '../AdminComponents/Gadget'
-import { Garments } from '../AdminComponents/garments';
+import { Garments } from '../AdminComponents/T-shirt';
+import Moblie from '../AdminComponents/Moblie';
 
 const CreateNewProduct = ({admintoken}) => {
     const [inputType, setInputType] = useState("");
@@ -17,7 +18,8 @@ const CreateNewProduct = ({admintoken}) => {
                 <option value="">Select the Type</option>
                 <option value="gadget">Gadget</option>
                 <option value="shirt">T-shirt/shirt</option>
-                <option value="garments">Garments</option>
+                <option value="mobile">Moblie</option>
+                {/* <option value="garments">Computer</option> */}
             </select>
 
             <div className='mt-6'>
@@ -27,6 +29,8 @@ const CreateNewProduct = ({admintoken}) => {
                             return <Gadget admintoken={admintoken} />;
                         case "shirt":
                             return <Garments  admintoken={admintoken}/>;
+                            case "mobile":
+                            return <Moblie  admintoken={admintoken}/>;
                         default:
                             return null;
                     }

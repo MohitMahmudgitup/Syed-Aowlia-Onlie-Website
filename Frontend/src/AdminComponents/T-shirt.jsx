@@ -1,24 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import { assets } from "../assets/assets";
+import { ShopContext } from "../Context/ShopContext";
 
-export const Garments = () => {
+export const TshirtInput = ({ admintoken }) => {
+  const { backend } = useContext(ShopContext);
+
   const [images, setImages] = useState([null, null, null, null]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("Men");
-  const [subCategory, setSubCategory] = useState("Topwear");
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
   const [price, setPrice] = useState("");
+  const [discountPrice, setDiscountPrice] = useState("");
   const [sizes, setSizes] = useState([]);
   const [bestseller, setBestseller] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+  const [stock, setStock] = useState("");
 
-  // Image preview
+  // 🧩 Fetch Categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get(`${backend}/api/category/getCategory`);
+        setCategories(res.data.categories || []);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+    fetchCategories();
+  }, [backend]);
+
+  // 🧩 Fetch Subcategories based on category
+  useEffect(() => {
+    const fetchSubCategories = async () => {
+      if (!category) return;
+      try {
+        const res = await axios.get(`${backend}/api/subcategory/getSubCategory`);
+        const subCatData = res.data.categories;
+        const result = subCatData.filter((p) => p.category._id === category);
+        setSubCategories(result);
+      } catch (err) {
+        console.error("Error fetching subcategories:", err);
+      }
+    };
+    fetchSubCategories();
+  }, [category, backend]);
+
+  // 🧩 Handle Image Change
   const handleImageChange = (index, e) => {
     const newImages = [...images];
     newImages[index] = e.target.files[0];
     setImages(newImages);
   };
 
-  // Size toggle
+  // 🧩 Toggle Sizes
   const toggleSize = (size) => {
     if (sizes.includes(size)) {
       setSizes(sizes.filter((s) => s !== size));
@@ -27,32 +64,61 @@ export const Garments = () => {
     }
   };
 
-  // Dummy submit just for UI
-  const handleSubmit = (e) => {
+  // 🧩 Submit Handler (with backend)
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("AdminAdd UI only – no backend connected!");
-    setImages([null, null, null, null]);
-    setName("");
-    setDescription("");
-    setCategory("Men");
-    setSubCategory("Topwear");
-    setPrice("");
-    setSizes([]);
-    setBestseller(false);
+
+    if (!name || !category || !subCategory || !price || !description) {
+      alert("Please fill all required fields!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("subcategory", subCategory);
+    formData.append("price", price);
+    formData.append("discount_price", discountPrice || price);
+    formData.append("bestseller", bestseller);
+    formData.append("stock", stock || 0);
+    sizes.forEach((size) => formData.append("sizes", size));
+    images.forEach((image) => {
+      if (image) formData.append("images", image);
+    });
+
+    try {
+      const res = await axios.post(`${backend}/api/product/add`, formData, {
+        headers: { admintoken },
+      });
+      alert("T-shirt product added successfully!");
+      console.log("✅ Response:", res.data);
+
+      // Reset form
+      setImages([null, null, null, null]);
+      setName("");
+      setDescription("");
+      setCategory("");
+      setSubCategory("");
+      setPrice("");
+      setDiscountPrice("");
+      setSizes([]);
+      setBestseller(false);
+      setStock("");
+    } catch (err) {
+      console.error("❌ Error adding product:", err);
+      alert("Failed to add T-shirt. Please check console.");
+    }
   };
 
   return (
-    <div className=" flex items-center ">
+    <div className="flex items-center">
       <div className="bg-white md:p-8 rounded-lg w-full max-w-2xl shadow-lg">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Image upload */}
+          {/* Image Upload */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {images.map((image, index) => (
-              <label
-                key={index}
-                htmlFor={`image${index + 1}`}
-                className="relative cursor-pointer group"
-              >
+              <label key={index} htmlFor={`image${index + 1}`} className="relative cursor-pointer group">
                 <img
                   src={image ? URL.createObjectURL(image) : assets.upload_area}
                   alt={`Image ${index + 1}`}
@@ -77,9 +143,7 @@ export const Garments = () => {
 
           {/* Product Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Product Name
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Product Name *</label>
             <input
               type="text"
               value={name}
@@ -89,11 +153,9 @@ export const Garments = () => {
             />
           </div>
 
-          {/* Product Description */}
+          {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Product Description
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -103,42 +165,47 @@ export const Garments = () => {
             ></textarea>
           </div>
 
-          {/* Category, Subcategory & Price */}
-          <div className="flex justify-between flex-col sm:flex-row gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Product Category
-              </label>
+          {/* Category, Subcategory, Price */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Category */}
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
               <select
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
+                required
               >
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
-                <option value="Kids">Kids</option>
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.name}
+                  </option>
+                ))}
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Sub Category
-              </label>
+            {/* Subcategory */}
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Subcategory *</label>
               <select
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
                 value={subCategory}
                 onChange={(e) => setSubCategory(e.target.value)}
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
+                required
               >
-                <option value="Topwear">Topwear</option>
-                <option value="Bottomwear">Bottomwear</option>
-                <option value="Winterwear">Winterwear</option>
+                <option value="">Select Subcategory</option>
+                {subCategories.map((sub) => (
+                  <option key={sub._id} value={sub._id}>
+                    {sub.name}
+                  </option>
+                ))}
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Product Price (৳)
-              </label>
+            {/* Price */}
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Price (৳) *</label>
               <input
                 type="number"
                 value={price}
@@ -149,20 +216,41 @@ export const Garments = () => {
             </div>
           </div>
 
+          {/* Discount & Stock */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Discount Price (৳)</label>
+              <input
+                type="number"
+                value={discountPrice}
+                onChange={(e) => setDiscountPrice(e.target.value)}
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Stock *</label>
+              <input
+                type="number"
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
+          </div>
+
           {/* Sizes */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product Sizes
-            </label>
-            <div className="flex gap-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Sizes</label>
+            <div className="flex gap-4 flex-wrap">
               {["S", "M", "L", "XL", "XXL"].map((size) => (
                 <div
                   key={size}
                   className={`px-4 py-2 cursor-pointer rounded-lg text-sm font-semibold ${
                     sizes.includes(size)
                       ? "bg-purple-600 text-white"
-                      : "bg-gray-200"
-                  } hover:bg-purple-500 transition duration-300`}
+                      : "bg-gray-200 hover:bg-purple-200"
+                  } transition duration-300`}
                   onClick={() => toggleSize(size)}
                 >
                   {size}
@@ -189,7 +277,7 @@ export const Garments = () => {
             type="submit"
             className="w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300"
           >
-            Add Product
+            Add T-Shirt
           </button>
         </form>
       </div>

@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { MdOutlineFormatListBulleted, MdDashboard, MdShoppingCart } from "react-icons/md";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-
+import { ImMenu3 } from "react-icons/im";
 function Sidebar() {
   const navItems = [
     {
-      to: "/adminPages",
+      to: "/adminPages/dashboard",
       icon: <MdDashboard size={24} />,
       label: "Dashboard"
     },
@@ -23,6 +23,11 @@ function Sidebar() {
       to: "/adminPages/category",
       icon: <BiSolidCategoryAlt size={24} />,
       label: "CatSubCategory"
+    },
+    {
+      to: "/adminPages/Footer",
+      icon: <ImMenu3 size={24} />,
+      label: "Footer"
     }
   ];
 

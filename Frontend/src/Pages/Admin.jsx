@@ -25,7 +25,7 @@ function Login({ setAdmintoken }) {
         setAdmintoken && setAdmintoken(response.data.token);
         if(response.data.role === "admin")  localStorage.setItem('admintoken', response.data.token);
         toast.success(response.data.message);
-        navigate('/adminPages')
+        navigate('/adminPages/dashboard')
       } else {
         toast.error(response.data.message);
       }

@@ -67,7 +67,7 @@ function Navbar({ admintoken }) {
       <div className="flex items-center  gap-2">
         {admintoken && (
           <NavLink
-            to="/adminPages"
+            to="/adminPages/dashboard"
             target="_blank"
             className={`hidden  lg:flex text-zinc-400  px-5 py-2 bg-white rounded-full`}
           >

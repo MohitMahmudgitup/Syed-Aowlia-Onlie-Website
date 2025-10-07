@@ -78,12 +78,12 @@ const ShopContextProvider = (props) => {
     // Check if the item already exists in the cart
     if (cardData[itemId]) {
       if (cardData[itemId][size]) {
-        cardData[itemId][size] += 1; // Increment quantity if item and size exist
+        cardData[itemId][size] += 1;
       } else {
-        cardData[itemId][size] = 1; // Add new size with quantity 1
+        cardData[itemId][size] = 1; 
       }
     } else {
-      cardData[itemId] = { [size]: 1 }; // Add new item with size
+      cardData[itemId] = { [size]: 1 }; 
     }
 
 if (cardData[itemId]) {
@@ -161,13 +161,6 @@ if (cardData[itemId]) {
       }
     }
   };
-
-
-
-
-
-
-
 
   // Calculate total quantity of items in the cart
   const getCartItem = () => {

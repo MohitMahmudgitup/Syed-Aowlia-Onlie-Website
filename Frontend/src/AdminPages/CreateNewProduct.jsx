@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Gadget from '../AdminComponents/Gadget'
-import { Garments } from '../AdminComponents/T-shirt';
+import {TshirtInput}  from '../AdminComponents/T-shirt';
 import Moblie from '../AdminComponents/Moblie';
 
 const CreateNewProduct = ({admintoken}) => {
@@ -28,7 +28,7 @@ const CreateNewProduct = ({admintoken}) => {
                         case "gadget":
                             return <Gadget admintoken={admintoken} />;
                         case "shirt":
-                            return <Garments  admintoken={admintoken}/>;
+                            return <TshirtInput  admintoken={admintoken}/>;
                             case "mobile":
                             return <Moblie  admintoken={admintoken}/>;
                         default:

@@ -5,7 +5,7 @@ import { AdminList } from '../AdminPages/AdminList.jsx'
 import  AdminOrders  from '../AdminPages/AdminOrders.jsx'
 import Sidebar from '../AdminComponents/Sidebers.jsx'
 import Gadget from '../AdminComponents/Gadget.jsx'
-import { Garments } from '../AdminComponents/T-shirt.jsx'
+import { TshirtInput } from '../AdminComponents/T-shirt.jsx'
 import Computer from '../AdminComponents/Computer.jsx'
 import { useEffect } from 'react'
 import AdminNavbar from '../AdminComponents/AdminNavbar.jsx'
@@ -14,6 +14,7 @@ import AdminCategory from '../AdminPages/AdminCategory.jsx'
 import CreateNewProduct from '../AdminPages/CreateNewProduct.jsx'
 import Editcat from '../AdminComponents/Editcat.jsx'
 import EditSubCat from '../AdminComponents/EditSubCat.jsx'
+import FooterInput from '../AdminComponents/FooterInput.jsx'
 
 const Adminpages = ({ admintoken ,setAdmintoken}) => {
 
@@ -28,20 +29,20 @@ const Adminpages = ({ admintoken ,setAdmintoken}) => {
                         <Sidebar />
                         <div className="flex-1 p-2 sm:p-6">
                             <Routes>
-                                <Route index element={<AdminAdd admintoken={admintoken} />} />
+                                <Route path="dashboard" adminPages element={<AdminAdd admintoken={admintoken} />} />
                                 <Route path="list" element={<AdminList admintoken={admintoken} />} />
                                 <Route path="orders" element={<AdminOrders admintoken={admintoken} />} />
-                                <Route path="/createproduct" element={<CreateNewProduct admintoken={admintoken} />} />
+                                <Route path="dashboard/createproduct" element={<CreateNewProduct admintoken={admintoken} />} />
                                 <Route path="68a366123ff9ff3fd861d31c" element={<Computer admintoken={admintoken} />} />
-                                <Route path="68a3658d3ff9ff3fd861d318" element={<Garments admintoken={admintoken} />} />
+                                <Route path="68a3658d3ff9ff3fd861d318" element={<TshirtInput admintoken={admintoken} />} />
                                 <Route path="category" element={<AdminCategory admintoken={admintoken} />} />
                                 <Route path="products/edit/:id" element={<AdminEditProduct admintoken={admintoken} />} />
                                 <Route path="category/editcat" element={<Editcat admintoken={admintoken} />} />
                                 <Route path="category/editsubcat" element={<EditSubCat admintoken={admintoken} />} />
+                                <Route path="Footer" element={<FooterInput admintoken={admintoken} />} />
                             </Routes>
                         </div>
                     </div>
-                    
                     <Footer/>
                     
                     </>

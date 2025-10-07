@@ -22,8 +22,6 @@ const Gadget = ({ admintoken }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-  // console.log(formData)
-  console.log("admintoken:", admintoken)
   const colors = [
     "red", "blue", "black", "green", "white", "yellow", "orange", "pink", "purple", "brown",
     "gray", "violet", "indigo", "turquoise", "teal", "magenta", "cyan", "lime", "maroon", "navy",

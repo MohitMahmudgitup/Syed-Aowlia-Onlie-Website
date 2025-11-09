@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDB from "./config/db.js";
-import { connetCloudnary } from "./config/cloudinary.js";
 import userRoutes from "./routers/user_router.js";
 import productRoutes from "./routers/product_router.js";
 import cartRouter from './routers/cart_router.js';

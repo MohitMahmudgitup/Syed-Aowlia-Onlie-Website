@@ -2,8 +2,6 @@ import React, { useContext, useState } from 'react'
 import {  Routes,Route } from 'react-router-dom'
 import Home from './Pages/Home'
 import { Collection } from './Pages/Collection'
-import About from './Pages/About'
-import Contact from './Pages/Contact'
 import Oders from './Pages/Oders'
 import Login from './Pages/Login'
 import Product from './Pages/Product'
@@ -49,7 +47,6 @@ function App() {
         <Route path='/verify' element={<VerifyStripe/>}/>
         <Route path="/login/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-
       </Routes>
        
     </div>

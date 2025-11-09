@@ -12,7 +12,7 @@ import subCategoryRouter from "./routers/subcategory_router.js"
 // App  setup
 
 const app = express();
-const port = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
 //middleware
 app.use(cors({
@@ -32,6 +32,6 @@ app.use("/api/subcategory", subCategoryRouter);
 app.use("/api/footer", footerRouter);
 
 connectDB();
-app.listen(port, "0.0.0.0", () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Example app listening on port ${port}`);
 });

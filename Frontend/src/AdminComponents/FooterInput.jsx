@@ -61,7 +61,6 @@ const FooterInput = ({ admintoken }) => {
                 }
             }
         });
-backend + "/api/category/getCategory"
         try {
             const res = await axios.post(backend + "/api/footer", data, {
                 headers: { admintoken },

@@ -1,7 +1,9 @@
-import  { useState } from "react";
+import  { useContext, useState } from "react";
 import axios from "axios";
+import { ShopContext } from "../Context/ShopContext";
 
 const FooterInput = ({ admintoken }) => {
+      const { backend } = useContext(ShopContext);
     const [formData, setFormData] = useState({
         companyName: "",
         description: "",
@@ -59,9 +61,9 @@ const FooterInput = ({ admintoken }) => {
                 }
             }
         });
-
+backend + "/api/category/getCategory"
         try {
-            const res = await axios.post("http://localhost:4000/api/footer", data, {
+            const res = await axios.post(backend + "/api/footer", data, {
                 headers: { admintoken },
             });
             alert("✅ Footer created successfully!");

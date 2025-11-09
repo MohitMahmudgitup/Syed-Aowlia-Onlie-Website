@@ -115,7 +115,6 @@ const Gadget = ({ admintoken }) => {
         { headers: { admintoken } }
       );
       alert("Product added successfully!");
-      console.log(res)
       setFormData({ name: "", brand: "", model: "", price: "", description: "", category: "", subcategory: "", color: "", bestseller: "false", discount_price: "", stock: "" });
       setSelectedColors([]);
       setImages([]);
@@ -124,6 +123,8 @@ const Gadget = ({ admintoken }) => {
     }
   };
 
+  const InputColors = "w-full border rounded-lg px-3 py-2 bg-white"
+
   return (
     <div className="max-w-2xl  bg-white shadow-lg rounded-2xl p-6 ">
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -131,11 +132,11 @@ const Gadget = ({ admintoken }) => {
         <div className="flex gap-4">
           <div className="w-full">
             <label className="block mb-1 font-medium">Gadget Name *</label>
-            <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required />
+            <input type="text" name="name" value={formData.name} onChange={handleInputChange} className={`${InputColors}`} required />
           </div>
           <div className="w-full">
             <label className="block mb-1 font-medium">Brand *</label>
-            <input type="text" name="brand" value={formData.brand} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required />
+            <input type="text" name="brand" value={formData.brand} onChange={handleInputChange} className={`${InputColors}`} required />
           </div>
         </div>
 
@@ -143,15 +144,15 @@ const Gadget = ({ admintoken }) => {
         <div className="flex gap-4">
           <div className="w-full">
             <label className="block mb-1 font-medium">Model</label>
-            <input type="text" name="model" value={formData.model} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" />
+            <input type="text" name="model" value={formData.model} onChange={handleInputChange} className={`${InputColors}`} />
           </div>
           <div className="w-full">
             <label className="block mb-1 font-medium">Price (৳) *</label>
-            <input type="number" name="price" value={formData.price} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required />
+            <input type="number" name="price" value={formData.price} onChange={handleInputChange} className={`${InputColors}`} required />
           </div>
           <div className="w-full">
             <label className="block mb-1 font-medium text-red-600">Discount price (৳) *</label>
-            <input type="number" name="discount_price" value={formData.discount_price} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" />
+            <input type="number" name="discount_price" value={formData.discount_price} onChange={handleInputChange} className={`${InputColors}`} />
           </div>
 
         </div>
@@ -160,7 +161,7 @@ const Gadget = ({ admintoken }) => {
           {/* Category */}
           <div className="w-full">
             <label className="block mb-1 font-medium">Category *</label>
-            <select name="category" value={formData.category} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required>
+            <select name="category" value={formData.category} onChange={handleInputChange} className={`${InputColors}`} required>
               <option value="">Select category</option>
               {categories.map((cat) => <option key={cat._id} value={cat._id}>{cat.name}</option>)}
             </select>
@@ -171,7 +172,7 @@ const Gadget = ({ admintoken }) => {
           (
             <div className="w-full">
             <label className="block mb-1 font-medium">Subcategory *</label>
-            <select name="subcategory" value={formData.subcategory} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" >
+            <select name="subcategory" value={formData.subcategory} onChange={handleInputChange} className={`${InputColors}`} >
               <option value="">Select subcategory</option>
               {subCategories.map((sub) => <option key={sub._id} value={sub._id}>{sub.name}</option>)}
             </select>
@@ -196,7 +197,7 @@ const Gadget = ({ admintoken }) => {
                 </span>
               ))}
             </div>
-            <input type="text" className="w-full border rounded-lg px-3 py-2" placeholder="Type to search colors..." value={query} onChange={(e) => { setQuery(e.target.value); setShowOptions(true); }} onFocus={() => setShowOptions(true)} onBlur={() => setTimeout(() => setShowOptions(false), 200)} />
+            <input type="text" className={`${InputColors}`} placeholder="Type to search colors..." value={query} onChange={(e) => { setQuery(e.target.value); setShowOptions(true); }} onFocus={() => setShowOptions(true)} onBlur={() => setTimeout(() => setShowOptions(false), 200)} />
             {showOptions && filteredColors.length > 0 && (
               <div className="absolute mt-1 w-full bg-white border rounded-lg shadow-lg max-h-48 overflow-y-auto">
                 {filteredColors.map((color) => (
@@ -212,7 +213,7 @@ const Gadget = ({ admintoken }) => {
           <div className="flex gap-4 mt-4">
           <div className="w-full">
             <label className="block mb-1 font-medium">bestseller</label>
-            <select name="bestseller" required value={formData.bestseller} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" >
+            <select name="bestseller" required value={formData.bestseller} onChange={handleInputChange} className={`${InputColors}`} >
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>
@@ -220,7 +221,7 @@ const Gadget = ({ admintoken }) => {
           </div>
           <div className="w-full">
             <label className="block mb-1 font-medium">stock *</label>
-            <input type="number" name="stock" value={formData.stock} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" required />
+            <input type="number" name="stock" value={formData.stock} onChange={handleInputChange} className={`${InputColors}`} required />
           </div>
 
           </div>
@@ -230,13 +231,13 @@ const Gadget = ({ admintoken }) => {
         {/* Description */}
         <div>
           <label className="block mb-1 font-medium">Description</label>
-          <textarea name="description" value={formData.description} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2" rows="4"></textarea>
+          <textarea name="description" value={formData.description} onChange={handleInputChange} className={`${InputColors}`} rows="4"></textarea>
         </div>
 
         {/* Images */}
         <div>
           <label className="block mb-1 font-medium">Upload Images</label>
-          <input type="file" multiple accept="image/*" onChange={handleImageChange} className="w-full border rounded-lg px-3 py-2" />
+          <input type="file" multiple accept="image/*" onChange={handleImageChange} className={`${InputColors}`} />
           {images.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-4">
               {images.map((img, i) => (

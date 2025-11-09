@@ -10,10 +10,10 @@ function ProductItem({ id, image, name, price, description, discountprice, cls }
 
     return (
         <Link 
-            className={`${cls} cursor-pointer  shadow-sm w-40 sm:w-full  rounded-xl bg-[#FAFCFC] hover:shadow-md ${darkmode ? 'text-gray-300' : 'text-gray-700'}`} 
+            className={`${cls} cursor-pointer    2xl:w-full  rounded-lg bg-[#FAFCFC] hover:shadow-md ${darkmode ? 'text-gray-300' : 'text-gray-700'}`} 
             to={`/product/${id}`}
         >
-            <div className='overflow-hidden rounded-t-xl shadow-xl'>
+            <div className='overflow-hidden rounded-t-lg shadow-xl'>
                 <img src={image} alt={name} className={` w-full h-40  sm:h-44  object-cover`} />
             </div>
             <p className={`pl-3 pt-3 pb-1 text-sm  sm:text-sm ${darkmode ? 'text-gray-400' : 'text-gray-600'}`}>

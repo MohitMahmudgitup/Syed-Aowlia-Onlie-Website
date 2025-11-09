@@ -14,8 +14,6 @@ export const Collection = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortOption, setSortOption] = useState("Relevant");
-
-
   const [subCategoryType, setSubCategoryType] = useState([]);
   const [selectSubCat, setSelectSubCat] = useState([]);
   const [categoryType, setCategoryType] = useState([]);
@@ -93,20 +91,20 @@ export const Collection = () => {
     }
 
     if (sortOption === "high-low") {
-      filteredProducts= [...filteredProducts].sort((a, b) => b.price - a.price);
+      filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
     }
-    
+
     if (sortOption === "low-high") {
-      filteredProducts =  [...filteredProducts].sort((c, d) => c.price - d.price);
-    } 
+      filteredProducts = [...filteredProducts].sort((c, d) => c.price - d.price);
+    }
     if (sortOption === "Relevant") {
       filteredProducts = [...filteredProducts]
     }
-  
+
     setFilter(filteredProducts);
   };
 
-  
+
 
   // Fetch both categories and subcategories on mount
   useEffect(() => {
@@ -163,16 +161,19 @@ export const Collection = () => {
   };
 
   // Helper function to get category name by ID
-  const getCategoryName = (categoryId) => {
-    const category = categoryType.find(cat => String(cat._id) === String(categoryId));
-    return category ? (category.name || category.categoryName) : `Category ${categoryId}`;
-  };
+
+  const category = categoryType.find(cat => String(cat._id) === String(collectionID));
+     
+    
+    
 
 
+const categorytitel = "hi"
+// console.log(categorytitel)
   return (
     <div className={`flex flex-col sm:flex-row gap-6 sm:pt-10 pt-2  ${darkmode ? "border-t border-t-gray-700" : "border-t"}`}>
-      <div className="w-full sm:w-1/4">
-        <div className={`p-4 sticky top-[115px] rounded-xl shadow-md transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
+      <div className="w-full sm:w-1/4 ">
+        <div className={`p-4 sticky top-0 rounded-xl transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
           {/* FILTERS HEADER */}
           <div className="flex items-center justify-between">
             <p
@@ -193,7 +194,7 @@ export const Collection = () => {
 
             <div
               className={`p-4 sticky top-[115px]  transition-all duration-300 
-      max-h-[80vh] overflow-y-auto bg-[#FAFCFC] rounded-md`}  // ✅ add scroll
+      max-h-[80vh] overflow-y-auto bg-[#FAFCFC] rounded-lg`}  // ✅ add scroll
             >
 
               {/* CATEGORIES - Show only when collectionID is "collection" */}
@@ -285,13 +286,13 @@ export const Collection = () => {
         <div className="flex items-center justify-between mb-6  gap-2 sm:flex-row">
           <Titel
             text1={"ALL"}
-            text2={collectionID === "collection" ? " COLLECTIONS" : ` ${getCategoryName(collectionID)?.toUpperCase() || "COLLECTIONS"}`}
+            text2={collectionID === "collection" ? " COLLECTIONS" : ` ${ category?.name?.toUpperCase()}`}
           />
 
           <select
             className={`border-2 text-sm sm:px-3 sm:py-1 rounded-lg transition-all focus:outline-none focus:ring-2 ${darkmode
-                ? "border-gray-600 bg-gray-600 text-white hover:bg-gray-700 focus:bg-gray-700 focus:ring-gray-400"
-                : "border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:ring-blue-400"
+              ? "border-gray-600 bg-gray-600 text-white hover:bg-gray-700 focus:bg-gray-700 focus:ring-gray-400"
+              : "border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:ring-blue-400"
               }`}
             value={sortOption}
             onChange={handleSortChange}
@@ -309,42 +310,42 @@ export const Collection = () => {
             {searchQuery && ` for "${searchQuery}"`}
           </p>
         </div>
-              <div className="flex justify-center">
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-2">
-          {filter.length > 0 ? (
-            filter.map((item) => (
-              <ProductItem
-                key={item._id}
-                id={item._id}
-                name={item.name}
-                price={item.price}
-                description={item.description}
-                 discountprice={item.discount_price}
-                image={item.images && item.images[0] ? `${backend}/uploads/product/${item.images[0]}` : ''}
-              />
-            ))
-          ) : (
-            <div className="col-span-full flex items-center justify-center h-[50vh]">
-              <div className="text-center">
-                <img
-                  className="mx-auto w-40 md:w-60 mb-4"
-                  src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-illustration-download-in-svg-png-gif-file-formats--available-product-tokostore-pack-e-commerce-shopping-illustrations-2809510.png"
-                  alt="No results found"
+        <div className="flex justify-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-2">
+            {filter.length > 0 ? (
+              filter.map((item) => (
+                <ProductItem
+                  key={item._id}
+                  id={item._id}
+                  name={item.name}
+                  price={item.price}
+                  description={item.description}
+                  discountprice={item.discount_price}
+                  image={item.images && item.images[0] ? `${backend}/uploads/product/${item.images[0]}` : ''}
                 />
-                <p className={`text-lg ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                  No products found
-                </p>
-                {(selectedCategories.length > 0 || selectedTypes.length > 0 || searchQuery) && (
-                  <p className={`text-sm mt-2 ${darkmode ? "text-gray-500" : "text-gray-500"}`}>
-                    Try adjusting your filters or search terms
+              ))
+            ) : (
+              <div className="col-span-full flex items-center justify-center h-[50vh]">
+                <div className="text-center">
+                  <img
+                    className="mx-auto w-40 md:w-60 mb-4"
+                    src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-illustration-download-in-svg-png-gif-file-formats--available-product-tokostore-pack-e-commerce-shopping-illustrations-2809510.png"
+                    alt="No results found"
+                  />
+                  <p className={`text-lg ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                    No products found
                   </p>
-                )}
+                  {(selectedCategories.length > 0 || selectedTypes.length > 0 || searchQuery) && (
+                    <p className={`text-sm mt-2 ${darkmode ? "text-gray-500" : "text-gray-500"}`}>
+                      Try adjusting your filters or search terms
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-              </div>
+        </div>
 
       </div>
     </div>

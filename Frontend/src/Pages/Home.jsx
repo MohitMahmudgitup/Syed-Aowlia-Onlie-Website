@@ -1,30 +1,34 @@
-import React from 'react'
-import Hero from '../Components/Hero'
-import LatesCallection from '../Components/LatesCallection'
-import BestSeller from '../Components/BestSeller'
-import OuerPolicy from '../Components/OuerPolicy'
-import NewsLetterBox from '../Components/NewsLetterBox'
-import Search from '../Components/Search'
-import Category from '../Components/Category'
+import React from "react";
+import Hero from "../Components/Hero";
+import LatesCallection from "../Components/LatesCallection";
+import BestSeller from "../Components/BestSeller";
+import OuerPolicy from "../Components/OuerPolicy";
+import NewsLetterBox from "../Components/NewsLetterBox";
+import Category from "../Components/Category";
 
-function Home() {
-  
+const Home = () => {
+  const sectionPadding = "px-1 sm:px-[5vw] md:px-[7vw] xl:px-[8vw] 2xl:px-[16vw]";
 
   return (
-    <div>
-      {/* <Search/> */}
-      <Hero/>
-      <div className={` sm:px-[5vw] md:px-[7vw] lg:px-[9vw] `}>
-      <Category/>
-      <div className='sm:px-0 px-2'>
-      <BestSeller/>
+    <main className="flex flex-col sm:gap-8">
+      
+      <div className={sectionPadding}>
+        <Hero />
+        <Category />
       </div>
-      <LatesCallection/>
-      <OuerPolicy/>
-      <NewsLetterBox/>
-      </div>
-    </div>
-  )
-}
 
-export default Home
+      <div className={sectionPadding}>
+        <BestSeller />
+      </div>
+
+      <div className={sectionPadding}>
+        <LatesCallection />
+        <OuerPolicy />
+        <NewsLetterBox />
+      </div>
+
+    </main>
+  );
+};
+
+export default Home;

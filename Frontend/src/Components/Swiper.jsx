@@ -11,13 +11,12 @@ import "swiper/css/effect-fade";
 // Import required modules
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { ShopContext } from "../Context/ShopContext";
-import { Link } from "react-router-dom";
 
 const SwiperComponent = () => {
   const { darkmode } = useContext(ShopContext);
   
   return (
-    <div className="relative sm:w-[85vw] w-full sm:p-4 p-2 mx-auto sm:h-[60vh] h-[25vh] group">
+    <div className="relative  w-full sm:py-4 py-2 sm:h-[60vh] h-[25vh] group">
       {/* Custom CSS for pagination bullets */}
 <style dangerouslySetInnerHTML={{
   __html: `
@@ -43,12 +42,12 @@ const SwiperComponent = () => {
 
       
       {/* Gradient overlay for better visual depth */}
-      {/* <div className=" absolute top-4 left-4 right-4 bottom-4 bg-gradient-to-b from-transparent via-transparent to-black/50 rounded-2xl pointer-events-none z-10" /> */}
+   
       
       <Swiper
         spaceBetween={20}
         slidesPerView={1}
-        className="custom-swiper h-full rounded-2xl overflow-hidden shadow-2xl"
+        className="custom-swiper h-full rounded-lg overflow-hidden "
         autoplay={{
           delay: 4000,
           disableOnInteraction: false,

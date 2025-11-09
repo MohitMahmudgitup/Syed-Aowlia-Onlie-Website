@@ -21,14 +21,14 @@ const CategoryItem = () => {
     }, [backend]);
 
     return (
-        <div className="flex overflow-x-auto space-x-2 sm:p-2 pb-2  scrollbar-hide">
+        <div className="flex overflow-x-auto space-x-2 sm:p-2 pb-2   scrollbar-hide">
             {categories.map((item) => (
                 <Link
                     to={`${item._id}`}
                     key={item._id}
-                    className="flex-shrink-0 bg-[#FFFFFF]  sm:w-32 md:w-36  sm:h-32 md:h-36 sm:p-2 px-5 py-2 flex flex-col justify-center items-center rounded-lg sm:rounded-xl sm:shadow-md 
-                        sm:hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out 
-                        border border-gray-200 hover:border-[#B8D9DC]"
+                    className="flex-shrink-0  bg-[#FFFFFF]  sm:w-32 md:w-36  sm:h-32 md:h-36 sm:p-2 px-5 py-2 flex flex-col justify-center items-center 2xl:rounded-lg rounded-full 
+                          transition-transform duration-300 ease-in-out 
+                        border border-blue-700 "
                 >
                     <img
                         src={`${backend}/uploads/category/${item.image}`}

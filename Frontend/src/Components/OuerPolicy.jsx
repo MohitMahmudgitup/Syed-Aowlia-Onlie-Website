@@ -5,71 +5,52 @@ import Titel from "./Titel";
 import { MdCurrencyExchange } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
 
-function OuerPolicy() {
-  const { darkmode } = useContext(ShopContext); // Access dark mode state
+const policyData = [
+  {
+    id: 1,
+    icon: <MdCurrencyExchange size={60} />,
+    title: "Easy Exchange Policy",
+    description: "We offer hassle-free exchange policy.",
+  },
+  {
+    id: 2,
+    icon: <img className="w-16 mb-4" src={assets.quality_icon} alt="7 Days Return" />,
+    title: "7 Days Return Policy",
+    description: "We provide a 7 days free return policy.",
+  },
+  {
+    id: 3,
+    icon: <BiSupport size={60} />,
+    title: "Best Customer Support",
+    description: "We provide 24/7 customer support.",
+  },
+];
+
+function OurPolicy() {
+  const { darkmode } = useContext(ShopContext);
+
+  const cardStyle = `flex flex-col w-full items-center shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`;
 
   return (
-    <div className="my-16 mx-auto max-w-screen-xl px-4">
-        <Titel text1={"OUR "} text2={"POLICIES"} />
-      <div className="flex flex-col sm:flex-row justify-between gap-4">
-        {/* Easy Exchange Policy */}
-        <div
-          className={`flex flex-col items-center ${
-            darkmode ? "bg-gray-800 text-white" : "bg-[#ECFF8E] text-gray-900"
-          } shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`}
-        >
-          
-          <MdCurrencyExchange size={60} />
-          <p className="font-semibold text-xl pt-5">Easy Exchange Policy</p>
-          <p
-            className={`text-center text-sm ${
-              darkmode ? "text-gray-300" : "text-gray-500"
-            }`}
-          >
-            We offer hassle-free exchange policy.
-          </p>
-        </div>
+    <div>
+      <Titel text1="OUR " text2="POLICIES" />
 
-        {/* 7 Days Return Policy */}
-        <div
-          className={`flex flex-col items-center ${
-            darkmode ? "bg-gray-800 text-white" : "bg-[#ECFF8E] text-gray-900"
-          } shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`}
-        >
-          <img
-            className="w-16 mb-4"
-            src={assets.quality_icon}
-            alt="7 Days Return"
-          />
-          <p className="font-semibold text-xl">7 Days Return Policy</p>
-          <p
-            className={`text-center text-sm ${
-              darkmode ? "text-gray-300" : "text-gray-500"
-            }`}
+      <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
+        {policyData.map((policy) => (
+          <div
+            key={policy.id}
+            className={`${cardStyle} bg-[#ECFF8E] text-gray-900`}
           >
-            We provide a 7 days free return policy.
-          </p>
-        </div>
-
-        {/* Best Customer Support */}
-        <div
-          className={`flex flex-col items-center ${
-            darkmode ? "bg-gray-800 text-white" : "bg-[#ECFF8E] text-gray-900"
-          } shadow-md rounded-lg p-6 transition-transform duration-300 hover:shadow-lg hover:scale-105`}
-        >
-          <BiSupport  size={60}/>
-          <p className="font-semibold text-xl pt-5">Best Customer Support</p>
-          <p
-            className={`text-center text-sm ${
-              darkmode ? "text-gray-300" : "text-gray-500"
-            }`}
-          >
-            We provide 24/7 customer support.
-          </p>
-        </div>
+            {policy.icon}
+            <p className="font-semibold text-xl pt-5">{policy.title}</p>
+            <p className={`text-center text-sm ${darkmode ? "text-gray-300" : "text-gray-500"}`}>
+              {policy.description}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export default OuerPolicy;
+export default OurPolicy;

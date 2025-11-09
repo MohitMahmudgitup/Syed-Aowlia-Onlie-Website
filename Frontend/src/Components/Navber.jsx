@@ -57,7 +57,7 @@ function Navbar({ admintoken }) {
   };
 
   return (
-    <div className={`  px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] flex sticky top-0  z-50 items-center justify-between py-1 font-medium   ${darkmode ? 'bg-zinc-900 text-white  ' : 'bg-[#B8D9DC] text-white '}`}>
+    <div className={`  px-4 sm:px-[5vw] md:px-[7vw] xl:px-[8vw] 2xl:px-[16vw] flex sticky top-0  z-50 items-center justify-between py-1 font-medium   ${darkmode ? 'bg-zinc-900 text-white  ' : 'bg-[#B8D9DC] text-white '}`}>
       {/* Logo */}
       <NavLink to={"/"} className={"-ml-4 sm:ml-0"} >
         <img width={180} src={assets.syedAowlia} alt="" />

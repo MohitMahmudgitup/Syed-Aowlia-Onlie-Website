@@ -91,7 +91,7 @@ function BestSeller() {
                           <div className="relative overflow-hidden rounded-t-lg">
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
                             <img
-                              src={`${backend}/uploads/product/${item.images[0]}`}
+                              src={`${item.images[0]}`}
                               alt={item.name}
                               className="w-full h-36 2xl:h-40 object-cover transform transition-transform duration-700 group-hover:scale-110"
                             />

@@ -69,3 +69,6 @@ a.active hr{
     width: 0px; 
   }
 }
+.break-inside-avoid {
+  break-inside: avoid;
+}

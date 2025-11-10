@@ -36,7 +36,7 @@ function BestSeller() {
 
   return (
     <div
-      className="relative sm:rounded-none 2xl:rounded-lg sm:py-8 py-4 2xl:h-full h-56  "
+      className="relative sm:rounded-none 2xl:rounded-lg sm:py-8 py-4 2xl:h-full xl:h-full h-56  "
       style={{
         background: darkmode
           ? "linear-gradient(135deg, rgba(30,30,46,0.95) 0%, rgba(45,45,65,0.95) 50%, rgba(60,60,85,0.95) 100%)"
@@ -53,7 +53,7 @@ function BestSeller() {
       <div className="relative z-10 2xl:px-4 px-1">
         <Titel text1="BEST" text2="SELLERS" />
 
-        <div className="relative group">
+        <div className="relative group 2xl:px-2 xl:px-2">
           {/* Swiper navigation buttons */}
           <button className="swiper-button-prev-custom absolute left-1 top-1/2 -translate-y-1/2 z-20 bg-white/70 hover:bg-white text-gray-800 font-bold rounded-full px-5 py-3 shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100">
             ❮

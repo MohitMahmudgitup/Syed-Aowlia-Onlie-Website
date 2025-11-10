@@ -310,8 +310,8 @@ const categorytitel = "hi"
             {searchQuery && ` for "${searchQuery}"`}
           </p>
         </div>
-        <div className="flex justify-center">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-2">
+   
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  2xl:gap-4 gap-3">
             {filter.length > 0 ? (
               filter.map((item) => (
                 <ProductItem
@@ -345,7 +345,6 @@ const categorytitel = "hi"
             )}
           </div>
 
-        </div>
 
       </div>
     </div>

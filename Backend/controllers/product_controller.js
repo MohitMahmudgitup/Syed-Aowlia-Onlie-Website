@@ -1,46 +1,37 @@
 import Product from "../models/product_model.js";
+import { cloudinaryInstance, connetCloudnary } from "../config/cloudinary.js";
+
+// Ensure Cloudinary is configured
+connetCloudnary();
 
 export const createProduct = async (req, res) => {
   try {
     const {
-      name,
-      discount_price,
-      brand,
-      stock,
-      price,
-      description,
-      category,
-      subcategory,
-      sizes,
-      bestseller,
-      product_type,
-      model,
-      color,
-      ram,
-      rom,
-      storage,
-      processor,
-      display,
-      battery,
-      os,
+      name, discount_price, brand, stock, price, description,
+      category, subcategory, sizes, bestseller, product_type,
+      model, color, ram, rom, storage, processor, display, battery, os
     } = req.body;
 
-    const images = req.files ? req.files.map(file => file.filename) : [];
-
     if (!name || !price || !category) {
-      return res
-        .status(400)
-        .json({ message: "Name, price, and category are required", success: false });
+      return res.status(400).json({ message: "Name, price, and category are required", success: false });
     }
 
-    // Prepare product data for saving
+    // Upload images to Cloudinary
+    let images = [];
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const result = await cloudinaryInstance.uploader.upload(file.path, { folder: "products" });
+        images.push(result.secure_url);
+      }
+    }
+
     const productData = {
       name,
       price: Number(price),
       description,
       category,
       subcategory,
-      sizes,
+      sizes: sizes ? JSON.parse(sizes) : [],
       bestseller: bestseller === "true",
       images,
       product_type,
@@ -50,29 +41,45 @@ export const createProduct = async (req, res) => {
       model,
       color,
       date: Date.now(),
-      ram,
-      rom,
-      storage,
-      processor,
-      display,
-      battery,
-      os,
+      ram, rom, storage, processor, display, battery, os,
     };
 
-    // Save the product to the database
     const savedProduct = new Product(productData);
     await savedProduct.save();
 
-    return res.json({
-      message: "Product created successfully",
-      product: savedProduct,
-      success: true,
-    });
+    return res.json({ message: "Product created successfully", product: savedProduct, success: true });
+
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ message: "Internal server error", success: false });
+    return res.status(500).json({ message: "Internal server error", success: false });
+  }
+};
+
+export const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.findById(id);
+    if (!product) return res.status(404).json({ message: "Product not found", success: false });
+
+    const updates = req.body;
+
+    // If new images are uploaded, send to Cloudinary
+    if (req.files && req.files.length > 0) {
+      const cloudImages = [];
+      for (const file of req.files) {
+        const result = await cloudinaryInstance.uploader.upload(file.path, { folder: "products" });
+        cloudImages.push(result.secure_url);
+      }
+      updates.images = cloudImages;
+    }
+
+    Object.assign(product, updates);
+    await product.save();
+
+    return res.json({ message: "Product updated successfully", product, success: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to update product", success: false });
   }
 };
 
@@ -110,42 +117,6 @@ export const getProductById = async (req, res) => {
   }
 };
 
-// Update a product
-export const updateProduct = async (req, res) => {
-  const { id } = req.params;
-  const { name, description, sizes, price, bestseller, product_type, brand, stock, discount_price, model, color } = req.body;
-
-  try {
-    
-    const images = req.files ? req.files.map(file => file.filename) : [];
-    const updatedProduct = await Product.findById(id);
-    if (!updatedProduct) {
-      return res
-        .status(404)
-        .json({ message: "Product not found.", success: false });
-    }
-
-    if(name) updatedProduct.name = name;
-    if(description) updatedProduct.description = description;
-    if(sizes) updatedProduct.sizes = JSON.parse(sizes);
-    if(price) updatedProduct.price = price;
-    if(bestseller) updatedProduct.bestseller = bestseller === "true" || bestseller === true;;
-    if(product_type) updatedProduct.product_type = product_type;
-    if(brand) updatedProduct.brand = brand;
-    if(model) updatedProduct.model = model;
-    if(stock) updatedProduct.stock = stock;
-    if(color) updatedProduct.color = color;
-    if(discount_price) updatedProduct.discount_price = discount_price;
-    if(images && images.length > 0) updatedProduct.images = images;
-    await updatedProduct.save();
- 
-    res.status(200).json({updatedProduct, success: true, new: true });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to update product.", error, success: false });
-  }
-};
 
 // Delete a product
 export const deleteProduct = async (req, res) => {

@@ -31,7 +31,7 @@ const CategoryItem = () => {
                         border border-blue-700 "
                 >
                     <img
-                        src={`${backend}/uploads/category/${item.image}`}
+                        src={`${item.image}`}
                         alt={item.name}
                         className="w-12 hidden sm:block h-12  sm:w-16 sm:h-16 md:w-20 md:h-20 object-cover rounded-lg"
                     />

@@ -69,7 +69,7 @@ function Product() {
               <div className="relative group">
                 <div className={`aspect-square rounded-2xl overflow-hidden ${darkmode ? 'bg-gray-800' : 'bg-white'} shadow-2xl`}>
                   <img
-                    src={`${backend}/uploads/product/${productData.images[currentImageIndex]}`}
+                    src={`${productData.images[currentImageIndex]}`}
                     alt={productData.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-zoom-in"
                     onClick={openModal}
@@ -118,7 +118,7 @@ function Product() {
                           }`}
                       >
                         <img
-                          src={`${backend}/uploads/product/${productData.images[index]}`}
+                          src={`${productData.images[index]}`}
                           alt={`${productData.name} ${index + 1}`}
                           className="w-full h-full object-cover"
                         />

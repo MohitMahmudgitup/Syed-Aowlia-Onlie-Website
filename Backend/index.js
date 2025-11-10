@@ -9,6 +9,7 @@ import orderRouter from './routers/order_router.js';
 import categoryRouter from "./routers/category_router.js"
 import footerRouter from "./routers/Footer_router.js"; 
 import subCategoryRouter from "./routers/subcategory_router.js"
+import { connetCloudnary } from "./config/cloudinary.js";
 // App  setup
 
 const app = express();
@@ -30,7 +31,7 @@ app.use("/api/order", orderRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/subcategory", subCategoryRouter);
 app.use("/api/footer", footerRouter);
-
+connetCloudnary();
 connectDB();
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Example app listening on port ${PORT}`);

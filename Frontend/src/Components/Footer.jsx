@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import PaymentMethods from "./PaymentMethods";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   const { darkmode } = useContext(ShopContext);
@@ -16,7 +17,7 @@ const Footer = () => {
           setFooterData(json.data[0]);
         }
       } catch (error) {
-        console.error("Error fetching footer data:", error);
+        // toast.error("Error fetching footer data:", error);
       }
     };
 

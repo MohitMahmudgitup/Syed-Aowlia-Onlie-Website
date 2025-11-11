@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { assets } from "../assets/assets";
 import Titel from "../Components/Titel";
 import { ShopContext } from "../Context/ShopContext";
 import ProductItem from "../Components/ProductItem";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Filters from "../Components/Common/Collection/Common/Filters";
+import { toast } from "react-toastify";
 
 export const Collection = () => {
   const { collectionID } = useParams()
@@ -24,7 +25,7 @@ export const Collection = () => {
       const subCatData = res.data.categories;
       setSubCategoryType(subCatData);
     } catch (error) {
-      console.error("Error fetching subcategories:", error);
+      toast.error("Error fetching subcategories:", error);
     }
   }
 
@@ -34,7 +35,7 @@ export const Collection = () => {
       const CatData = res.data.categories;
       setCategoryType(CatData);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      toast.error("Error fetching categories:", error);
     }
   }
 
@@ -163,130 +164,21 @@ export const Collection = () => {
   // Helper function to get category name by ID
 
   const category = categoryType.find(cat => String(cat._id) === String(collectionID));
-     
-    
-    
 
 
-const categorytitel = "hi"
-// console.log(categorytitel)
+
+
+
+  const categorytitel = "hi"
   return (
     <div className={`flex flex-col sm:flex-row gap-6 sm:pt-10 pt-2  ${darkmode ? "border-t border-t-gray-700" : "border-t"}`}>
-      <div className="w-full sm:w-1/4 ">
-        <div className={`p-4 sticky top-0 rounded-xl transition-all duration-300 ${darkmode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-700"}`}>
-          {/* FILTERS HEADER */}
-          <div className="flex items-center justify-between">
-            <p
-              onClick={() => setShowFilter((prev) => !prev)}
-              className="text-xl font-semibold cursor-pointer flex items-center gap-2 transition-colors duration-300"
-            >
-              FILTERS
-              <img
-                className={`h-4 transition-transform sm:hidden ${showFilter ? "rotate-90" : ""}`}
-                src={assets.dropdown_icon}
-                alt="Toggle Filters"
-              />
-            </p>
-          </div>
-
-          {/* FILTER OPTIONS */}
-          <div className={`${showFilter ? "hidden" : "block"} sm:block`}>
-
-            <div
-              className={`p-4 sticky top-[115px]  transition-all duration-300 
-      max-h-[80vh] overflow-y-auto bg-[#FAFCFC] rounded-lg`}  // ✅ add scroll
-            >
-
-              {/* CATEGORIES - Show only when collectionID is "collection" */}
-              {collectionID === "collection" && categoryType.length > 0 && (
-                <div className="mb-6">
-                  <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                    CATEGORIES ({categoryType.length})
-                  </p>
-                  <div className="flex flex-col gap-3 text-sm">
-                    {categoryType.map((categoryItem) => (
-                      <label className="flex items-center gap-2" key={categoryItem._id}>
-                        <input
-                          className="w-4 h-4 rounded-md transition-all duration-300"
-                          type="checkbox"
-                          value={categoryItem._id}
-                          onChange={() => handleCategoryChange(categoryItem._id)}
-                          checked={selectedCategories.includes(String(categoryItem._id))}
-                        />
-                        <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
-                          {categoryItem.name || categoryItem.categoryName || 'Unnamed Category'}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* SUBCATEGORIES */}
-              {selectSubCat.length > 0 && (
-                <div className="mb-6">
-                  <p className={`mb-3 text-sm font-bold transition-all duration-300 ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                    SUBCATEGORIES ({selectSubCat.length})
-                  </p>
-                  <div className="flex flex-col gap-3 text-sm">
-                    {selectSubCat.map((item) => (
-                      <label className="flex items-center gap-2" key={item._id || item.id}>
-                        <input
-                          className="w-4 h-4 rounded-md transition-all duration-300"
-                          type="checkbox"
-                          value={item._id || item.id}
-                          onChange={() => handleTypeChange(item._id || item.id)}
-                          checked={selectedTypes.includes(String(item._id || item.id))}
-                        />
-                        <span className={darkmode ? "text-gray-300" : "text-gray-700"}>
-                          {item.name || 'Unnamed Subcategory'}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* ACTIVE FILTERS DISPLAY */}
-              {(selectedCategories.length > 0 || selectedTypes.length > 0) && (
-                <div className="mb-4">
-                  <p className={`mb-2 text-sm font-bold ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                    Active Filters:
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedCategories.map(catId => (
-                      <span
-                        key={catId}
-                        className={`px-2 py-1 text-xs rounded-full ${darkmode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"}`}
-                      >
-                        {getCategoryName(catId)}
-                      </span>
-                    ))}
-                    {selectedTypes.map(subId => (
-                      <span
-                        key={subId}
-                        className={`px-2 py-1 text-xs rounded-full ${darkmode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-700"}`}
-                      >
-                        {selectSubCat.find(sub => String(sub._id || sub.id) === String(subId))?.name || 'Subcategory'}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-            </div>
-
-
-
-          </div>
-        </div>
-      </div>
+      <Filters setShowFilter={setShowFilter} showFilter={showFilter} collectionID={collectionID} categoryType={categoryType} handleCategoryChange={handleCategoryChange} selectedCategories={selectedCategories} selectSubCat={selectSubCat} handleTypeChange={handleTypeChange} selectedTypes={selectedTypes} />
 
       <div className="flex-1">
         <div className="flex items-center justify-between mb-6  gap-2 sm:flex-row">
           <Titel
             text1={"ALL"}
-            text2={collectionID === "collection" ? " COLLECTIONS" : ` ${ category?.name?.toUpperCase()}`}
+            text2={collectionID === "collection" ? " COLLECTIONS" : ` ${category?.name?.toUpperCase()}`}
           />
 
           <select
@@ -310,40 +202,40 @@ const categorytitel = "hi"
             {searchQuery && ` for "${searchQuery}"`}
           </p>
         </div>
-   
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  2xl:gap-4 gap-3">
-            {filter.length > 0 ? (
-              filter.map((item) => (
-                <ProductItem
-                  key={item._id}
-                  id={item._id}
-                  name={item.name}
-                  price={item.price}
-                  description={item.description}
-                  discountprice={item.discount_price}
-                  image={item.images && item.images[0] ? `${backend}/uploads/product/${item.images[0]}` : ''}
+
+        <div className=" columns-2 xl:grid   xl:grid-cols-5   gap-3   space-y-3 sm:space-y-0 ">
+          {filter.length > 0 ? (
+            filter.map((item) => (
+              <ProductItem
+                key={item._id}
+                id={item._id}
+                name={item.name}
+                price={item.price}
+                description={item.description}
+                discountprice={item.discount_price}
+                image={item.images && item.images[0] ? `${item.images[0]}` : ''}
+              />
+            ))
+          ) : (
+            <div className="col-span-full flex items-center justify-center h-[50vh]">
+              <div className="text-center">
+                <img
+                  className="mx-auto w-40 md:w-60 mb-4"
+                  src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-illustration-download-in-svg-png-gif-file-formats--available-product-tokostore-pack-e-commerce-shopping-illustrations-2809510.png"
+                  alt="No results found"
                 />
-              ))
-            ) : (
-              <div className="col-span-full flex items-center justify-center h-[50vh]">
-                <div className="text-center">
-                  <img
-                    className="mx-auto w-40 md:w-60 mb-4"
-                    src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-illustration-download-in-svg-png-gif-file-formats--available-product-tokostore-pack-e-commerce-shopping-illustrations-2809510.png"
-                    alt="No results found"
-                  />
-                  <p className={`text-lg ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
-                    No products found
+                <p className={`text-lg ${darkmode ? "text-gray-400" : "text-gray-600"}`}>
+                  No products found
+                </p>
+                {(selectedCategories.length > 0 || selectedTypes.length > 0 || searchQuery) && (
+                  <p className={`text-sm mt-2 ${darkmode ? "text-gray-500" : "text-gray-500"}`}>
+                    Try adjusting your filters or search terms
                   </p>
-                  {(selectedCategories.length > 0 || selectedTypes.length > 0 || searchQuery) && (
-                    <p className={`text-sm mt-2 ${darkmode ? "text-gray-500" : "text-gray-500"}`}>
-                      Try adjusting your filters or search terms
-                    </p>
-                  )}
-                </div>
+                )}
               </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
 
 
       </div>

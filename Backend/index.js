@@ -36,5 +36,5 @@ app.use("/api/hero", heroRouter);
 connetCloudnary();
 connectDB();
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Example app listening on port http://192.168.0.102:${PORT}`);
 });

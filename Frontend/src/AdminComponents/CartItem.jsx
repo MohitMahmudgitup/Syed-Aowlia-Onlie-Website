@@ -3,6 +3,7 @@ import axios from "axios";
 import { ShopContext } from "../Context/ShopContext";
 import { Link } from "react-router-dom";
 import { IoCreateOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 const CartItem = () => {
   const { backend } = useContext(ShopContext);
@@ -13,7 +14,7 @@ const CartItem = () => {
       const response = await axios.get(backend + "/api/category/getCategory");
       setCart(response.data.categories);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      toast.error("Error fetching categories:", error);
     }
   };
 

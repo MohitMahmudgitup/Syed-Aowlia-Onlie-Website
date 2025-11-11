@@ -27,7 +27,6 @@ const AdminOrders = ({ admintoken }) => {
 
       setOrders(response.data.data || []);
     } catch (error) {
-      console.error("Error fetching orders:", error);
       toast.error(error.message || "Failed to fetch orders.");
     } finally {
       setIsLoading(false);
@@ -53,7 +52,6 @@ const AdminOrders = ({ admintoken }) => {
         toast.error("Failed to update order status.");
       }
     } catch (error) {
-      console.error("Error:", error);
       toast.error(error.message || "Failed to update order status.");
     }
   };

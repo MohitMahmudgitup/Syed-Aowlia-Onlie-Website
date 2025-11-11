@@ -1,7 +1,7 @@
 import React from 'react'
 
-import CategoryItem from './CategoryItem.jsx';
-import Titel from './Titel.jsx';
+import CategoryItem from '../../../CategoryItem.jsx';
+import Titel from '../../../Titel.jsx';
 
 const Category = () => {
   return (

@@ -3,13 +3,14 @@ import axios from "axios";
 import { FiEdit, FiTrash2, FiSave, FiX } from "react-icons/fi";
 import { ShopContext } from "../Context/ShopContext";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Editcat = () => {
     const [categories, setCategories] = useState([]);
     const [editCategory, setEditCategory] = useState(null);
     const [name, setName] = useState("");
     const [image, setImage] = useState(null);
-    const [deleteId, setDeleteId] = useState(null); // store category to delete
+    const [deleteId, setDeleteId] = useState(null); 
     const { backend } = useContext(ShopContext);
 
     // Fetch all categories
@@ -18,7 +19,7 @@ const Editcat = () => {
             const res = await axios.get(`${backend}/api/category/getCategory`);
             setCategories(res.data.categories);
         } catch (err) {
-            console.error("Error fetching categories", err);
+            toast.error("Error fetching categories", err);
         }
     };
 
@@ -36,13 +37,13 @@ const Editcat = () => {
             await axios.put(`${backend}/api/category/updateCategory/${id}`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
-            alert("Category updated successfully");
+            toast.success("Category updated successfully");
             setEditCategory(null);
             setName("");
             setImage(null);
             fetchCategories();
         } catch (err) {
-            console.error("Error updating category", err);
+            toast.error("Error updating category", err);
         }
     };
 
@@ -54,7 +55,7 @@ const Editcat = () => {
             setDeleteId(null); // close modal
             fetchCategories();
         } catch (err) {
-            console.error("Error deleting category", err);
+            toast.error("Error deleting category", err);
         }
     };
 

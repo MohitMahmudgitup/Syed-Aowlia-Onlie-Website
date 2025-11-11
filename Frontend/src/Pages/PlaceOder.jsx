@@ -66,9 +66,7 @@ const PlaceOrder = () => {
         items: orderItems,
         amount: getTotalAmount() + delivery_fee,
       };
-      // console.log(orderData);
-      // Ensure token is logged for debugging
-      // console.log("Token being sent:", token);
+
 
       switch (method) {
         case "cod":
@@ -77,7 +75,6 @@ const PlaceOrder = () => {
             orderData,
             { headers: { token } }
           );
-          console.log(response.data);
           if (response.data.success) {
             setCartItem({});
             navigate("/oders");
@@ -92,7 +89,6 @@ const PlaceOrder = () => {
               orderData,
               { headers: { token } }
             );
-            console.log(responseStrict.data);
             if (responseStrict.data.success) {
               const { session_url } = responseStrict.data;
               window.location.replace(session_url);
@@ -107,7 +103,6 @@ const PlaceOrder = () => {
           break;
       }
     } catch (error) {
-      console.error("An error occurred during order submission:", error);
       toast.error("Order submission failed. Please try again.");
     }
   };

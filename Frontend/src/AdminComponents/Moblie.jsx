@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ShopContext } from "../Context/ShopContext";
+import { toast } from "react-toastify";
 
 const Moblie = ({ admintoken }) => {
   const { backend } = useContext(ShopContext);
@@ -43,7 +44,7 @@ const Moblie = ({ admintoken }) => {
       const res = await axios.get(backend + "/api/category/getCategory");
       setCategories(res.data.categories || []);
     } catch (err) {
-      console.error(err);
+      toast.error(err);
     }
   };
 
@@ -55,7 +56,7 @@ const Moblie = ({ admintoken }) => {
       const result = subCatData.filter((p) => p.category._id === formData.category);
       setSubCategories(result);
     } catch (err) {
-      console.error(err);
+      toast.error(err);
     }
   };
 

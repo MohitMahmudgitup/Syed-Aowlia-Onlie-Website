@@ -4,21 +4,21 @@ import { FiShoppingCart } from "react-icons/fi";
 import { MdBorderColor } from "react-icons/md";
 import { MdInventory2 } from "react-icons/md"; // icon for stock
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const AllAmount = ({ admintoken }) => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const { backend } = useContext(ShopContext);
 
-  const fetchAllProduct = async () => {
-    try {
-      const res = await axios.get(backend + "/api/product");
-      const data = res.data?.products || [];
-      setProducts(data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
+ const fetchAllProduct = async () => {
+  try {
+    const res = await axios.get(backend + "/api/product");
+    setProducts(res.data?.products || []);
+  } catch (error) {
+    toast.error("Failed to load products. Please try again.");
+  }
+};
 
   const fetchOrders = async () => {
     try {
@@ -34,7 +34,7 @@ const AllAmount = ({ admintoken }) => {
 
       setOrders(response.data.data || []);
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      toast.error("Error fetching orders:", error);
     }
   };
 

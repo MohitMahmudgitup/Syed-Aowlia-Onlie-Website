@@ -4,6 +4,9 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { IoBagHandleOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa6";
+import { FiUser } from "react-icons/fi";
 
 function Navbar({ admintoken }) {
   const navigate = useNavigate();
@@ -30,9 +33,9 @@ function Navbar({ admintoken }) {
   const getUserId = async () => {
     const token = localStorage.getItem("token");
     const res = await axios.post(
-      backend + "/api/user",  // POST route
-      {},                      // empty body
-      { headers: { token } }   // token header
+      backend + "/api/user",
+      {},
+      { headers: { token } }
     );
 
     setUserData(res.data.user); // should show user data now
@@ -65,18 +68,19 @@ function Navbar({ admintoken }) {
 
       {/* Icons Section */}
       <div className="flex items-center  gap-2">
-        {admintoken && (
-          <NavLink
-            to="/adminPages/dashboard"
-            target="_blank"
-            className={`hidden  lg:flex text-zinc-400  px-5 py-2 bg-white rounded-full`}
-          >
-            ADMIN PANEL
-          </NavLink>
-        )}
+      {admintoken && (
+  <NavLink
+    to="/adminPages/dashboard"
+    target="_blank"
+  >
+    <div className="hidden lg:flex items-center justify-center text-zinc-400 bg-white rounded-full py-2 w-40">
+      ADMIN PANEL
+    </div>
+  </NavLink>
+)}
+
         {/* Search Icon */}
         <div className="pr-3  py-2  bg-[#ffffffec] hidden sm:block  rounded-full">
-
           <div onClick={handleSearch} className="items-center  cursor-pointer  w-full flex justify-center rounded-full">
             <motion.input
               initial={{ width: "0rem", opacity: 0.8 }}
@@ -104,20 +108,25 @@ function Navbar({ admintoken }) {
           </div>
         </div>
 
-        <Link to={"collection"} className="relative w-9 h-9 flex justify-center items-center rounded-full bg-[#ffffffec] overflow-hidden">
-                            <motion.div
-              whileHover={{ scale: 1.2, rotate: 15 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="w-6 flex justify-center items-center "
-              onClick={toggleSearch} // click toggles search open
-            >
-              <img
-                src={assets.allProduct}
-                className="relative w-5 cursor-pointer transition-all duration-300"
-                alt="Search Icon"
-              />
-            </motion.div>
-              </Link>
+        <Link to={"collection"} className="relative gap-2 px-0 sm:px-4 w-9 xl:w-full text-black h-9 flex justify-center items-center rounded-full bg-[#ffffffec] overflow-hidden">
+          
+          <div className="hidden sm:block">
+              <p>COLLECTIONS</p>
+            </div>
+          <motion.div
+            whileHover={{ scale: 1.2, rotate: 15 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="w-6 flex justify-center items-center "
+            onClick={toggleSearch} // click toggles search open
+          >
+            
+            <img
+              src={assets.allProduct}
+              className="relative cursor-pointer transition-all duration-300"
+              alt="Search Icon"
+            />
+          </motion.div>
+        </Link>
 
 
         {/* Profile Dropdown */}
@@ -136,19 +145,15 @@ function Navbar({ admintoken }) {
               </div>
             ) : (
               <div className="relative w-9 h-9 flex justify-center items-center rounded-full bg-[#ffffffec] overflow-hidden">
-                                            <motion.div
-              whileHover={{ scale: 1.2, rotate: 15 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="w-6 flex justify-center items-center "
-              onClick={toggleSearch} // click toggles search open
-            >
-              <img
-                src={assets.profile_icon}
-                className="relative w-5 cursor-pointer transition-all duration-300"
-                alt="Search Icon"
-              />
-            </motion.div>
-                
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 15 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="w-6 flex justify-center items-center "
+                  onClick={toggleSearch} // click toggles search open
+                >
+                  <FiUser  size={26} color="black" />
+                </motion.div>
+
               </div>
 
 
@@ -169,25 +174,28 @@ function Navbar({ admintoken }) {
         </Link>
 
         {/* Cart Icon */}
-        <Link to="/cart" className="relative">
-          <img src={assets.cart_icon} className={`w-5 cursor-pointer transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`} alt="Cart Icon" />
-          <p className={`absolute -right-[5px] -bottom-[5px] text-center w-4 h-4 rounded-full text-xs 
-  ${darkmode ? 'bg-white text-black' : 'bg-[#ECFF8E] text-black'}`}>
-            {getCartItem() || 0}
-          </p>
-        </Link>
+       <div>
+  <Link to="/cart" className="relative">
+    <IoBagHandleOutline size={26} color="black" />
+
+    <p className="absolute -right-1 -bottom-1 text-center w-4 h-4 rounded-full text-xs bg-[#ECFF8E] text-black leading-[14px]">
+      {getCartItem() || 0}
+    </p>
+  </Link>
+</div>
+
 
         {/* Mobile Menu Icon */}
-        {/* <img
+        <img
           onClick={() => setVisible(true)}
           src={assets.menu_icon}
           alt="Menu Icon"
-          className={`w-5  cursor-pointer sm:hidden block transition-all duration-300 ${darkmode ? 'invert' : 'brightness-0 invert'}`}
-        /> */}
+          className={`w-5  cursor-pointer sm:hidden block transition-all duration-300 `}
+        />
       </div>
 
       {/* Sidebar for small screens */}
-      {/* <div
+      <div
         className={`fixed z-40 top-0 right-0 bottom-0 ${darkmode ? "bg-zinc-900 text-white" : "bg-white"} transition-all duration-300 ${visible ? "w-64" : "w-0"} overflow-hidden`}
       >
         <div className="flex flex-col">
@@ -195,10 +203,10 @@ function Navbar({ admintoken }) {
             <img src={assets.dropdown_icon} className="h-4 rotate-180" alt="Back Icon" />
             <p className="text-xl">Back</p>
           </div>
-          <NavLink onClick={() => setVisible(false)} to="/" className="py-3 pl-6 border-b  text-black">HOME</NavLink>
-          <NavLink onClick={() => setVisible(false)} to="/about" className="py-3 pl-6 border-b text-black">ABOUT</NavLink>
+          {/* <NavLink onClick={() => setVisible(false)} to="/" className="py-3 pl-6 border-b  text-black">HOME</NavLink> */}
+          {/* <NavLink onClick={() => setVisible(false)} to="/about" className="py-3 pl-6 border-b text-black">ABOUT</NavLink> */}
           <NavLink onClick={() => setVisible(false)} to="/collection" className="py-3 pl-6 border-b text-black">COLLECTION</NavLink>
-          <NavLink onClick={() => setVisible(false)} to="/contact" className="py-3 pl-6 border-b text-black">CONTACT</NavLink>
+          {/* <NavLink onClick={() => setVisible(false)} to="/contact" className="py-3 pl-6 border-b text-black">CONTACT</NavLink> */}
           {
             
             admintoken &&
@@ -206,7 +214,7 @@ function Navbar({ admintoken }) {
 
           }
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

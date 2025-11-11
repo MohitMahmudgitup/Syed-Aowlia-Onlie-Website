@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { toast } from "react-toastify";
 
 const CategoryItem = () => {
   const { backend } = useContext(ShopContext);
@@ -21,7 +22,7 @@ const CategoryItem = () => {
       const response = await axios.get(backend + "/api/category/getCategory");
       setCategories(response.data.categories);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      toast.error("Error fetching categories:", error);
     } finally {
       setLoading(false);
     }

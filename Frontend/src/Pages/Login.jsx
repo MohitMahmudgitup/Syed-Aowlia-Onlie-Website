@@ -43,7 +43,6 @@ function SignUp() {
         toast.error(response.data.message); // Show error toast for failed request
       }
     } catch (error) {
-      console.error("Error:", error);
       toast.error("Something went wrong. Please try again."); // Show error toast for exceptions
     }
   };

@@ -1,6 +1,7 @@
 import  { useContext, useState } from "react";
 import axios from "axios";
 import { ShopContext } from "../Context/ShopContext";
+import { toast } from "react-toastify";
 
 const FooterInput = ({ admintoken }) => {
       const { backend } = useContext(ShopContext);
@@ -62,14 +63,10 @@ const FooterInput = ({ admintoken }) => {
             }
         });
         try {
-            const res = await axios.post(backend + "/api/footer", data, {
-                headers: { admintoken },
-            });
-            alert("✅ Footer created successfully!");
-            console.log(res.data);
+            await axios.post(backend + "/api/footer", data, {    headers: { admintoken },    });
+            toast.error("✅ Footer created successfully!");
         } catch (error) {
-            console.error("Error creating footer:", error);
-            alert("❌ Failed to create footer!");
+            toast.error("Error creating footer:", error);
         }
     };
 

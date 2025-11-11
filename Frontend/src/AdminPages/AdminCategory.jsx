@@ -5,13 +5,13 @@ import { MdOutlineCategory } from "react-icons/md";
 import { ShopContext } from "../Context/ShopContext";
 import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AdminCategory = ({ admintoken }) => {
     const { backend } = useContext(ShopContext);
     const [name, setName] = useState("");
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
 
     const [subName, setSubName] = useState("");
     const [godata, setGodata] = useState();
@@ -30,7 +30,7 @@ const AdminCategory = ({ admintoken }) => {
             );
             setCategories(res.data.categories || []);
         } catch (err) {
-            console.error("Error fetching categories", err);
+            toast.error("Error fetching categories", err);
         }
     };
 
@@ -43,7 +43,7 @@ const AdminCategory = ({ admintoken }) => {
             );
             setSubCategories(res.data.categories || []);
         } catch (err) {
-            console.error("Error fetching subcategories", err);
+            toast.error("Error fetching subcategories", err);
         }
     };
 
@@ -56,7 +56,6 @@ const AdminCategory = ({ admintoken }) => {
     const handleSubmitCategory = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setMessage("");
 
         try {
             const formData = new FormData();
@@ -71,16 +70,15 @@ const AdminCategory = ({ admintoken }) => {
 
             if (res.data) {
                 setGodata(res.data.category);
-                setMessage("✅ Category created successfully!");
+                toast.success("✅ Category created successfully!");
                 setName("");
                 setImage(null);
                 fetchCategories();
             } else {
-                setMessage("⚠️ Something went wrong!");
+                toast.error("⚠️ Something went wrong!");
             }
         } catch (err) {
-            console.error(err);
-            setMessage("❌ Error creating category!");
+            toast.error("❌ Error creating category!");
         } finally {
             setLoading(false);
         }

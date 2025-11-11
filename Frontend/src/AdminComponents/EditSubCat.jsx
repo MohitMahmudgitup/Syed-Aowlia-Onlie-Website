@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FiEdit, FiTrash2, FiSave, FiX } from "react-icons/fi";
 import { ShopContext } from "../Context/ShopContext";
+import { toast } from "react-toastify";
 
 const EditSubCat = () => {
   const [subCategories, setSubCategories] = useState([]);
@@ -15,7 +16,7 @@ const EditSubCat = () => {
       const res = await axios.get(`${backend}/api/subcategory/getSubCategory`);
       setSubCategories(res.data.categories);
     } catch (error) {
-      console.log("Error fetching subcategories:", error);
+      toast.error("Error fetching subcategories:", error);
     }
   };
 
@@ -48,7 +49,7 @@ const EditSubCat = () => {
       handleCancel();
       alert("Subcategory updated successfully!");
     } catch (error) {
-      console.log("Error updating subcategory:", error);
+      toast.error("Error updating subcategory:", error);
     }
   };
 
@@ -59,7 +60,7 @@ const EditSubCat = () => {
         fetchSubCategories();
         alert("Subcategory deleted successfully!");
       } catch (error) {
-        console.log("Error deleting subcategory:", error);
+        toast.error("Error deleting subcategory:", error);
       }
     }
   };

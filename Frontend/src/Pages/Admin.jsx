@@ -30,7 +30,6 @@ function Login({ setAdmintoken }) {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error)
       toast.error('Invalid email or password frontend!');
     } finally {
       setLoading(false);

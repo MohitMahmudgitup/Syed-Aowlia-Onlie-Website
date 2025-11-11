@@ -11,6 +11,7 @@ import "swiper/css/effect-fade";
 // Import required modules
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { ShopContext } from "../Context/ShopContext";
+import { toast } from "react-toastify";
 
 const SwiperComponent = () => {
   const { backend  } = useContext(ShopContext);
@@ -26,7 +27,7 @@ const SwiperComponent = () => {
           setSlides(res.data.data[0].image);
         }
       } catch (error) {
-        console.error("Error fetching hero images:", error);
+        toast.error("Error fetching hero images:", error);
       } finally {
         setLoading(false);
       }

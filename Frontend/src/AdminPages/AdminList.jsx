@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { FiShoppingCart } from "react-icons/fi";
 import { ShopContext } from "../Context/ShopContext";
+import { toast } from "react-toastify";
 
 export const AdminList = () => {
   const { backend } = useContext(ShopContext);
@@ -20,9 +21,9 @@ export const AdminList = () => {
       setIsLoading(true);
       const res = await axios.get(backend + "/api/product");
       const data = res.data.products || [];
-      setProducts(data); // ✅ update products state so UI works
+      setProducts(data); 
     } catch (error) {
-      console.error("Error fetching products:", error);
+      toast.error("Error fetching products:", error);
     } finally {
       setIsLoading(false);
     }
@@ -38,7 +39,6 @@ export const AdminList = () => {
       setProducts(products.filter(product => product._id !== productId));
       toast.success('Product deleted successfully');
     } catch (error) {
-      console.error('Error deleting product:', error);
       toast.error('Failed to delete product');
     } finally {
       setDeletingId(null);

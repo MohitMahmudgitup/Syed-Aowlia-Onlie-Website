@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../Context/ShopContext";
+import { toast } from "react-toastify";
 
 export const TshirtInput = ({ admintoken }) => {
   const { backend } = useContext(ShopContext);
@@ -26,7 +27,7 @@ export const TshirtInput = ({ admintoken }) => {
         const res = await axios.get(`${backend}/api/category/getCategory`);
         setCategories(res.data.categories || []);
       } catch (err) {
-        console.error("Error fetching categories:", err);
+        toast.error("Error fetching categories:", err);
       }
     };
     fetchCategories();
@@ -42,7 +43,7 @@ export const TshirtInput = ({ admintoken }) => {
         const result = subCatData.filter((p) => p.category._id === category);
         setSubCategories(result);
       } catch (err) {
-        console.error("Error fetching subcategories:", err);
+        toast.error("Error fetching subcategories:", err);
       }
     };
     fetchSubCategories();
@@ -88,13 +89,10 @@ export const TshirtInput = ({ admintoken }) => {
     });
 
     try {
-      const res = await axios.post(`${backend}/api/product/add`, formData, {
+      await axios.post(`${backend}/api/product/add`, formData, {
         headers: { admintoken },
       });
-      alert("T-shirt product added successfully!");
-      console.log("✅ Response:", res.data);
-
-      // Reset form
+      toast.error("T-shirt product added successfully!");
       setImages([null, null, null, null]);
       setName("");
       setDescription("");
@@ -106,8 +104,7 @@ export const TshirtInput = ({ admintoken }) => {
       setBestseller(false);
       setStock("");
     } catch (err) {
-      console.error("❌ Error adding product:", err);
-      alert("Failed to add T-shirt. Please check console.");
+      toast.error("❌ Error adding product:", err);
     }
   };
 

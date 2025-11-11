@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import Titel from "../Components/Titel";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Orders() {
   const { backend, token, products, currency, darkmode } = useContext(ShopContext);
@@ -19,8 +20,6 @@ function Orders() {
         }
       );
 
-      // console.log("API response:", response.data);
-
       if (response.data.success && response.data.data) {
         let allOrders = [];
         response.data.data.forEach((order) => {
@@ -37,10 +36,10 @@ function Orders() {
         });
         setOrdersData(allOrders.reverse());
       } else {
-        console.error("No orders found in the response.");
+        toast.error("No orders found in the response.");
       }
     } catch (error) {
-      console.error("Error loading orders:", error);
+      toast.error("Error loading orders:", error);
     }
   };
 

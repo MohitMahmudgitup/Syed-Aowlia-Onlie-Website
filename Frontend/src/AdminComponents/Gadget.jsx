@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ShopContext } from "../Context/ShopContext";
+import { toast } from "react-toastify";
 
 const Gadget = ({ admintoken }) => {
   const { backend } = useContext(ShopContext);
@@ -39,7 +40,7 @@ const Gadget = ({ admintoken }) => {
       const res = await axios.get(backend + "/api/category/getCategory");
       setCategories(res.data.categories || []);
     } catch (err) {
-      console.error("Error fetching categories:", err);
+      toast.error("Error fetching categories:", err);
     }
   };
 
@@ -51,7 +52,7 @@ const Gadget = ({ admintoken }) => {
       const result =  subCatData.filter((p) => p.category._id === formData.category);
       setSubCategories(result);
     } catch (err) {
-      console.error("Error fetching subcategories:", err);
+      toast.error("Error fetching subcategories:", err);
     }
   };
 

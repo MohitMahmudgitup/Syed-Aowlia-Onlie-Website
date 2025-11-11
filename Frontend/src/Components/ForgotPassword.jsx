@@ -3,13 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ShopContext } from '../Context/ShopContext';
-import Titel from './Titel';
 import { assets } from '../assets/assets';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const { backend, darkmode } = useContext(ShopContext);
+  const { backend } = useContext(ShopContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,6 +12,11 @@ a.active hr{
 }
 *{
     font-family:Outfit
+}
+
+.f1{
+  font-family: "Dancing Script", cursive;
+  font-weight: 500
 }
 
 .prata-regular {

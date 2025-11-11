@@ -43,7 +43,7 @@ function RelatedProduct({ selectedCategories, selectedTypes }) {
       </div>
 
       {related.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-2 ">
+        <div className="columns-2 xl:grid   xl:grid-cols-6   gap-3   space-y-3 sm:space-y-0  ">
           {related.map((product) => (
             <ProductItem
               key={product._id}
@@ -51,7 +51,7 @@ function RelatedProduct({ selectedCategories, selectedTypes }) {
               name={product.name}
               description={product.description}
               price={product.price}
-               image={`${backend}/uploads/product/${product.images[0]}`}
+               image={`${product.images[0]}`}
             />
           ))}
         </div>

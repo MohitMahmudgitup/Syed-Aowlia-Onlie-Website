@@ -32,13 +32,7 @@ function LatestCollection() {
     <div className="py-4">
       <Titel text1="LATEST " text2="COLLECTION" />
 
-      <div className=" columns-2  
-  sm:columns-3 
-  md:columns-4 
-  lg:columns-5 
-  xl:columns-6 
-  gap-3 
-  space-y-3 ">
+      <div className=" columns-2 xl:grid   xl:grid-cols-6   gap-3   space-y-3 sm:space-y-0 ">
         {latestProducts.length > 0
           ? latestProducts.map((item) => (
             <ProductItem

@@ -7,17 +7,17 @@ import NewsLetterBox from "../Components/NewsLetterBox";
 import Category from "../Components/Category";
 
 const Home = () => {
-  const sectionPadding = "px-1 sm:px-[5vw] md:px-[7vw] xl:px-[8vw] 2xl:px-[16vw]";
+  const sectionPadding = "px-1 sm:px-[5vw] md:px-[7vw] xl:px-[8vw] 2xl:px-[16vw] flex flex-col gap-";
 
   return (
-    <main className="flex flex-col sm:gap-8">
+    <main className="flex flex-col gap-">
       
       <div className={sectionPadding}>
         <Hero />
         <Category />
       </div>
 
-      <div className={sectionPadding}>
+      <div className="px-0 sm:px-[5vw] md:px-[7vw] xl:px-[8vw] 2xl:px-[16vw]  flex flex-col ">
         <BestSeller />
       </div>
 

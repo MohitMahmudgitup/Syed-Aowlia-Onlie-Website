@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+// Swiper Imports
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+
 const CategoryItem = () => {
   const { backend } = useContext(ShopContext);
   const [categories, setCategories] = useState([]);
@@ -13,7 +19,7 @@ const CategoryItem = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(backend + "/api/category/getCategory");
-      setCategories(response.data.categories); 
+      setCategories(response.data.categories);
     } catch (error) {
       console.error("Error fetching categories:", error);
     } finally {
@@ -25,45 +31,53 @@ const CategoryItem = () => {
     fetchCategories();
   }, [backend]);
 
-  const skeletonCount = 6; 
+  const skeletonCount = 6;
 
   return (
-    <div className="flex overflow-x-auto space-x-2 sm:p-2 pb-2 scrollbar-hide">
-      {loading
-        ? Array.from({ length: skeletonCount }).map((_, i) => (
-            <div
-              key={i}
-              className="flex-shrink-0 bg-[#FFFFFF] sm:w-32 md:w-36 sm:h-32 md:h-36 sm:p-2 px-5 py-2 flex flex-col justify-center items-center 2xl:rounded-lg xl:rounded-lg rounded-full border border-blue-700 animate-pulse"
-            >
-              <Skeleton
-                circle={true}
-                width={64}
-                height={64}
-                className="hidden sm:block sm:w-16 sm:h-16 md:w-20 md:h-20 object-cover rounded-lg"
-              />
-              <Skeleton
-                width={60}
-                height={16}
-                className="sm:mt-2 text-center"
-              />
-            </div>
-          ))
-        : categories.map((item) => (
-            <Link
-              to={`${item._id}`}
-              key={item._id}
-              className="flex-shrink-0 bg-[#FFFFFF] sm:w-32 md:w-36 sm:h-32 md:h-36 sm:p-2 px-5 py-2 flex flex-col justify-center items-center 2xl:rounded-lg xl:rounded-lg rounded-full 
-                     transition-transform duration-300 ease-in-out 
-                     border border-blue-700 "
-            >
-              <img
-                src={`${item.image}`}
-                alt={item.name}
-                className="w-12 hidden sm:block h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-cover rounded-lg"
-              />
-              <p className="text-sm sm:text-sm md:text-base sm:mt-2 text-center">{item.name}</p>
-            </Link>
-          ))}
+    <div className="w-full">
+
+      <Swiper
+        spaceBetween={16}
+        slidesPerView={3.5}
+        breakpoints={{
+          480: { slidesPerView: 4.5 },
+          640: { slidesPerView: 5 },
+          768: { slidesPerView: 6 },
+          1024: { slidesPerView: 7 },
+        }}
+        loop={true}
+        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        modules={[Autoplay, Navigation]}
+        className="px-.5 pb-2"
+      >
+        {loading
+          ? Array.from({ length: skeletonCount }).map((_, i) => (
+              <SwiperSlide key={i}>
+                <div className="w-24 sm:w-32 h-28 sm:h-32 bg-white border border-gray-200 rounded-xl flex flex-col justify-center items-center animate-pulse">
+                  <Skeleton circle={true} width={60} height={60} />
+                  <Skeleton width={50} height={14} className="mt-2" />
+                </div>
+              </SwiperSlide>
+            ))
+          : categories.map((item) => (
+              <SwiperSlide key={item._id}>
+                <Link
+                  to={`${item._id}`}
+                  className="w-24 sm:w-32 h-28 sm:h-32 bg-white border border-gray-200 hover:border-blue-600 rounded-xl 
+                            flex flex-col justify-center items-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-md"
+                  />
+                  <p className="text-lg f1 sm:text-sm font-medium mt-2 text-gray-700 text-center">
+                    {item.name}
+                  </p>
+                </Link>
+              </SwiperSlide>
+            ))}
+      </Swiper>
     </div>
   );
 };

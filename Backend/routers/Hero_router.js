@@ -1,12 +1,11 @@
 import express from "express";
-import multer from "multer";
 import {   addHeroImage,
   getHeroImages,
   updateHeroImages,
   deleteHero,deleteSingleHeroImage } from "../controllers/Hero_controller.js";
 
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
+import upload from "../middleware/hero_multer.js";
 
 // Multiple images upload
 router.post("/add", upload.any(), addHeroImage);
